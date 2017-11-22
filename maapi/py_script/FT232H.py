@@ -84,6 +84,7 @@ def enable_FTDI_driver():
         subprocess.check_call('modprobe -q ftdi_sio', shell=True)
         subprocess.check_call('modprobe -q usbserial', shell=True)
 
+
 def use_FT232H():
     """Disable any built in FTDI drivers which will conflict and cause problems
     with libftdi (which is used to communicate with the FT232H).  Will register

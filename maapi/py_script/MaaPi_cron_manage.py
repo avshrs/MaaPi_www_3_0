@@ -28,6 +28,7 @@ def run():
                 Maapi_dbname, Maapi_user, Maapi_host, Maapi_passwd))
     except:
         qa("I am unable to connect to the database")
+
     else:
         x = conn.cursor()
         x.execute(
