@@ -1,0 +1,144 @@
+
+{% load staticfiles %}
+{% load filters %}
+{% load staticfiles %}
+<html>
+	<head>
+		<title>MaaPi</title>
+		<meta charset="utf-8" />
+		<link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.ico' %}">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+
+		<script	src="https://code.jquery.com/jquery-1.12.4.js"></script>
+		<script	src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+		<script src="{% static 'assets/js/jquery.sumoselect.js' %}"></script>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/5.0.14/highcharts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/5.0.14/highcharts-more.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/5.0.14/js/modules/exporting.js"></script>
+
+		<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+
+		<link rel="stylesheet" href="{% static 'assets/css/main.css' %}" >
+	<link rel="stylesheet" href="{% static 'assets/css/sumoselect.css' %}" >
+		<link rel="stylesheet" href="{% static 'assets/fonts/opensans/stylesheet.css' %}">
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+		<noscript><link rel="stylesheet" href="{% static 'assets/css/noscript.css'%}" /></noscript>
+
+
+<style>
+
+		body
+				{
+				background-attachment: fixed;
+				-webkit-backface-visibility: hidden;
+				background-image:  linear-gradient(to top, rgba(19, 21, 25, 0.4), rgba(19, 21, 25, 0.4)),  url({% static 'images/'%}{{name|backgroud_main}}) ;
+				background-size: cover;
+				background-repeat: no-repeat;
+				height: 3000px;
+				width: 100%;
+				z-index: 1;
+				display: block;
+				margin: 0 auto;
+				}
+
+		#daytime{
+			margin-left: 10px;
+			float:left;
+			margin-top:2px;
+
+			font-size: 12px;}
+
+
+		#nav
+				{
+				padding-right: 10px;
+				height: 1.8em;
+				width: 100%;
+				background-color: rgba(225,225,225,0.2);
+				bottom: -10px;
+				font-size: 13px;
+				}
+
+		#nav ul
+				{
+				float:right;
+				overflow-x:hidden;
+				white-space:nowrap;
+				}
+
+		#nav ul li
+				{
+				display:inline;
+				}
+		</style>
+	</head>
+
+
+	<body>
+<div id="nav">
+	<script >
+	setInterval( function updateDiv(){ $( "#daytime" ).load(window.location.href + " #daytime" );}, 60000);
+	</script>
+
+	<ul>
+
+
+		{% if user.is_authenticated %}
+			<li> Welcome
+				<strong> {% if user.first_name%}
+										{{ user.first_name }}
+								{% else %}
+										{{ user.username }}
+								{% endif %}
+				</strong>
+			</li>
+
+		{% endif %}
+
+		<li id="datetime">{{date_time}}</li>
+		{% if perms.app_label.can_do_something  %}
+				<li > <a href="{% url 'admin:index'%}">Settings</a> </li>
+		{% endif %}
+		<li > <a href="{% url 'logout'%}">logout</a> </li>
+
+	</ul>
+
+
+</div>
+	<div id="wrapper" style="padding: 0rem 0rem;top: -30px;">
+	  <!-- Header -->
+	 <div class="logo">
+	  <a  href="/" ><img  src="{% static 'images/lowgo.svg'%}" alt="" height="70" width="150"/></a>
+	 </div>
+		    <nav>
+		      <ul >
+		      	<li><a href="{% url 'sensor_list_detail'%}">Sensors</a></li>
+						<li><a href="{% url 'devCharts' pk='715' acc='1' date_from='-day' date_to='now' %}" style="cursor: pointer;">Charts</a></li>
+		        <li><a href="{% url 'DevicesSettings'%}">Advance</a></li>
+
+		      </ul>
+		    </nav>
+{% block content %}
+
+
+
+
+
+{% endblock %}
+
+</div>
+
+
+
+	<div id="bg" ></div>
+
+	<script src="{% static 'assets/js/skel.min.js'%}"></script>
+	<script src="{% static 'assets/js/util.js'%}"></script>
+	<script src="{% static 'assets/js/main.js'%}"></script>
+
+
+	</body>
+</html>

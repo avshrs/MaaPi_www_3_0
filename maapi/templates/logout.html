@@ -1,0 +1,55 @@
+
+{% load i18n static %}
+{% load staticfiles %}
+<!DOCTYPE html>
+<head>
+<meta charset="utf-8">
+<title>MaaPi Logged OUt</title>
+<meta name="description" content="slick Login">
+<meta name="author" content="Webdesigntuts+">
+	<link rel="stylesheet" href="{% static 'assets/css/main.css' %}" >
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="http://www.modernizr.com/downloads/modernizr-latest.js"></script>
+
+
+<style>
+  table {
+  	border-collapse: collapse;
+  	border-spacing: 0;
+  }
+
+  body {
+    height:100vh;
+    width: 100%;
+    margin-top: 100px;
+  	font-family: sans-serif;
+  	background-color: #000;
+  	background-image: -webkit-linear-gradient(bottom, #000 0%, #333 100%);
+  	background-image: -moz-linear-gradient(bottom, #000 0%, #333 100%);
+  	background-image: -o-linear-gradient(bottom, #000 0%, #333 100%);
+  	background-image: -ms-linear-gradient(bottom, #000 0%, #333 100%);
+  	background-image: linear-gradient(bottom, #000 0%, #333 100%);
+  }
+
+  img{
+  display:block;
+
+  margin: auto auto;
+
+
+  }
+  button{
+    color: black;
+    display:block;
+    margin: auto auto
+  }
+</style>
+</head>
+  <body>
+
+        <img src="{% static 'images/lowgo.svg'%}" alt="" height="70" width="150"/>
+        <h3 style="text-align: center; margin-top:30px" > You are logged out</h3>
+        <button type="button" onclick="location.href='{% url 'login'%}';" >Log In</button>
+    
+</body>
+</html>

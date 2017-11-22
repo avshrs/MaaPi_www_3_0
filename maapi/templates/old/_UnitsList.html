@@ -1,0 +1,40 @@
+{% extends '_Base.html' %}
+{% block content %}
+{% load staticfiles %}
+{% load filters %}
+{% load humanize %}
+
+
+    <header id="header">
+        <!--span class="icon fa-diamond">
+
+        </span-->
+
+        <div class="content">
+          <div class="inner" style="max-height: 100%;">
+            <div class="table">
+              <table style="margin:0 auto">
+                    <tr>
+                      <th class="d-id" >Id</th>
+                      <th class="d-id" >Unit Name</th>
+                      <th class="d-id" >Unit</th>
+                      <th class="d-id" >Enabled</th>
+
+                    </tr>
+                    {% for names in UnitList %}
+                    <tr id="{{names.dev_main_group}}">
+                      <td class="d-id" ><a href="{% url 'UnitsnEdit' pk=names.pk %}">{{ names.id }}</a></td>
+                      <td class="d-id" ><a href="{% url 'UnitsnEdit' pk=names.pk %}">{{ names.unit_name }}</a></td>
+                      <td class="d-id" ><a href="{% url 'UnitsnEdit' pk=names.pk %}">{{names.unit}}</a></td>
+                      <td class="d-id" ><a href="{% url 'UnitsnEdit' pk=names.pk %}">{{names.unit_enabled|isTrue}}</a></td>
+                    <tr>
+                        {% endfor %}
+                  </table>
+          </div>
+        </div>
+      </div>
+
+  </header>
+</div>
+	<div id="bg"></div>
+{% endblock %}

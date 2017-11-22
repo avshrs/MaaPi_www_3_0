@@ -1,0 +1,107 @@
+{% extends 'Base.html' %}
+
+
+{% block content %}
+{% load staticfiles %}
+{% load chartit %}
+
+  <div class="pane-when " id="s-when">
+    <div class="content">
+        <div class="clock clock-countdown">
+          <div class="site-config"></div>
+          <div class="elem-center">
+            <script >
+              setInterval( function updateDiv(){ $( "#temp_v" ).load(window.location.href + " #temp_v" );}, 60000);
+            </script>
+
+            <div class="digit" id="temp_v">
+              <span  class="days" >
+                {% for post in temp %}
+                  {{ post.dev_value|floatformat:"-1" }}
+                {% endfor %}
+
+              </span>
+              <span class="txt"><sup>o</sup> C</span>
+            </div>
+          </div>
+
+          <div class="elem-bottom">
+            <script>
+              setInterval( function updateDiv(){ $( "#date_time" ).load(window.location.href + " #date_time" );}, 60000);
+            </script>
+            <div class="deco" id="date_time">
+              <span class="hours">{{date_time}}</span>
+            </div>
+          </div>
+        </div>
+
+        <footer>
+          <p>    {% for post in temp %}
+                    {{ post.dev_user_name }}
+                  {% endfor %}
+              </p>
+        </footer>
+    </div>
+  </div>
+
+  <main class="page-main" id="mainpage">
+    <div class="section page-home page page-cent" id="s-home">
+      <section class="content">
+        <header class="header">
+          <script >
+            setInterval( function updateDiv(){ $( "#sensors" ).load(window.location.href + " #sensors" );}, 60000);
+          </script>
+          <div id="sensors" class="h-left;background-color: none;">
+            <p style="font-size:25px;">        Sensory: </p>
+            <table >
+              {%for sensor in main_screen%}
+                <tr style="background-color: none;">
+                  <td style="font-size:20px;background-color: none;padding-left:0px;"><strong style="align: right;"><a style="color:white"href="{% url 'devCharts_new' pk=sensor.pk acc='4' dn='1' dv='d'%}"> {{sensor.dev_value|floatformat:"-1"}}  </a> </strong></td>
+                  <td style="font-size:16px;background-color: none;padding-left:5px;">{% if sensor.dev_dev_kind == "temperature"%}<sup>o</sup>C {% endif %}
+                                                                                    {% if sensor.dev_dev_kind == "humidity"%} %    {% endif %}
+                                                                                    {% if sensor.dev_dev_kind == "accuracy"%} %    {% endif %}</td>
+                  <td class="unit" style=" color=white; text-align:center; padding-left:20px">{% if sensor.dev_value > sensor.dev_value_old %}
+                                                                        <span style="color=white;">&#8599;</span>
+                                                                            {%endif%}
+                                                                            {% if sensor.dev_value <  sensor.dev_value_old %}
+                                                                          <span style="color=white;">&#8600;</span>
+                                                                            {%endif%}
+                                                                            {% if sensor.dev_value == sensor.dev_value_old %}
+                                                                          <span style="color=white;">&#8212;</span>
+                                                                            {%endif%}
+                                                                            </td>
+                  <td style="font-size:16px;background-color: none;padding-left:20px;">{{sensor.dev_user_name}}</td>
+                </tr>
+              {%endfor%}
+
+            </table>
+          </div>
+
+          <div class="h-right"></div>
+        </header>
+      </section>
+
+    </div>
+    <div class="section page-register page page-cent"  id="s-register">
+      <section class="content">
+        <header class="p-title">
+
+
+
+        <script>
+          setInterval( function updateDiv(){ $( "#dupa" ).load(window.location.href + " #dupa" );}, 60000);
+        </script>
+
+        <div id='dupa'>{{ chart|load_charts:"container" }}</div>
+
+          <div id='container' style="height:250px; "> Chart will be rendered here </div>
+
+        </header>
+      </section>
+
+    </div>
+
+
+</main>
+
+{% endblock %}

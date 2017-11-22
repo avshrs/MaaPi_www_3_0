@@ -1,0 +1,181 @@
+{% extends '_Base.html' %}
+{% block content %}
+{% load staticfiles %}
+{% load filters %}
+{% csrf_token %}
+
+  <header id="header">
+
+
+</header>
+</br>
+
+    <div id="device_chart_new" style="max-width:95%; width:1600px; dispaly:block; margin: auto; ">
+
+      <script>
+        $(document).ready(function() {
+          $('#button').click('change', do_something);
+        });
+
+        function do_something() {
+
+        name = $("#select_name").val();
+        acc = $("#select_name4").val();
+        day = $("#select_name3").val();
+        num = $("#select_name2").val();
+
+        dd ="/devices/Charts/Group=null/Device="+name+"/Acc="+acc+"-N="+num+"-Date="+day;
+        window.location.replace(dd);
+      }
+
+
+      </script>
+
+      <div id="container-chart" style="max-width:95%; max-height:95%;width:1600px; height:600px; dispaly:block; margin: auto; " ></div>
+
+      <script type="text/javascript">
+      $(function(){
+         Highcharts.chart('container-chart', {
+             chart:{     zoomType:'x',
+                        backgroundColor: 'rgba(0,0,0,0)',
+                        type: 'spline'
+                        },
+
+                  stacking: false,
+                  exporting:{
+                            enabled:false,
+                            },
+                 legend: {
+                            layout: 'horizontal',
+                            align: 'center',
+                            itemStyle: {
+                                        color: '#ffffff',
+                                        fontWeight: 'bold'
+                                      },
+                            itemHiddenStyle: {
+                                              color: 'grey'
+                                            },
+                          },
+                  title : {
+                      style:{color:'white'},
+                      text :
+                      {%ifequal groupname 'null'%}
+                      {%for name in dataName%}
+                      '{{name}}'
+                      {%endfor%}
+                      {%else%}
+
+                        'Grupa {{groupname}}'
+
+                      {%endifequal%}
+
+                  },
+                  plotOptions: {
+                                line:{
+                                      marker:{
+                                              enabled:false,
+                                              },
+                                     },
+                              },
+                 xAxis: {
+                       zoomType:'x',
+
+                       type: 'datetime',
+                       labels: {
+                                style: {
+                                        color: 'white'
+                                      },
+                               align: 'left'
+                              }
+                          },
+                    yAxis: {
+
+
+
+
+                                labels: {
+                                         style: {
+                                                 color: 'white'
+                                               },
+
+                                       }
+                                   },
+
+                  series : [
+                    {%ifequal groupname 'null'%}
+                      {
+                      name : {%for name in dataName%} '{{name}}' {%endfor%},
+                      data :  {{data}},
+                     }
+                    {%else%}
+                      {%for list in grouplist%}
+                        {
+                        name : '{{list.dev_user_name}}',
+                        data :  {{list.dev_id|data_chart:data2}},
+                        },
+
+                      {%endfor%}
+
+                    {%endifequal%}
+
+
+                  ]
+              });
+          });
+
+
+
+      </script>
+
+
+    <div id="selectM" >
+      <div class="box2">
+        <div style="float:left;"><span style="text-align:center;">Sensor</span></div>
+          <div style="clear: left;">
+            <select style="height:20px; width:150px;" id="select_name" name="select">
+              {% for glist in grouplist2 %}
+              <option  value="{{glist.dev_location}}" {%if GroupPK == glist.dev_location|stringformat:"i" %}selected="selected"{%endif%}><script> group_pk = {{glist.dev_location}};</script>  {{ glist.dev_location}}   </option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+
+      <div class="box2">
+        <p style="text-align:center;">Range</p>
+        <select style="height:20px; width:150px;" id="select_name2" name="select">
+          {%for i in loop%}
+          <option  value="{{ forloop.counter }}" {%if chartDN == forloop.counter|stringformat:"i"  %}selected="selected"{%endif%}>{{ forloop.counter }}</option>
+          {%endfor%}
+
+        </select>
+      </div>
+
+      <div class="box2"><p style="text-align:center;">------ </p>
+        <select style="height:20px; width:150px;"  id="select_name3" name="select">
+          <option  value="h" {%if chartDV == 'h'%}selected="selected"{%endif%}>Hour</option>
+          <option  value="d" {%if chartDV == 'd'%}selected="selected"{%endif%}>Day</option>
+          <option  value="m" {%if chartDV == 'm'%}selected="selected"{%endif%}>Month</option>
+          <option  value="y" {%if chartDV == 'y'%}selected="selected"{%endif%}>Year</option>
+        </select>
+      </div>
+
+      <div class="box2"><p style="text-align:center;">Accuracy</p>
+        <select style="height:20px; width:150px;" id="select_name4" name="select">
+          <option  value="0"{%if chartACC == "0"  %}selected="selected"{%endif%}>100%</option>
+          <option  value="1"{%if chartACC == "1"  %}selected="selected"{%endif%}>auto</option>
+          <option  value="2"{%if chartACC == "2"  %}selected="selected"{%endif%}>2</option>
+          <option  value="4"{%if chartACC == "4"  %}selected="selected"{%endif%}>4</option>
+          <option  value="8"{%if chartACC == "8"  %}selected="selected"{%endif%}>8</option>
+          <option  value="16"{%if chartACC == "16"  %}selected="selected"{%endif%}>16</option>
+          <option  value="32"{%if chartACC == "32"  %}selected="selected"{%endif%}>32</option>
+          <option  value="64"{%if chartACC == "64"  %}selected="selected"{%endif%}>64</option>
+        </select>
+      </div>
+      <div class="box2">
+        <button style="font-size:12px;padding:0 ; margin-top:23px;  width:150px;" id="button">Generate</button>
+      </div>
+    </div>
+    </div>
+
+
+{% endblock %}

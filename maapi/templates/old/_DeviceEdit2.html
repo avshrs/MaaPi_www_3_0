@@ -1,0 +1,448 @@
+{% extends '_Base.html' %}
+{% block content %}
+{% load filters %}
+{% load staticfiles %}
+{% load humanize %}
+
+    <header id="header">
+      <div class="content">
+          <div class="inner" style="max-height: 100%;">
+            <div class="table">
+              <style>
+                  #id_dev_id {
+                    background-color: rgba(255, 0, 0, 0);
+                    color:white;
+                  width: 180px;
+                  font-size: 12px;
+                  }
+                  #id_dev_user_id {
+                    background-color: rgba(255, 0, 0, 0);
+                    color:white;
+                  width: 180px;
+                  height: 25px;
+                  font-size: 12px;
+                  }
+                  #id_dev_on_main_screen_user_id {
+                    background-color: rgba(255, 0, 0, 0);
+                    color:white;
+                  width: 180px;
+                  height: 25px;
+                  font-size: 12px;
+                  }
+
+                  #id_dev_dev_name {
+                  color:white;
+                  width: 180px;
+                  height: 25px;
+                  font-size: 12px;
+                  }
+                  #id_dev_watchdog_max_manage_gpio_nr {
+                ;
+                  background-color: rgba(255, 0, 0, 0);
+                  color:white;
+                  width: 180px;
+                  height: 25px;
+                  font-size: 12px;
+                  }
+                  #id_dev_watchdog_min_manage_gpio_nr {
+                    background-color: rgba(255, 0, 0, 0);
+                    color:white;
+                  width: 180px;
+                  height: 25px;
+                  font-size: 12px;
+                  }
+                  #id_dev_www_url {
+                  color:white;
+                  width: 180px;
+                  height: 25px;
+                  font-size: 12px;
+                  }
+                  #id_dev_www_class {
+                  color:white;
+                  width: 180px;
+                  height: 25px;
+                  font-size: 12px;
+                  }
+                  #id_dev_gpio_pin {
+                    background-color: rgba(255, 0, 0, 0);
+                    color:white;
+                  width: 180px;
+                  height: 25px;
+                  font-size: 12px;
+                  }
+                  #id_dev_interval {
+                    background-color: rgba(255, 0, 0, 0);
+                    color:white;
+                  width: 180px;
+                  height: 25px;
+                  font-size: 12px;
+                  }
+                  #id_dev_bus_type {
+                  color:white;
+                  width: 180px;
+                  height: 25px;
+                  font-size: 12px;
+                  }
+                  #id_dev_type {
+                  color:white;
+                  width: 180px;
+                  height: 25px;
+                  font-size: 12px;
+                  }
+                  #id_dev_watchdog {
+                  color:white;
+                  width: 180px;
+                  height: 25px;
+                  font-size: 12px;
+                  }
+                  #id_dev_watchdog_min {
+                    background-color: rgba(255, 0, 0, 0);
+                    color:white;
+                  width: 180px;
+                  height: 25px;
+                  font-size: 12px;
+                  }
+                  #id_dev_watchdog_max {
+                    background-color: rgba(255, 0, 0, 0);
+                    color:white;
+                  width: 180px;
+                  height: 25px;
+                  font-size: 12px;
+                  }
+                  #id_dev_watchdog_do_min {
+                  color:white;
+                  width: 180px;
+                  height: 25px;
+                  font-size: 12px;
+                  }
+                  #id_dev_watchdog_do_max {
+                  color:white;
+                  width: 180px;
+                  height: 25px;
+                  font-size: 12px;
+                  }
+                  #id_dev_user_name {
+                    color:white;
+                  width: 180px;
+                  height: 25px;
+                  font-size: 12px;
+                  }
+                  #id_dev_user_describe {
+                    color:white;
+                  width: 180px;
+                  height: 25px;
+                  font-size: 12px;
+                  }
+                  #id_dev_dev_kind {
+                    color:white;
+                  width: 180px;
+                    font-size: 12px;
+                    height: 25px;
+                  }
+                  #id_dev_adjust {
+                    background-color: rgba(255, 0, 0, 0);
+                    color:white;
+                    font-size: 12px;
+                  width: 180px;
+
+                  }
+                  #id_dev_location {
+                  width: 180px;
+                    height: 25px;
+                    font-size: 12px;
+                  }
+              </style>
+
+                <form  method="POST" class="post-form">
+          	     {% csrf_token %}
+                    <table>
+
+
+                      <tr>
+                        <th>
+                          <label for="id_dev_status">Dev status:</label>
+                        </th>
+                        <td>
+                          <select id="id_dev_status" name="dev_status">
+                            <option value="2" {%for ia in dev%}{%ifequal ia.dev_id|intcomma  pkej|intcomma %} {%if ia.dev_status == True%} selected="selected"{%endif%}{%endifequal%}{%endfor%}>Yes</option>
+                            <option value="3" {%for ia in dev%}{%ifequal ia.dev_id|intcomma  pkej|intcomma %} {%if ia.dev_status == False%} selected="selected"{%endif%}{%endifequal%}{%endfor%}>No</option>
+                          </select>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <th>
+                          <label for="id_dev_user_id">Dev user id:</label>
+                        </th>
+                        <td>
+                          <input id="id_dev_user_id" name="dev_user_id" type="number" value="{%for ia in dev%}{%ifequal ia.dev_id|intcomma  pkej|intcomma %}{{ia.dev_user_id}}{%endifequal%}{%endfor%}" required />
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <th>
+                          <label for="id_dev_user_name">Dev user name:</label>
+                        </th>
+                        <td>
+                          <input id="id_dev_user_name" maxlength="30" name="dev_user_name" type="text" value="{%for ia in dev%}{%ifequal ia.dev_id|intcomma pkej|intcomma %}{{ia.dev_user_name}}{%endifequal%}{%endfor%}"  required />
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <th>
+                          <label for="id_dev_user_describe">Dev user describe:</label>
+                        </th>
+                        <td>
+                          <input id="id_dev_user_describe" maxlength="30" name="dev_user_describe" value="{%for ia in dev%}{%ifequal ia.dev_id|intcomma pkej|intcomma %}{{ia.dev_user_describe}}{%endifequal%}{%endfor%}" type="text" />
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <th>
+                          <label for="id_dev_location">Dev location:</label>
+                        </th>
+                        <td>
+
+                          <select id="id_dev_location" name="dev_location">
+                            <option value="1" {%for ia in dev%}{%ifequal ia.dev_id|intcomma  pkej|intcomma %} {%if ia.dev_location == 1%}  selected="selected"{%endif%}{%endifequal%}{%endfor%}> 1 </option>
+                            <option value="2" {%for ia in dev%}{%ifequal ia.dev_id|intcomma  pkej|intcomma %} {%if ia.dev_location == 2%}  selected="selected"{%endif%}{%endifequal%}{%endfor%}>2</option>
+                            <option value="3" {%for ia in dev%}{%ifequal ia.dev_id|intcomma  pkej|intcomma %} {%if ia.dev_location == 3%}  selected="selected"{%endif%}{%endifequal%}{%endfor%}>3</option>
+                            <option value="4" {%for ia in dev%}{%ifequal ia.dev_id|intcomma  pkej|intcomma %} {%if ia.dev_location == 4%}  selected="selected"{%endif%}{%endifequal%}{%endfor%}>4</option>
+                            <option value="5" {%for ia in dev%}{%ifequal ia.dev_id|intcomma  pkej|intcomma %} {%if ia.dev_location == 5%}  selected="selected"{%endif%}{%endifequal%}{%endfor%}>5</option>
+                            <option value="6" {%for ia in dev%}{%ifequal ia.dev_id|intcomma  pkej|intcomma %} {%if ia.dev_location == 6%}  selected="selected"{%endif%}{%endifequal%}{%endfor%}>6</option>
+                            <option value="7" {%for ia in dev%}{%ifequal ia.dev_id|intcomma  pkej|intcomma %} {%if ia.dev_location == 7%}  selected="selected"{%endif%}{%endifequal%}{%endfor%}>7</option>
+                            <option value="8" {%for ia in dev%}{%ifequal ia.dev_id|intcomma  pkej|intcomma %} {%if ia.dev_location == 8%}  selected="selected"{%endif%}{%endifequal%}{%endfor%}>8</option>
+                            <option value="9" {%for ia in dev%}{%ifequal ia.dev_id|intcomma  pkej|intcomma %} {%if ia.dev_location == 9%}  selected="selected"{%endif%}{%endifequal%}{%endfor%}>9</option>
+                            <option value="10"{%for ia in dev%}{%ifequal ia.dev_id|intcomma  pkej|intcomma %} {%if ia.dev_location == 10%} selected="selected"{%endif%}{%endifequal%}{%endfor%}>10</option>
+                            <option value="11"{%for ia in dev%}{%ifequal ia.dev_id|intcomma  pkej|intcomma %} {%if ia.dev_location == 11%} selected="selected"{%endif%}{%endifequal%}{%endfor%}>11</option>
+                            <option value="12"{%for ia in dev%}{%ifequal ia.dev_id|intcomma  pkej|intcomma %} {%if ia.dev_location == 12%} selected="selected"{%endif%}{%endifequal%}{%endfor%}>12</option>
+                            <option value="13"{%for ia in dev%}{%ifequal ia.dev_id|intcomma  pkej|intcomma %} {%if ia.dev_location == 13%} selected="selected"{%endif%}{%endifequal%}{%endfor%}>13</option>
+                            <option value="14"{%for ia in dev%}{%ifequal ia.dev_id|intcomma  pkej|intcomma %} {%if ia.dev_location == 14%} selected="selected"{%endif%}{%endifequal%}{%endfor%}>14</option>
+                            <option value="15"{%for ia in dev%}{%ifequal ia.dev_id|intcomma  pkej|intcomma %} {%if ia.dev_location == 15%} selected="selected"{%endif%}{%endifequal%}{%endfor%}>15</option>
+                            <option value="16"{%for ia in dev%}{%ifequal ia.dev_id|intcomma  pkej|intcomma %} {%if ia.dev_location == 16%} selected="selected"{%endif%}{%endifequal%}{%endfor%}>16</option>
+                            <option value="17"{%for ia in dev%}{%ifequal ia.dev_id|intcomma  pkej|intcomma %} {%if ia.dev_location == 17%} selected="selected"{%endif%}{%endifequal%}{%endfor%}>17</option>
+                            <option value="18"{%for ia in dev%}{%ifequal ia.dev_id|intcomma  pkej|intcomma %} {%if ia.dev_location == 18%} selected="selected"{%endif%}{%endifequal%}{%endfor%}>18</option>
+                            <option value="19"{%for ia in dev%}{%ifequal ia.dev_id|intcomma  pkej|intcomma %} {%if ia.dev_location == 19%} selected="selected"{%endif%}{%endifequal%}{%endfor%}>19</option>
+                            <option value="20"{%for ia in dev%}{%ifequal ia.dev_id|intcomma  pkej|intcomma %} {%if ia.dev_location == 20%} selected="selected"{%endif%}{%endifequal%}{%endfor%}>20</option>
+                          </select>
+                        </td>
+                      </tr>
+
+
+
+
+
+                      <tr><th><label for="id_dev_dev_kind">Dev dev kind:</label></th><td><select id="id_dev_dev_kind" name="dev_dev_kind">
+                      <option value="" selected="selected">None</option>
+                      <option value="Temperature">Temperature</option>
+                      <option value="Humidity">Humidity</option>
+                      <option value="Accuracy">Accuracy</option>
+                      <option value="Pressure">Pressure</option>
+                      <option value="Sealevel-Pressure">Sealevel-Pressure</option>
+                      <option value="Altitude">Altitude</option>
+                      <option value="Light-Level">Light-Level</option>
+                      <option value="Relay">Relay</option>
+                      <option value="Sun-Energy">Sun-Energy</option>
+                      <option value="Percent">Percent</option>
+                      <option value="MegaBytes">MegaBytes</option>
+                      <option value="KiloBytes">KiloBytes</option>
+                      <option value="GigaBytes">GigaBytes</option>
+                      <option value="Wats">Wats</option>
+                      <option value="Volts">Volts</option>
+                      <option value="Amperes">Amperes</option>
+                      <option value="Amperes">Amperes</option>
+                      </select></td></tr>
+                      <tr><th><label for="id_dev_dev_name">Dev dev name:</label></th><td><textarea cols="40" id="id_dev_dev_name" name="dev_dev_name" rows="10" required>
+                      </textarea></td></tr>
+                      <tr><th><label for="id_dev_type">Dev type:</label></th><td><textarea cols="40" id="id_dev_type" name="dev_type" rows="10" required>
+                      </textarea></td></tr>
+                      <tr><th><label for="id_dev_gpio_pin">Dev gpio pin:</label></th><td><input id="id_dev_gpio_pin" name="dev_gpio_pin" type="number" /></td></tr>
+                      <tr><th><label for="id_dev_bus_type">Dev bus type:</label></th><td><textarea cols="40" id="id_dev_bus_type" name="dev_bus_type" rows="10" required>
+                      </textarea></td></tr>
+                      <tr><th><label for="id_dev_interval">Dev interval:</label></th><td><input id="id_dev_interval" name="dev_interval" type="number" /></td></tr>
+                      <tr><th><label for="id_dev_adjust">Dev adjust:</label></th><td><input id="id_dev_adjust" name="dev_adjust" type="number" /></td></tr>
+                      <tr><th><label for="id_dev_watchdog">Dev watchdog:</label></th><td><select id="id_dev_watchdog" name="dev_watchdog">
+                      <option value="1" selected="selected">Unknown</option>
+                      <option value="2">Yes</option>
+                      <option value="3">No</option>
+                      </select></td></tr>
+                      <tr><th><label for="id_dev_watchdog_min">Dev watchdog min:</label></th><td><input id="id_dev_watchdog_min" name="dev_watchdog_min" step="any" type="number" /></td></tr>
+                      <tr><th><label for="id_dev_watchdog_do_min">Dev watchdog do min:</label></th><td><select id="id_dev_watchdog_do_min" name="dev_watchdog_do_min">
+                      <option value="" selected="selected">None</option>
+                      <option value="Mail">Mail</option>
+                      <option value="Exec Python">Exec Python</option>
+                      <option value="Exec SQL">Exec SQL</option>
+                      <option value="GPIO">GPIO</option>
+                      <option value="PWM">PWM</option>
+                      <option value="ALARM HI">ALARM HI</option>
+                      <option value="ALARM LOW">ALARM LOW</option>
+                      </select></td></tr>
+                      <tr><th><label for="id_dev_watchdog_min_manage_gpio_nr">Dev watchdog min manage gpio nr:</label></th><td><input id="id_dev_watchdog_min_manage_gpio_nr" name="dev_watchdog_min_manage_gpio_nr" type="number" /></td></tr>
+                      <tr><th><label for="id_dev_watchdog_max">Dev watchdog max:</label></th><td><input id="id_dev_watchdog_max" name="dev_watchdog_max" step="any" type="number" /></td></tr>
+                      <tr><th><label for="id_dev_watchdog_do_max">Dev watchdog do max:</label></th><td><select id="id_dev_watchdog_do_max" name="dev_watchdog_do_max">
+                      <option value="" selected="selected">None</option>
+                      <option value="Mail">Mail</option>
+                      <option value="Exec Python">Exec Python</option>
+                      <option value="Exec SQL">Exec SQL</option>
+                      <option value="GPIO">GPIO</option>
+                      <option value="PWM">PWM</option>
+                      <option value="ALARM HI">ALARM HI</option>
+                      <option value="ALARM LOW">ALARM LOW</option>
+                      </select></td></tr>
+                      <tr><th><label for="id_dev_watchdog_max_manage_gpio_nr">Dev watchdog max manage gpio nr:</label></th><td><input id="id_dev_watchdog_max_manage_gpio_nr" name="dev_watchdog_max_manage_gpio_nr" type="number" /></td></tr>
+                      <tr><th><label for="id_dev_main_group">Dev main group:</label></th><td><select id="id_dev_main_group" name="dev_main_group">
+                      <option value="" selected="selected">None</option>
+                      <option value="1">Rekuperator1</option>
+                      <option value="2">Kotłownia</option>
+                      <option value="3">Parter</option>
+                      <option value="4">Kotłownia</option>
+                      <option value="5">Wywiew  reku</option>
+                      <option value="6">Nawiew reku</option>
+                      <option value="7">Rekuperator3</option>
+                      <option value="8">Outside</option>
+                      <option value="9">Parter</option>
+                      <option value="10">Pietro</option>
+                      <option value="11">garaz</option>
+                      <option value="12">group11111</option>
+                      <option value="13">23456236236</option>
+                      <option value="14">15</option>
+                      <option value="15">16</option>
+                      <option value="16">17</option>
+                      <option value="17">18</option>
+                      <option value="18">18</option>
+                      <option value="19">19</option>
+                      <option value="20">group0</option>
+                      </select></td></tr>
+                      <tr><th><label for="id_dev_sec_group">Dev sec group:</label></th><td><select id="id_dev_sec_group" name="dev_sec_group">
+                      <option value="" selected="selected">None</option>
+                      <option value="1">Rekuperator1</option>
+                      <option value="2">Kotłownia</option>
+                      <option value="3">Parter</option>
+                      <option value="4">Kotłownia</option>
+                      <option value="5">Wywiew  reku</option>
+                      <option value="6">Nawiew reku</option>
+                      <option value="7">Rekuperator3</option>
+                      <option value="8">Outside</option>
+                      <option value="9">Parter</option>
+                      <option value="10">Pietro</option>
+                      <option value="11">garaz</option>
+                      <option value="12">group11111</option>
+                      <option value="13">23456236236</option>
+                      <option value="14">15</option>
+                      <option value="15">16</option>
+                      <option value="16">17</option>
+                      <option value="17">18</option>
+                      <option value="18">18</option>
+                      <option value="19">19</option>
+                      <option value="20">group0</option>
+                      </select></td></tr>
+                      <tr><th><label for="id_dev_third_group">Dev third group:</label></th><td><select id="id_dev_third_group" name="dev_third_group">
+                      <option value="" selected="selected">None</option>
+                      <option value="1">Rekuperator1</option>
+                      <option value="2">Kotłownia</option>
+                      <option value="3">Parter</option>
+                      <option value="4">Kotłownia</option>
+                      <option value="5">Wywiew  reku</option>
+                      <option value="6">Nawiew reku</option>
+                      <option value="7">Rekuperator3</option>
+                      <option value="8">Outside</option>
+                      <option value="9">Parter</option>
+                      <option value="10">Pietro</option>
+                      <option value="11">garaz</option>
+                      <option value="12">group11111</option>
+                      <option value="13">23456236236</option>
+                      <option value="14">15</option>
+                      <option value="15">16</option>
+                      <option value="16">17</option>
+                      <option value="17">18</option>
+                      <option value="18">18</option>
+                      <option value="19">19</option>
+                      <option value="20">group0</option>
+                      </select></td></tr>
+                      <tr><th><label for="id_dev_on_main_screen">Dev on main screen:</label></th><td><select id="id_dev_on_main_screen" name="dev_on_main_screen">
+                      <option value="1" selected="selected">Unknown</option>
+                      <option value="2">Yes</option>
+                      <option value="3">No</option>
+                      </select></td></tr>
+                      <tr><th><label for="id_dev_on_main_screen_main">Dev on main screen main:</label></th><td><select id="id_dev_on_main_screen_main" name="dev_on_main_screen_main">
+                      <option value="1">Unknown</option>
+                      <option value="2">Yes</option>
+                      <option value="3" selected="selected">No</option>
+                      </select></td></tr>
+                      <tr><th><label for="id_dev_on_main_screen_graph">Dev on main screen graph:</label></th><td><select id="id_dev_on_main_screen_graph" name="dev_on_main_screen_graph">
+                      <option value="1">Unknown</option>
+                      <option value="2">Yes</option>
+                      <option value="3" selected="selected">No</option>
+                      </select></td></tr>
+                      <tr><th><label for="id_dev_on_main_screen_user_id">Dev on main screen user id:</label></th><td><input id="id_dev_on_main_screen_user_id" name="dev_on_main_screen_user_id" type="number" /></td></tr>
+
+
+                    </table>
+                    <button type="submit" name="device_edit" class="save btn btn-default">Save</button>
+              </form>
+
+
+              <script>
+              $(document).ready(
+              function()
+                {
+
+                  function if_visible(name_id,hide_show_id,arg){
+                  if($("#"+name_id).val() ==arg)
+                    {
+                    $('label[for="' + hide_show_id + '"]').show();
+                    $("#"+hide_show_id).show();
+                    }
+                  else
+                    {
+                      $('label[for="' + hide_show_id + '"]').hide();
+                      $("#"+hide_show_id).hide();
+                    }
+                    if($("#"+name_id).val() ==arg)
+                      {
+                      $('label[for="' + hide_show_id + '"]').show();
+                      $("#"+hide_show_id).show();
+                      }
+                    else
+                      {
+                        $('label[for="' + hide_show_id + '"]').hide();
+                        $("#"+hide_show_id).hide();
+                      }
+
+
+                    $("#"+name_id).on("change",
+                   function()
+                      {
+                        if($("#"+name_id).val() ==arg)
+                          {
+                            $('label[for="' + hide_show_id + '"]').show();
+                            $("#"+hide_show_id).show();
+                          }
+                        if($("#"+name_id).val() !=arg)
+                          {
+                            $('label[for="' + hide_show_id + '"]').hide();
+                            $("#"+hide_show_id).hide();
+                          }
+                      }
+                      )
+                    }
+
+
+                    var gpio_txt = 'GPIO';
+                    var gpio_min = 'id_dev_watchdog_do_min';
+                    var gpio_max = 'id_dev_watchdog_do_max';
+                    var gpio_min_id_hide = 'id_dev_watchdog_min_manage_gpio_nr'; // or whatever
+                    var gpio_max_id_hide = 'id_dev_watchdog_max_manage_gpio_nr'; // or whatever
+                    if_visible(gpio_min, gpio_min_id_hide, gpio_txt);
+                    if_visible(gpio_max, gpio_max_id_hide, gpio_txt);
+                  });
+
+              </script>
+          </div>
+        </div>
+      </div>
+
+  </header>
+
+
+{% endblock %}

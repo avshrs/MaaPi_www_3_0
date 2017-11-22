@@ -1,0 +1,157 @@
+
+{% extends '1/_Base.html' %}
+{% block content %}
+{% load humanize %}
+
+{% load staticfiles %}
+{% load filters %}
+<script>
+$(document).ready(function(){
+
+$(".button2").click(function(){
+	var id=this.attr('id');
+	$id.show();
+
+});
+
+$("#group1").click(function(){
+$("#group0").hide();
+});
+$("#all").click(function(){
+$("#group0").show();
+});
+
+});
+
+
+
+</script>
+
+<script>
+var inner2=document.getElementById("main_list").clientHeight;
+
+document.getElementById("main_temp").style.paddingTop="calc(("+inner2+"px - 160px)/2)";
+document.getElementById("main_temp").style.paddingBottom="calc(("+inner2+"px - 160px)/2)";
+
+</script>
+
+<header id="header">
+	<div class="content">
+		<div class="inner">
+			<script >
+			setInterval( function updateDiv(){ $( "#main_temp" ).load(window.location.href + " #mtemp" );}, 60000);
+			</script>
+			<div id="main_temp">
+				<div id="mtemp">
+					<p>
+						<a class="main_temp  button2 " href="{% url 'devCharts'  pk=temp.0.dev_id acc='1' date_from='-day' date_to='now'%}">{{temp.0.dev_value|floatformat:"-1"}}</a>
+						<sup style="padding-right:-20px;top:-60px; font-size:15px"></sup>
+						<sub style="top:-60px; font-size:30px"> {{temp.0.dev_unit|units}}</sub>
+					</p>
+					<div id="mName">
+						<p style="margin:0; line-height:1;">
+						<a class="main_temp_name"  href="{% url 'devCharts'  pk=temp.0.dev_id acc='1' date_from='-day' date_to='now'%}">{{temp.0.dev_user_name}}</a>
+					</p>
+					</div>
+				</div>
+			</div>
+		<div id="main_list" >
+			<script >
+			setInterval( function updateDiv(){ $( "#sensors" ).load(window.location.href + " #sensors" );}, 60000);
+			</script>
+			<div id="sensors" >
+				<table>
+					{%for sensor_in_main_screen in dev_on_main_screen%}
+					<tr style="background-color: none;">
+					<td ><strong style="align: right;"> <a  class=".button" style="color:white" href="{% url 'devCharts'  pk=sensor_in_main_screen acc='1' date_from='-day' date_to='now'%}"> {{ sensor_in_main_screen|value_by_id|floatformat:"-1" }}</a> </strong></td>
+					<td >{{ sensor_in_main_screen|unit_by_id }} </td>
+					<td class="unit">{{ sensor_in_main_screen|trend }}</td>
+					<td ><a style="color:white"href="{% url 'devCharts'  pk=sensor_in_main_screen acc='1' date_from='-day' date_to='now'%}"> {{ sensor_in_main_screen|name_by_id}} </a></td>
+					</tr>
+					{%endfor%}
+				</table>
+			</div>
+		</div>
+		</div>
+	</div>
+
+
+</header>
+
+<style>
+.highcharts-container {max-width:95%;}
+</style>
+
+	<div id="main">
+	{%for dev_in_main_screen in dev_on_main_screen%}
+		<article id="{{dev_in_main_screen}}">
+
+
+		</article>
+	{%endfor%}
+
+	{%for dev_in_main_screen in temp%}
+		<article id="{{dev_in_main_screen.dev_id}}">
+
+		</article>
+	{%endfor%}
+
+
+
+
+	<!-- sensor list -->
+	<article id="sensor_list">
+				<div id="link" style="font-weight: bold; margin:0 auto;  text-align: center; "><a href="{% url 'sensor_list_detail'%}">Sensors Details</a></div>
+				</br>
+
+				<table style="margin:0 auto">
+					<tr>
+							<th class="d-dev" > Device Name</th>
+							<th class="d-value" > Value</th>
+							<th class="d-unit" > Unit</th>
+							<th class="d-dev_location"> Location</th>
+							<th class="d-value" > Trend</th>
+					</tr>
+					{% for names in data %}
+					<tr id="{{names.dev_main_group}}">
+					<td class="d-dev" >{{ names.dev_user_name }}</td>
+					<td class="d-value" >{% if names.dev_adjust == 0 %}
+						 {{names.dev_value|floatformat:"-2"}}
+						 {%else%}
+						 {{names.dev_value|floatformat:"-2"|add:names.dev_adjust}}
+						 {%endif%}
+					</td>
+					<td class="d-unit" >{{ names.dev_unit_id|units}}</td>
+					<td class="d-dev_location" >{{ names.dev_location }}</td>
+					<td class="d-unit" >{{names.dev_id|trend}}</td>
+					</tr>
+					{% endfor %}
+				</table>
+	</article>
+
+
+
+
+
+	<!-- Work -->
+	<article id="devices">
+
+	</article>
+
+
+
+	</div>
+
+<!-- Footer -->
+
+
+
+
+<script>
+var inner2=document.getElementById("main_list").clientHeight;
+
+document.getElementById("main_temp").style.paddingTop="calc(("+inner2+"px - 160px)/2)";
+document.getElementById("main_temp").style.paddingBottom="calc(("+inner2+"px - 160px)/2)";
+
+</script>
+{% endblock %}

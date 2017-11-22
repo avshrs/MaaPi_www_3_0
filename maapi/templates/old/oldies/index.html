@@ -1,0 +1,42 @@
+
+
+{% extends "BaseMain.html"%}
+
+{% block content %}
+{% load chartit %}
+{% load filters %}
+
+<div style="padding-left:50px;">
+
+<table>
+    <tr>
+    <th class="dev" > Device Name</th>
+    <th class="value" style="text-align:center;"> Value</th>
+    <th class="unit" style="text-align:center;width:50px;"> Unit</th>
+    <th class="dev_location"> Location</th>
+    <th class="value"> Trend</th>
+
+
+    </tr>
+     {% for names in data %}
+        <tr>
+
+        <td class="dev" style="padding-right:20px;"><a href="{% url 'devCharts' pk=names.pk acc='0' dn='1' dv='d' %}">{{ names.dev_user_name }}</a></td>
+
+        <td class="value" style="width:60px;text-align:center;">{% if names.dev_adjust == 0 %}  {{names.dev_value|floatformat:"-1"}}  {%else%}{{names.dev_value|floatformat:"-2"|add:names.dev_adjust}}  {%endif%} </td>
+        <td class="unit" style="text-align:center;width:50px;">{% if names.dev_dev_kind == "temperature"%}C {% endif %}{% if names.dev_dev_kind == "humidity"%}% {% endif %}{% if names.dev_dev_kind == "accuracy"%}% {% endif %} </td>
+
+        <td class="dev_location" style="max-width:200px; padding-right:20px;">{{ names.dev_location }}</td>
+        <td class="unit" style="text-align:center;">
+        {% if names.dev_value > names.dev_value_old %} &#8599; {%endif%} {% if names.dev_value <  names.dev_value_old %} &#8600; {%endif%} {% if names.dev_value == names.dev_value_old %} &#8594; {%endif%}
+        </td>
+
+
+
+
+         <tr>
+        {% endfor %}
+ </table>
+</div>
+
+{% endblock %}

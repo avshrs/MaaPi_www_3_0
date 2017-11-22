@@ -1,0 +1,217 @@
+{% extends '_Base.html' %}
+{% block content %}
+{% load staticfiles %}
+<style>
+#id_group0_user_sort {
+  background-color: rgba(255, 0, 0, 0);
+  color:white;
+width: 180px;
+height: 25px;
+font-size: 12px;
+}
+</style>
+
+    <header id="header">
+        <!--span class="icon fa-diamond">
+
+        </span-->
+        <style>
+        #id_c_time_min {
+          background-color: rgba(255, 0, 0, 0);
+          color:white;
+        width: 180px;
+        height: 25px;
+        font-size: 12px;
+        }
+        </style>
+        <div class="content">
+          <div class="inner" style="max-height: 100%;">
+            <div class="table">
+              <p style="	font-size: 14px;">Edit Cron nr: <strong>{{cronEditPk.0.c_id}}</strong></p>
+                <form  method="POST" class="post-form">
+          	     {% csrf_token %}
+                    <table>
+                      <tr>
+                        <th>
+                          <label for="id_sensor_id">sensor_id:</label>
+                        </th>
+                        <td>
+                          <input style="width:350px;" id="id_sensor_id" name="sensor_id" value="{{gpiosEditPk.0.sensor_id}}"  type="text" required />
+                        </td>
+                      </tr>
+                      <tr>
+                        <th>
+                          <label for="id_gpio_nr">gpio_nr:</label>
+                        </th>
+                        <td>
+                          <input id="id_gpio_nr" maxlength="20" name="gpio_nr" value="{{gpiosEditPk.0.gpio_nr}}" type="number" required />
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <th>
+                          <label for="id_gpio_defult_value">gpio_defult_value:</label>
+                        </th>
+                        <td>
+                          <select id="id_gpio_defult_value" name="gpio_defult_value">
+
+                            <option value="2" {%if gpiosEditPk.0.gpio_defult_value == True%} selected="selected"{%endif%}>Yes</option>
+                            <option value="3" {%if gpiosEditPk.0.gpio_defult_value == False%} selected="selected"{%endif%}>No</option>
+                          </select>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <th>
+                          <label for="id_gpio_boll_or_freq">gpio_boll_or_freq:</label>
+                        </th>
+                        <td>
+                          <select id="id_gpio_boll_or_freq" name="gpio_boll_or_freq">
+
+                            <option value="2" {%if gpiosEditPk.0.gpio_boll_or_freq == True%} selected="selected"{%endif%}>Yes</option>
+                            <option value="3" {%if gpiosEditPk.0.gpio_boll_or_freq == False%} selected="selected"{%endif%}>No</option>
+                          </select>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <th>
+                          <label for="id_min_status">min_status:</label>
+                        </th>
+                        <td>
+                          <select id="id_min_status" name="min_status">
+
+                            <option value="2" {%if gpiosEditPk.0.min_status == True%} selected="selected"{%endif%}>Yes</option>
+                            <option value="3" {%if gpiosEditPk.0.min_status == False%} selected="selected"{%endif%}>No</option>
+                          </select>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <th>
+                          <label for="id_min_what_do_booleans">min_what_do_boolean:</label>
+                        </th>
+                        <td>
+                          <select id="id_min_what_do_boolean" name="min_what_do_boolean">
+
+                            <option value="2" {%if gpiosEditPk.0.min_what_do_boolean == True%} selected="selected"{%endif%}>Yes</option>
+                            <option value="3" {%if gpiosEditPk.0.min_what_do_boolean == False%} selected="selected"{%endif%}>No</option>
+                          </select>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <th>
+                          <label for="id_min_what_do_real">min_what_do_real:</label>
+                        </th>
+                        <td>
+                          <input id="id_min_what_do_real" maxlength="20" name="min_what_do_real" value="{{gpiosEditPk.0.min_what_do_real}}" type="number" required />
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <th>
+                          <label for="id_min_value">min_value:</label>
+                        </th>
+                        <td>
+                          <input id="id_min_value" maxlength="20" name="min_value" value="{{gpiosEditPk.0.min_value}}" type="number" required />
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <th>
+                          <label for="id_max_status">max_status:</label>
+                        </th>
+                        <td>
+                          <select id="id_max_status" name="max_status">
+
+                            <option value="2" {%if gpiosEditPk.0.max_status == True%} selected="selected"{%endif%}>Yes</option>
+                            <option value="3" {%if gpiosEditPk.0.max_status == False%} selected="selected"{%endif%}>No</option>
+                          </select>
+                        </td>
+                      </tr>
+
+
+                      <tr>
+                        <th>
+                          <label for="id_max_what_do_boolean">max_what_do_boolean:</label>
+                        </th>
+                        <td>
+                          <select id="id_max_what_do_boolean" name="max_what_do_boolean">
+
+                            <option value="2" {%if gpiosEditPk.0.max_what_do_boolean == True%} selected="selected"{%endif%}>Yes</option>
+                            <option value="3" {%if gpiosEditPk.0.max_what_do_boolean == False%} selected="selected"{%endif%}>No</option>
+                          </select>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <th>
+                          <label for="id_max_what_do_real">max_what_do_real:</label>
+                        </th>
+                        <td>
+                          <input id="id_max_what_do_real" maxlength="20" name="max_what_do_real" value="{{gpiosEditPk.0.max_what_do_real}}" type="number" required />
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <th>
+                          <label for="id_max_value">max_value:</label>
+                        </th>
+                        <td>
+                          <input id="id_max_value" maxlength="20" name="max_value" value="{{gpiosEditPk.0.max_value}}" type="number" required />
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <th>
+                          <label for="id_pwm_freq_on_value">pwm_freq_on_value:</label>
+                        </th>
+                        <td>
+                          <input id="id_pwm_freq_on_value" maxlength="20" name="pwm_freq_on_value" value="{{gpiosEditPk.0.pwm_freq_on_value}}" type="number" required />
+                        </td>
+                      </tr>
+
+
+                      <tr>
+                        <th>
+                          <label for="id_pwm_puls_w_on_value">pwm_puls_w_on_value:</label>
+                        </th>
+                        <td>
+                          <input id="id_pwm_puls_w_on_value" maxlength="20" name="pwm_puls_w_on_value" value="{{gpiosEditPk.0.pwm_puls_w_on_value}}" type="number" required />
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <th>
+                          <label for="id_status">status:</label>
+                        </th>
+                        <td>
+                          <select id="id_status" name="status">
+
+                            <option value="2" {%if gpiosEditPk.0.status == True%} selected="selected"{%endif%}>Yes</option>
+                            <option value="3" {%if gpiosEditPk.0.status == False%} selected="selected"{%endif%}>No</option>
+                          </select>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <th>
+                          <label for="id_dev_id_gpio">dev_id_gpio:</label>
+                        </th>
+                        <td>
+                          <input id="id_dev_id_gpio" maxlength="20" name="dev_id_gpio" value="{{gpiosEditPk.0.dev_id_gpio}}" type="number" required />
+                        </td>
+                      </tr>
+
+                    </table>
+                    <button type="submit" name="device_edit" class="save btn btn-default">Save</button>
+              </form>
+
+          </div>
+        </div>
+      </div>
+
+  </header>
+
+{% endblock %}

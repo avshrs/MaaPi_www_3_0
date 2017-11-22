@@ -1,0 +1,30 @@
+<html>
+<head>
+<title>Avshrs Temp</title>
+{% load staticfiles %}
+
+    <!-- code to include the highcharts and jQuery libraries goes here -->
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+     <script src="http://code.highcharts.com/highcharts.js"></script>
+     <script src="http://code.highcharts.com/highcharts-more.js"></script>
+     <script src="http://code.highcharts.com/modules/exporting.js"></script>
+    <!-- load_charts filter takes a comma-separated list of id's where -->
+    <!-- the charts need to be rendered to                             -->
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    {% load chartit %}
+</head>
+<body>
+
+<div class="page-header">
+    <h1><a href="/">Sensors Values</a></h1>
+
+</div>
+
+
+{% block content %}
+
+
+{% endblock %}
+
+</body>
+</html>

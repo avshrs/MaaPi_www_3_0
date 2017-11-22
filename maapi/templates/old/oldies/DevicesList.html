@@ -1,0 +1,191 @@
+
+<!doctype html>
+{% load humanize %}
+{% load filters %}
+{% load staticfiles %}
+{% load chartit %}
+<html class="no-js" lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>MaaPi - Smart Mystem</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, user-scalable=0">
+
+    <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    <script src="http://code.highcharts.com/highcharts-more.js"></script>
+    <script src="http://code.highcharts.com/modules/exporting.js"></script>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="{% static 'css/maapi-main.css' %}">
+    <!--link rel="stylesheet" href="{% static 'css/styles.css' %}"-->
+    <link rel="stylesheet" href="{% static 'css/pageloader.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/opensans/stylesheet.css' %}">
+    <link rel="stylesheet" href="{% static 'css/ionicons.min.css' %}">
+
+    <link rel="stylesheet" href="{% static 'js/vendor/jquery.fullPage.css' %}">
+    <!--link rel="stylesheet" href="{% static 'js/vegas/vegas.min.css' %}"-->
+
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/main_responsive.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style-color1.css' %}"> <!-- menu on left -->
+
+    <script src="{% static 'js/vendor/modernizr-2.7.1.min.js' %}"></script>
+
+</head>
+<body id="menu" class="alt-bg">
+  <div class="page-loader" id="page-loader">
+    <div>
+      <i class="ion ion-loading-d"></i>
+      <p>loading</p>
+    </div>
+  </div>
+
+  <header class="header-top">
+    <div class="menu clearfix">
+      <a href="{% url 'devValues' %}">Device Values</a>
+      <a href="{% url 'DevicesList' %}">Device Settings</a>
+    </div>
+  </header>
+
+  <nav class="quick-link count-2 nav-left">
+    <div class="logo">
+      <a href="#home"></a>
+    </div>
+
+    <ul id="qmenu" class="qmenu">
+      <li data-menuanchor="home">
+        <a href="#home" class="">
+          <i class="icon ion ion-home"></i>
+        </a>
+      </li>
+      <li data-menuanchor="register">
+        <a href="#register">
+          <i class="icon ion ion-compose"></i>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="page-cover" id="s-cover">
+    <div class="cover-bg pos-abs full-size bg-img" data-image-src="{% static 'img/bg-default.jpg' %}">
+    </div>
+    <div class="cover-bg-mask pos-abs full-size bg-color" data-bgcolor="rgba(0, 0, 0, 0.41)">
+    </div>
+  </div>
+
+
+
+  <main class="page-main" id="mainpage">
+    <div class="section page-home page page-cent" id="s-home">
+
+
+      <section class="content">
+        <header class="header">
+
+          <div class="table">
+          <style>
+          .id { width: 50px;text-align: center;}
+          .user_id { width: 70px;text-align: center;}
+          .device {padding-right:20px;max-width: 200px}
+          .status {width: 50px; text-align: center;}
+          .dev_location {padding-right:20px;max-width: 200px}
+          .group { width: 70px;text-align: center;}
+          .lastUpdate {width: 180px; text-align: right;}
+          </style>
+          <a href="{% url 'GroupList'%}"> edit group names</a>
+
+          <table>
+          <tr>
+            <th class="id">Id</th>
+            <th class="id">User Id</th>
+            <th class="device">Device User Name</th>
+            <th class="device">Device type</th>
+            <th class="dev_location"> Location </th>
+            <th class="status">Status</th>
+            <th class="status">Temp_MS</th>
+            <th class="status">List_MS</th>
+            <th class="status">Graph_MS</th>
+            <th class="group">Main Group</th>
+
+
+            <th class="lastUpdate">Last Update</th>
+          </tr>
+          {% for device in devices %}
+          <tr>
+                  <td class="id">{{ device.pk }}</td>
+                  <td class="user_id">{{device.dev_user_id}}</td>
+                  <td class="device"><a href="{% url 'DeviceEdit' pk=device.pk %}">{{ device.dev_user_name }} </a> </td>
+                  <td class="user_id">{{device.dev_dev_kind}}</td>
+                  <td class="dev_location"> {{device.dev_location}} </td>
+                  <td class="status">
+                    {%ifequal   device.dev_status True %}
+                    &#10004;
+                    {% else %}
+                    -
+                    {% endifequal%}
+
+                  </td>
+                  <td class="status">
+                    {%ifequal  device.dev_on_main_screen_main True %}
+                    &#10004;
+                    {% else %}
+                    -
+                    {% endifequal%}
+                  </td>
+                  <td class="status">
+                    {%ifequal  device.dev_on_main_screen True %}
+                    &#10004;
+                    {% else %}
+                    -
+                    {% endifequal%}
+                  </td>
+
+                  <td class="status">
+                    {%ifequal  device.dev_on_main_screen_graph True %}
+                    &#10004;
+                    {% else %}
+                    -
+                    {% endifequal%}
+                  </td>
+
+                  <td class="group">{{ device.dev_main_group}} </td>
+
+
+                  <td class="lastUpdate">{{device.dev_last_update|naturaltime}}</td>
+          </tr>
+          {% endfor %}
+          </table>
+          </div>
+            <div class="h-right"></div>
+      </header>
+    </section>
+  </div>
+
+  <div class="section page-register page page-cent"  id="s-register">
+    <section class="content">
+      <header class="p-title">
+      </header>
+    </section>
+  </div>
+
+  <footer class="page-footer">
+    <div>
+    </div>
+  </footer>
+
+<!-- All Javascript plugins goes here -->
+  <script src="{% static 'js/vendor/jquery-1.11.2.min.js' %}"></script>
+<!-- All vendor scripts -->
+  <script src="{% static 'js/vendor/all.js' %}"></script>
+<!-- Form script -->
+  <script src="{% static 'js/form_script.js' %}"></script>
+<!-- Javascript main files -->
+  <script src="{% static 'js/main.js' %}"></script>
+
+</body>
+
+</html>

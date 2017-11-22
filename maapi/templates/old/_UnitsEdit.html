@@ -1,0 +1,56 @@
+{% extends '_Base.html' %}
+{% block content %}
+{% load staticfiles %}
+
+
+    <header id="header">
+        <!--span class="icon fa-diamond">
+
+        </span-->
+
+        <div class="content">
+          <div class="inner" style="max-height: 100%;">
+            <div class="table">
+              <p style="	font-size: 14px;">Edit Unit:<strong> {{UnitName.0.0}}</dtrong></p>
+            </br>
+                <form  method="POST" class="post-form">
+          	     {% csrf_token %}
+                    <table>
+                      <tr>
+                        <th>
+                          <label for="id_unit_name">Unit Name:</label>
+                        </th>
+                        <td>
+                          <input id="id_unit_name" maxlength="20" name="unit_name" value="{{UnitName.0.0}}" type="text" required />
+                        </td>
+                      </tr>
+                      <tr>
+                        <th>
+                          <label for="id_unit">Unit</label>
+                        </th>
+                        <td>
+                          <input id="id_unit" maxlength="20" name="unit" value="{{UnitName.0.1}}" type="text" required />
+                        </td>
+                      </tr>
+                      <tr>
+                        <th>
+                          <label for="id_unit_enabled">Enable</label>
+                        </th>
+                        <td>
+                          <select id="id_unit_enabled" name="unit_enabled">
+                            <option value="2" {%if UnitName.0.2 == True%} selected="selected"{%endif%}>Yes</option>
+                            <option value="3" {%if UnitName.0.2 == False%} selected="selected"{%endif%}>No</option>
+                          </select>
+                        </td>
+                      </tr>
+                    </table>
+                  <button type="submit" name="unit_edit" class="save btn btn-default">Save</button>
+              </form>
+
+          </div>
+        </div>
+      </div>
+
+  </header>
+
+{% endblock %}

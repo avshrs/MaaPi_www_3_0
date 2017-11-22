@@ -1,0 +1,65 @@
+{% extends '_Base.html' %}
+{% block content %}
+{% load staticfiles %}
+{% load filters %}
+{% load humanize %}
+
+<style>
+.d-id{
+  width:250px;
+}
+</style>
+
+     <header id="header">
+        <div class="content">
+          <div class="inner" style="max-height: 100%;">
+            <div class="table">
+              <table style="margin:0 auto">
+                    <tr>
+                      <th class="d-id" >Id</th>
+                      <th class="d-id" >Sens. Id</th>
+                      <th class="d-id" >Gpio Default Value</th>
+                      <th class="d-id" >Gpio Bool/PWM</th>
+                      <th class="d-id" >Min Status</th>
+                      <th class="d-id" >Min  Bool turn on/off</th>
+                      <th class="d-id" >Min target PWM</th>
+                      <th class="d-id" >Min target PWM</th>
+                      <th class="d-id" >Min Value</th>
+                      <th class="d-id" >Max Status</th>
+                      <th class="d-id" >Max Bool turn on/off</th>
+                      <th class="d-id" >Max target Hz PWM</th>
+                      <th class="d-id" >Max target puls PWM</th>
+                      <th class="d-id" >Max Value</th>
+                      <th class="d-id" >Status</th>
+                      <th class="d-id" >Device GPIO</th>
+
+                    </tr>
+                    {% for names in gpiosList %}
+                    <tr>
+                      <td class="d-id" ><a href="{% url 'GpiosEdit' pk=names.pk %}">{{ names.id }}</a></td>
+                      <td class="d-id" ><a href="{% url 'GpiosEdit' pk=names.pk %}">{{ names.sensor_id}}</a></td>
+                      <td class="d-id" ><a href="{% url 'GpiosEdit' pk=names.pk %}">{{ names.gpio_defult_value|isTrue}}</a></td>
+                      <td class="d-id" ><a href="{% url 'GpiosEdit' pk=names.pk %}">{{ names.gpio_boll_or_freq|isTrue}}</a></td>
+                      <td class="d-id" ><a href="{% url 'GpiosEdit' pk=names.pk %}">{{ names.min_status|isTrue}}</a></td>
+                      <td class="d-id" ><a href="{% url 'GpiosEdit' pk=names.pk %}">{{ names.min_what_do_boolean|isTrue}}</a></td>
+                      <td class="d-id" ><a href="{% url 'GpiosEdit' pk=names.pk %}">{{ names.min_what_do_real}}</a></td>
+                      <td class="d-id" ><a href="{% url 'GpiosEdit' pk=names.pk %}">{{ names.min_value}}</a></td>
+                      <td class="d-id" ><a href="{% url 'GpiosEdit' pk=names.pk %}">{{ names.max_status|isTrue}}</a></td>
+                      <td class="d-id" ><a href="{% url 'GpiosEdit' pk=names.pk %}">{{ names.max_what_do_boolean|isTrue}}</a></td>
+                      <td class="d-id" ><a href="{% url 'GpiosEdit' pk=names.pk %}">{{ names.max_what_do_real}}</a></td>
+                      <td class="d-id" ><a href="{% url 'GpiosEdit' pk=names.pk %}">{{ names.max_value}}</a></td>
+                      <td class="d-id" ><a href="{% url 'GpiosEdit' pk=names.pk %}">{{ names.pwm_freq_on_value}}</a></td>
+                      <td class="d-id" ><a href="{% url 'GpiosEdit' pk=names.pk %}">{{ names.pwm_puls_w_on_value}}</a></td>
+                      <td class="d-id" ><a href="{% url 'GpiosEdit' pk=names.pk %}">{{ names.status|isTrue}}</a></td>
+                      <td class="d-id" ><a href="{% url 'GpiosEdit' pk=names.pk %}">{{ names.dev_id_gpio}}</a></td>
+                    </tr>
+                      {%endfor%}
+                  </table>
+          </div>
+        </div>
+      </div>
+
+  </header>
+</div>
+	<div id="bg"></div>
+{% endblock %}

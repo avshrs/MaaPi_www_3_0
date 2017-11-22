@@ -1,0 +1,56 @@
+
+{% extends 'Base_new.html' %}
+{% load staticfiles %}
+{% load chartit %}
+{% block content %}
+
+
+  <div id="mySidenav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <a href="{% url 'devValues' %}">Device Values</a>
+    <a href="{% url 'DevicesList' %}">Device Settings</a>
+    <a href="#">Clients</a>
+    <a href="#">Contact</a>
+  </div>
+
+
+  <div class="button" onclick="openNav()"><a>logo</a> <a>Menu</a></div>
+
+  <ul id="rb-grid" class="rb-grid clearfix">
+
+  	<li class="icon-clima-1 rb-span-2">
+
+  		<h3>Lisbon</h3>
+  		<span class="rb-temp">21°C</span>
+
+  		<div class="rb-overlay">
+  			<span class="rb-close">close</span>
+  			<div class="rb-week">
+  				<div><span class="rb-city">Lisbon</span><span class="icon-clima-1"></span><span>21°C</span></div>
+  				<div><span>Mon</span><span class="icon-clima-1"></span><span>19°C</span></div>
+  				<div><span>Tue</span><span class="icon-clima-2"></span><span>19°C</span></div>
+  				<div><span>Wed</span><span class="icon-clima-2"></span><span>18°C</span></div>
+  				<div><span>Thu</span><span class="icon-clima-2"></span><span>17°C</span></div>
+  				<div><span>Fri</span><span class="icon-clima-1"></span><span>19°C</span></div>
+  				<div><span>Sat</span><span class="icon-clima-1"></span><span>22°C</span></div>
+  				<div><span>Sun</span><span class="icon-clima-1"></span><span>18°C</span></div>
+  			</div>
+  		</div>
+
+  	</li>
+
+  	<li class="icon-clima-2">
+  		<h3>Paris</h3><span class="rb-temp">11°C</span>
+  		<div class="rb-overlay">
+  			<!-- ... -->
+  		</div>
+  	</li>
+
+  	<li><!-- ... --></li>
+
+  	<!-- ... -->
+
+  </ul>
+
+
+{% endblock %}

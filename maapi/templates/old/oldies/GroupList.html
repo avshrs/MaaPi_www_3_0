@@ -1,0 +1,36 @@
+{% extends "Base.html"%}
+{% load humanize %}
+{% block content %}
+<div class="table">
+<style>
+.group { width: 150px; height:25px;text-align: center;}
+</style>
+
+<table>
+<tr>
+
+
+  <th class="group">edit</th>
+  <th class="group">Group 1</th>
+  <th cl
+</tr>
+
+{% for post in forms %}
+<tr>
+
+        <td class="group"><a href="{% url 'GroupEdit' pk=post.pk %}">edit {{post.pk}}</a> </td>
+        <td class="group">{{ post.group0 }}  </td>
+
+
+
+
+</tr>
+{% endfor %}
+
+</table>
+
+
+
+</div>
+
+{% endblock %}

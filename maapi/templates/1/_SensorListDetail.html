@@ -1,0 +1,56 @@
+{% extends '1/_Base.html' %}
+{% block content %}
+{% load staticfiles %}
+{% load filters %}
+{% load humanize %}
+
+<style>
+.buttonn{
+
+cursor: pointer;
+}
+
+</style>
+
+
+
+    <header id="header">
+        <div class="content">
+          <div class="inner" style="max-height: 100%;">
+            <div class="table">
+              <table style="margin:0 auto">
+                    <tr>
+                      <th class="d-id" >Id</th>
+                      <th class="d-dev" >Name</th>
+                      <th class="d-value" >Trend</th>
+                      <th class="d-value" >Value</th>
+                      <th class="d-unit" >Unit</th>
+                      <th class="d-dev_location"> Location</th>
+                      <th class="d-dev_group"> Main Group</th>
+                      <th class="d-dev_type"> Dev Type</th>
+                      <th class="d-dev_type"> Dev Bus</th>
+
+                    </tr>
+                  {% for names in devices %}
+                    <tr id="{{names.dev_main_group}}">
+
+                      <td class="d-id" id="{{ names.dev_id}}">  <a href="{% url 'devCharts'  pk=names.dev_id acc='1' date_from='-day' date_to='now'%}">{{ names.dev_user_id }}</a></td>
+                      <td class="d-dev" id="{{ names.dev_id}}"> <a href="{% url 'devCharts'  pk=names.dev_id acc='1' date_from='-day' date_to='now'%}">{{ names.dev_user_name }}</a></td>
+                      <td class="d-value"id="{{ names.dev_id}}"> <a href="{% url 'devCharts'  pk=names.dev_id acc='1' date_from='-day' date_to='now'%}">{{names.dev_id|trend}}</a></td>
+                      <td class="d-value" id="{{ names.dev_id}}"> <a href="{% url 'devCharts'  pk=names.dev_id acc='1' date_from='-day' date_to='now'%}">{{names.dev_id|adjust|floatformat:"-2"}}</a></td>
+                      <td class="d-unit" id="{{ names.dev_id}}"> <a href="{% url 'devCharts'  pk=names.dev_id acc='1' date_from='-day' date_to='now'%}">{{ names.dev_unit_id|units}}</a></td>
+                      <td class="d-dev_location" id="{{ names.dev_id}}"> <a href="{% url 'devCharts'  pk=names.dev_id acc='1' date_from='-day' date_to='now'%}">{{names.dev_location}}</a></td>
+                      <td class="d-dev_group" id="{{ names.dev_id}}"> <a href="{% url 'devCharts'  pk=names.dev_id acc='1' date_from='-day' date_to='now'%}">{{names.dev_main_group}}</a></td>
+                      <td class="d-dev_type" id="{{ names.dev_id}}"> <a href="{% url 'devCharts'  pk=names.dev_id acc='1' date_from='-day' date_to='now'%}">{{ names.dev_type }}</a></td>
+                      <td class="d-dev_type" id="{{ names.dev_id}}"> <a href="{% url 'devCharts'  pk=names.dev_id acc='1' date_from='-day' date_to='now'%}">{{ names.dev_bus_type }}</a></td>
+                    <tr>
+                  {% endfor %}
+                  </table>
+          </div>
+        </div>
+      </div>
+
+  </header>
+</div>
+	<div id="bg"></div>
+{% endblock %}

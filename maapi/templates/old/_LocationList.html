@@ -1,0 +1,38 @@
+{% extends '_Base.html' %}
+{% block content %}
+{% load staticfiles %}
+{% load filters %}
+{% load humanize %}
+
+
+    <header id="header">
+        <!--span class="icon fa-diamond">
+
+        </span-->
+
+        <div class="content">
+          <div class="inner" style="max-height: 100%;">
+            <div class="table">
+              <table style="margin:0 auto">
+                    <tr>
+                      <th class="d-id" >Id</th>
+                      <th class="d-id" >Location </th>
+                      <th class="d-id" >Enabled</th>
+
+                    </tr>
+                    {% for names in locationList %}
+                    <tr id="{{names.dev_main_group}}">
+                      <td class="d-id" ><a href="{% url 'LocationEdit' pk=names.pk %}">{{ names.id }}</a></td>
+                      <td class="d-id" ><a href="{% url 'LocationEdit' pk=names.pk %}">{{ names.location }}</a></td>
+                      <td class="d-id" ><a href="{% url 'LocationEdit' pk=names.pk %}">{{names.location_enabled|isTrue}}</a></td>
+                    <tr>
+                        {% endfor %}
+                  </table>
+          </div>
+        </div>
+      </div>
+
+  </header>
+</div>
+	<div id="bg"></div>
+{% endblock %}

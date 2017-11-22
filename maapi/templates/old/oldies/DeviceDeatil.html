@@ -1,0 +1,11 @@
+{% extends "Base.html"%}
+
+{% block content %} <div class="table"> <div> </div>
+    <div class="post">
+        <a class="btn btn-default" href="{% url 'DeviceEdit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a> -
+        {% if post.pk %}
+        {{ post.pk}}
+        {% endif %}
+         -  {{ post.dev_user_name }}  - {{ post.dev_status }}
+    </div>
+{% endblock %}
