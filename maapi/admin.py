@@ -215,7 +215,10 @@ class SwitchModelAdmin(admin.ModelAdmin):
                                                                          'switch_turn_on_at_sensor_value_min_e',
                                                                          'switch_turn_on_at_sensor_value_min',
                                                                          'switch_turn_on_at_sensor_value_max_e',
-                                                                         'switch_turn_on_at_sensor_value_max']}),
+                                                                         'switch_turn_on_at_sensor_value_max',
+                                                                         'switch_turn_on_at_cond_not_e',
+                                                                         'switch_turn_on_at_cond_not_val',
+                                                                         ]}),
                 ('Select device to update value',            {'fields': ['switch_update_rom']}),
                 ('Status ',                                  {'fields': ['switch_enabled']}),
                 ]

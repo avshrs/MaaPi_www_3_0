@@ -362,7 +362,8 @@ class SwitchModel(models.Model):
     switch_turn_on_at_sensor_value_min      = models.FloatField             (blank=True, null=True, default=0, verbose_name="Source < X")
     switch_turn_on_at_sensor_value_max_e     = models.NullBooleanField      (blank=False, null=False, default=False, verbose_name="Enable max")
     switch_turn_on_at_sensor_value_max      = models.FloatField             (blank=True, null=True, default=0, verbose_name="Source > X")
-
+    switch_turn_on_at_cond_not_e            = models.NullBooleanField      (blank=False, null=False, default=False, verbose_name="if Sensor != cond. put state")
+    switch_turn_on_at_cond_not_val          = models.NullBooleanField      (blank=False, null=False, default=False, verbose_name="State 1=True 0=False")
     class Meta:
         managed = False
         db_table = 'maapi_switch'
