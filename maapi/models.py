@@ -195,7 +195,8 @@ class Devices(models.Model):
     dev_collect_values_if_cond_min      = models.FloatField       (blank=True, null=True,default=0,verbose_name="value < X")
     dev_collect_values_if_cond_from_dev_e = models.NullBooleanField (blank=False, null=False ,default=False, verbose_name="Enable refered sensor")
     dev_collect_values_if_cond_from_dev   = models.ForeignKey       ('self',null=True, blank=True,on_delete=models.DO_NOTHING,  )
-
+    dev_collect_values_if_cond_force_value_e = models.NullBooleanField (blank=False, null=False ,default=False, verbose_name="if cond False")
+    dev_collect_values_if_cond_force_value = models.FloatField       (blank=True, null=True,verbose_name="Force value")
     def save(self, *args, **kwargs):
         if not self.pk:
             cursor = connection.cursor()

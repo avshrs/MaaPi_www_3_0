@@ -20,6 +20,8 @@ class DevicesAdmin(admin.ModelAdmin):
                                                                      'dev_collect_values_if_cond_min',
                                                                      'dev_collect_values_if_cond_max_e',
                                                                      'dev_collect_values_if_cond_max',
+                                                                    'dev_collect_values_if_cond_force_value_e',
+                                                                     'dev_collect_values_if_cond_force_value',
                                                                      ]}),
 
                 ('Location and Groups',                 {'fields': ['dev_location','dev_main_group','dev_sec_group','dev_third_group',]}),
