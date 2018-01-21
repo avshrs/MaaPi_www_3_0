@@ -35,6 +35,6 @@ urlpatterns = [
     #1url(r'^Charts/Draw=(?P<pk>[a-zA-Z0-9_.-]+)-Acc=(?P<acc>[0-9]+)-N=(?P<dn>[0-9]+)-Date=(?P<dv>[h|d|m|y|w])$', devCharts, name='devCharts'),
     #2url(r'^Charts/Draw-(?P<pk>[a-zA-Z0-9_.-]+)-Acc-(?P<acc>[0-9]+)-From-(?P<date_from>[0-9 :_-]+)-To-(?P<date_to>[0-9 :_-]+)$', devCharts, name='devCharts'),
     url(r'^Charts/Draw=(?P<pk>[a-zA-Z0-9_,.-]+)/Acc=(?P<acc>[0-9]+)/From=(?P<date_from>[a-z0-9 :_-]+)/To=(?P<date_to>[a-z0-9 :_-]+)$', devCharts, name='devCharts'),
-    url(r'^postData/SysName=(?P<postsysname>[a-zA-Z0-9_.-]+)/Id=(?P<postid>[a-zA-Z0-9_.-]+)/Value=(?P<postvalue>[0-9]+)/Idx=(?P<postidx>[0-9]+)$', getFromEsp, name='getFromEsp'),
+    url(r'^postData/SysName=(?P<postsysname>[a-zA-Z0-9_.-]+)/Id=(?P<postid>[0-9]+)/Value=(?P<postvalue>[0-9.0-9]+)/Idx=(?P<postidx>[0-9]+)$', getFromEsp, name='getFromEsp'),
     url(r'^robots.txt$', lambda r: HttpResponse("User-agent: *\nDisallow: /", content_type="text/plain"))
     ]

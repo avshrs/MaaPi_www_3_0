@@ -21,15 +21,15 @@ def getFromEsp(request,postsysname,postid,postvalue,postidx):
            print "whatever ..."
     if request.method == "GET" :
            #get old value
-           old=Devices.objects.filter(dev_id=int(postid)).values_list('dev_value', flat=True)[0]
+           old=Devices.objects.filter(dev_id = int(postid)).values_list('dev_value', flat=True)[0]
            #assign in table correct sensor
-           devValueUpdate = Devices.objects.get(dev_id=int(postid))
+           devValueUpdate = Devices.objects.get(dev_id = int(postid))
            # update old value
            devValueUpdate.dev_value_old = float(old)
            # update value
            devValueUpdate.dev_value = float(postvalue)
            # update tile of updete value
-           devValueUpdate.dev_last_update=datetime.now()
+           devValueUpdate.dev_last_update = datetime.now()
            #update status
            devValueUpdate.dev_read_error="ok"
            #save row
@@ -39,7 +39,7 @@ def getFromEsp(request,postsysname,postid,postvalue,postidx):
            #cursor to not define in model database
            cursor = connection.cursor()
            #exec query - insert value in table
-           cursor.execute("""INSERT INTO maapi_dev_rom_{0}_values VALUES (default,{1},default,{2})""".format(dev_rom_id.replace("-", "_"), int(postid),int(postvalue)))
+           cursor.execute("""INSERT INTO maapi_dev_rom_{0}_values VALUES (default,{1},default,{2})""".format(dev_rom_id.replace("-", "_"), int(postid),float(postvalue)))
 
 
     return render(request, 'rest.html', {})
