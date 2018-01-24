@@ -51,7 +51,14 @@ table th span {  color: #222; }
                                         chart:{
                                               zoomType:'x',
                                               backgroundColor: 'rgba(0,0,0,0)',
-                                              type: 'spline'
+                                              type: 'spline',
+                                              marginBottom: 120,
+                                              reflow: false,
+                                              marginLeft: 50,
+                                              marginRight: 20,
+                                              style: {
+                                                  position: 'absolute'
+                                              },
                                               },
 
                                         stacking: false,
@@ -71,14 +78,19 @@ table th span {  color: #222; }
                                                 },
                                         title : {
                                                 style:{color:'white'},
-                                                text : {%ifequal groupname 'null'%} 'Sensor: {{dataName.0.dev_user_name}}:  {{dataName.0.dev_value|floatformat:"-1"}} {{dataName.0.dev_unit_id|units}}  ',
+                                                text :
+                                                {%ifequal groupname 'null'%}
+                                                'Sensor: {{dataName.0.dev_user_name}}:  {{dataName.0.dev_value|floatformat:"-1"}} {{dataName.0.dev_unit_id|units}}  ',
                                                 {%else%}
-                                                      'Select: {%for gr in grouplist%}  {{gr|name_by_id}}, {%endfor%}',
+                                                      'Select: Group...',
                                                 {%endifequal%}
                                                 },
                                         credits :
                                                 {
                                                 enabled: false
+                                                },
+                                        boost: {
+                                                useGPUTranslations: true
                                                 },
                                         tooltip: {
                                                 shared: true,
@@ -89,16 +101,17 @@ table th span {  color: #222; }
                                                 },
                                         colors: ['#7cb5ec', '#ff00ff', '#90ed7d', '#f7a35c', '#8085e9',
                                                 '#f15c80', '#e4d354', '#2b908f', '#f45b5b', '#91e8e1'],
+
                                         plotOptions: {
-
-
-
-                                                      spline:{
+                                                    spline:{
                                                               marker:{
                                                                       enabled:false,
                                                                       },
+
+
                                                             },
                                                     },
+
                                         xAxis: {
                                                 zoomType:'x',
                                                 type: 'datetime',
@@ -109,7 +122,18 @@ table th span {  color: #222; }
                                                         align: 'left'
                                                         }
                                                 },
-                                        yAxis: {
+                                        yAxis: { tooltip: {
+                formatter: function () {
+                    var point = this.points[0];
+                    return '<b>' + point.series.name + '</b><br/>' + Highcharts.dateFormat('%A %B %e %Y', this.x) + ':<br/>' +
+                        '1 USD = ' + Highcharts.numberFormat(point.y, 2) + ' EUR';
+                },
+                shared: true
+            },
+                                                {%if groupname != 'null'%}
+                                              //  type: 'logarithmic',
+                                              //  minorTickInterval: 1,
+                                                {%endif%}
                                                 title: {
                                                         text: null,
                                                       },
