@@ -212,14 +212,7 @@ class SwitchModelAdmin(admin.ModelAdmin):
                 ('Switch at min value ',                     {'fields': ['switch_value_min_e','switch_reference_sensor_min_e','switch_reference_sensor_min','switch_value_min']}),
                 ('Switch at max value ',                     {'fields': ['switch_value_max_e','switch_reference_sensor_max_e','switch_reference_sensor_max','switch_value_max']}),
                 ('Gpio state invert',                        {'fields': ['switch_invert',
-                                                                         'switch_turn_on_at_sensor_e',
-                                                                         'switch_turn_on_at_sensor',
-                                                                         'switch_turn_on_at_sensor_value_min_e',
-                                                                         'switch_turn_on_at_sensor_value_min',
-                                                                         'switch_turn_on_at_sensor_value_max_e',
-                                                                         'switch_turn_on_at_sensor_value_max',
-                                                                         'switch_turn_on_at_cond_not_e',
-                                                                         'switch_turn_on_at_cond_not_val',
+
                                                                          ]}),
                 ('Select device to update value',            {'fields': ['switch_update_rom']}),
                 ('Status ',                                  {'fields': ['switch_enabled']}),
@@ -275,7 +268,7 @@ class MathModelAdmin(admin.ModelAdmin):
                 ('Mathematical Expresion',                  {'fields': ['math_math']}),
 
                 ('Select device to update value',      {'fields': ['math_update_rom']}),
-                ('Exec expression when condition is true',          {'fields': ['math_exec_if_cond_e','math_exec_cond','math_exec_cond_value_min_e','math_exec_cond_value_min','math_exec_cond_value_max_e','math_exec_cond_value_max','math_exec_cond_force_value_e','math_exec_cond_force_value']}),
+                #('Exec expression when condition is true',          {'fields': ['math_exec_if_cond_e','math_exec_cond','math_exec_cond_value_min_e','math_exec_cond_value_min','math_exec_cond_value_max_e','math_exec_cond_value_max','math_exec_cond_force_value_e','math_exec_cond_force_value']}),
                 ('Status ',                                 {'fields': ['math_enabled']}),
                 ]
     class Media:

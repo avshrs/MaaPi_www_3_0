@@ -318,14 +318,14 @@ class MathModel(models.Model):
     math_descript               = models.CharField          (blank=False, null=False,max_length=255, verbose_name="Description")
     math_update_rom             = models.ForeignKey         (Devices, on_delete=models.DO_NOTHING, related_name="dev_5", verbose_name="Output Sensor")
     math_enabled                = models.NullBooleanField   (blank=False, null=False, default=False , verbose_name="Enabled")
-    math_exec_if_cond_e         = models.NullBooleanField   (blank=False, null=False, default=False , verbose_name="Enabled")
-    math_exec_cond              = models.ForeignKey         (Devices, on_delete=models.DO_NOTHING,related_name="dev_10010",blank=True, null=True, verbose_name="Reference Sensor")
-    math_exec_cond_value_min    = models.FloatField         (blank=False, null=False , default=0, verbose_name="Referens < X" )
-    math_exec_cond_value_max    = models.FloatField         (blank=False, null=False , default=0, verbose_name="Referens > X" )
-    math_exec_cond_value_min_e  = models.NullBooleanField   (blank=False, null=False, default=False , verbose_name="Enable value < X")
-    math_exec_cond_value_max_e  = models.NullBooleanField   (blank=False, null=False, default=False , verbose_name="Enable value > X")
-    math_exec_cond_force_value_e  = models.NullBooleanField   (blank=False, null=False, default=False , verbose_name="If Ref. != cond. put value")
-    math_exec_cond_force_value   = models.FloatField         (blank=False, null=False , default=0, verbose_name="value" )
+    #math_exec_if_cond_e         = models.NullBooleanField   (blank=False, null=False, default=False , verbose_name="Enabled")
+    #math_exec_cond              = models.ForeignKey         (Devices, on_delete=models.DO_NOTHING,related_name="dev_10010",blank=True, null=True, verbose_name="Reference Sensor")
+    #math_exec_cond_value_min    = models.FloatField         (blank=False, null=False , default=0, verbose_name="Referens < X" )
+    #math_exec_cond_value_max    = models.FloatField         (blank=False, null=False , default=0, verbose_name="Referens > X" )
+    #math_exec_cond_value_min_e  = models.NullBooleanField   (blank=False, null=False, default=False , verbose_name="Enable value < X")
+    #math_exec_cond_value_max_e  = models.NullBooleanField   (blank=False, null=False, default=False , verbose_name="Enable value > X")
+    #math_exec_cond_force_value_e  = models.NullBooleanField   (blank=False, null=False, default=False , verbose_name="If Ref. != cond. put value")
+    #math_exec_cond_force_value   = models.FloatField         (blank=False, null=False , default=0, verbose_name="value" )
 
     class Meta:
         managed = False
@@ -357,14 +357,14 @@ class SwitchModel(models.Model):
     switch_update_rom                       = models.ForeignKey             (Devices, on_delete=models.DO_NOTHING, related_name="dev_31",blank=False, null=False , verbose_name="Output Sensor", help_text="Which sensor i have to update? - value")
     switch_enabled                          = models.NullBooleanField       (blank=False, null=False, default=False, verbose_name="Enabled")
 
-    switch_turn_on_at_sensor_e              = models.NullBooleanField       (blank=False, null=False, default=False, verbose_name="switch on - if sensor")
-    switch_turn_on_at_sensor                = models.ForeignKey             (Devices, on_delete=models.DO_NOTHING,related_name="dev_222",blank=True, null=True, verbose_name="Reference Sensor")
-    switch_turn_on_at_sensor_value_min_e    = models.NullBooleanField       (blank=False, null=False, default=False, verbose_name="Enable min")
-    switch_turn_on_at_sensor_value_min      = models.FloatField             (blank=True, null=True, default=0, verbose_name="Source < X")
-    switch_turn_on_at_sensor_value_max_e     = models.NullBooleanField      (blank=False, null=False, default=False, verbose_name="Enable max")
-    switch_turn_on_at_sensor_value_max      = models.FloatField             (blank=True, null=True, default=0, verbose_name="Source > X")
-    switch_turn_on_at_cond_not_e            = models.NullBooleanField      (blank=False, null=False, default=False, verbose_name="if Sensor != cond. put state")
-    switch_turn_on_at_cond_not_val          = models.NullBooleanField      (blank=False, null=False, default=False, verbose_name="State 1=True 0=False")
+    #switch_turn_on_at_sensor_e              = models.NullBooleanField       (blank=False, null=False, default=False, verbose_name="switch on - if sensor")
+    #switch_turn_on_at_sensor                = models.ForeignKey             (Devices, on_delete=models.DO_NOTHING,related_name="dev_222",blank=True, null=True, verbose_name="Reference Sensor")
+    #switch_turn_on_at_sensor_value_min_e    = models.NullBooleanField       (blank=False, null=False, default=False, verbose_name="Enable min")
+    #switch_turn_on_at_sensor_value_min      = models.FloatField             (blank=True, null=True, default=0, verbose_name="Source < X")
+    #switch_turn_on_at_sensor_value_max_e     = models.NullBooleanField      (blank=False, null=False, default=False, verbose_name="Enable max")
+    #switch_turn_on_at_sensor_value_max      = models.FloatField             (blank=True, null=True, default=0, verbose_name="Source > X")
+    #switch_turn_on_at_cond_not_e            = models.NullBooleanField      (blank=False, null=False, default=False, verbose_name="if Sensor != cond. put state")
+    #switch_turn_on_at_cond_not_val          = models.NullBooleanField      (blank=False, null=False, default=False, verbose_name="State 1=True 0=False")
     class Meta:
         managed = False
         db_table = 'maapi_switch'
