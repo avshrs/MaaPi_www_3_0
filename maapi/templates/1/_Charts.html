@@ -51,14 +51,7 @@ table th span {  color: #222; }
                                         chart:{
                                               zoomType:'x',
                                               backgroundColor: 'rgba(0,0,0,0)',
-                                              type: 'spline',
-                                              marginBottom: 120,
-                                              reflow: false,
-                                              marginLeft: 50,
-                                              marginRight: 20,
-                                              style: {
-                                                  position: 'absolute'
-                                              },
+                                              type: 'spline'
                                               },
 
                                         stacking: false,
@@ -89,9 +82,6 @@ table th span {  color: #222; }
                                                 {
                                                 enabled: false
                                                 },
-                                        boost: {
-                                                useGPUTranslations: true
-                                                },
                                         tooltip: {
                                                 shared: true,
                                                 useHTML: true,
@@ -101,17 +91,16 @@ table th span {  color: #222; }
                                                 },
                                         colors: ['#7cb5ec', '#ff00ff', '#90ed7d', '#f7a35c', '#8085e9',
                                                 '#f15c80', '#e4d354', '#2b908f', '#f45b5b', '#91e8e1'],
-
                                         plotOptions: {
-                                                    spline:{
+
+
+
+                                                      spline:{
                                                               marker:{
                                                                       enabled:false,
                                                                       },
-
-
                                                             },
                                                     },
-
                                         xAxis: {
                                                 zoomType:'x',
                                                 type: 'datetime',
@@ -122,18 +111,9 @@ table th span {  color: #222; }
                                                         align: 'left'
                                                         }
                                                 },
-                                        yAxis: { tooltip: {
-                formatter: function () {
-                    var point = this.points[0];
-                    return '<b>' + point.series.name + '</b><br/>' + Highcharts.dateFormat('%A %B %e %Y', this.x) + ':<br/>' +
-                        '1 USD = ' + Highcharts.numberFormat(point.y, 2) + ' EUR';
-                },
-                shared: true
-            },
-                                                {%if groupname != 'null'%}
-                                              //  type: 'logarithmic',
-                                              //  minorTickInterval: 1,
-                                                {%endif%}
+                                        yAxis: {
+                                                //type: 'logarithmic',
+                                                //minorTickInterval: 1,
                                                 title: {
                                                         text: null,
                                                       },
