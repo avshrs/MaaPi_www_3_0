@@ -77,13 +77,26 @@ class PortListenerModel(models.Model):
         db_table = 'maapi_port_listener'
         verbose_name_plural = "Exec - Rest listener"
 
+class MachineLocation(models.Model):
+    id                              = models.AutoField        (primary_key=True)
+    ml_name                         = models.CharField        (unique=True, max_length=100,null=False,blank=False, verbose_name="Name")
+    ml_description                  = models.CharField        (unique=True, max_length=255,null=False,blank=False, verbose_name="Description")
+    ml_location                     = models.CharField        (unique=True, max_length=100,null=False,blank=False, verbose_name="Board location")
+    ml_enabled                      = models.NullBooleanField (blank=False, null=False, default=False, verbose_name="Enabled")
+
+    def __unicode__(self):
+        return u'%s' % self.ml_location
+    class Meta:
+        managed = False
+        db_table = 'maapi_machine_locations'
+        verbose_name_plural = "Settings - List - Board location"
 
 class SensorsList(models.Model):
 
     device_name                 = models.CharField          (unique=True, max_length=60)
     device_desctiption          = models.CharField          (max_length=255)
     device_lib_name             = models.CharField          (max_length=255)
-    device_location             = models.CharField          (max_length=255)
+    device_location             = models.ForeignKey         (MachineLocation, on_delete=models.DO_NOTHING, blank=False, null=False, related_name="Machine_Location", verbose_name="Board Location")
     device_enabled              = models.NullBooleanField   (blank=False, null=False, default=False)
 
     def __unicode__(self):
@@ -159,19 +172,6 @@ class BusTypes(models.Model):
         db_table = 'maapi_bustypes'
         verbose_name_plural = "Settings - List - Bus Types"
 
-class MachineLocation(models.Model):
-    id                              = models.AutoField        (primary_key=True)
-    ml_name                         = models.CharField        (unique=True, max_length=100,null=False,blank=False, verbose_name="Name")
-    ml_description                  = models.CharField        (unique=True, max_length=255,null=False,blank=False, verbose_name="Description")
-    ml_location                     = models.CharField        (unique=True, max_length=100,null=False,blank=False, verbose_name="Board location")
-    ml_enabled                      = models.NullBooleanField (blank=False, null=False, default=False, verbose_name="Enabled")
-
-    def __unicode__(self):
-        return u'%s' % self.ml_location
-    class Meta:
-        managed = False
-        db_table = 'maapi_machine_locations'
-        verbose_name_plural = "Settings - List - Board location"
 
 
 class Devices(models.Model):
