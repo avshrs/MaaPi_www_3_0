@@ -1,6 +1,6 @@
 # coding: utf-8
 from django.contrib import admin
-from .models import MaapiFuturesModel,CronModel, BackgroudListModel,PortListenerModel, ScanedOneWireListModel,  Devices, Groups, Units, Locations, Logs, SensorsList, CommandLine, SqlQuery, MathModel, MainScreen, SwitchModel ,BusTypes, MailWachDog, MailingList
+from .models import MaapiFuturesModel,CronModel, BackgroudListModel,PortListenerModel,MachineLocation, ScanedOneWireListModel,  Devices, Groups, Units, Locations, Logs, SensorsList, CommandLine, SqlQuery, MathModel, MainScreen, SwitchModel ,BusTypes, MailWachDog, MailingList
 
 
 @admin.register(Devices)
@@ -8,7 +8,7 @@ class DevicesAdmin(admin.ModelAdmin):
     ordering=['dev_user_id']
 
     fieldsets = [
-                ('Main device parameters',              {'fields': ['dev_user_id', 'dev_user_name', 'dev_user_describe', 'dev_rom_id', 'dev_time_stamp','dev_status']}),
+                ('Main device parameters',              {'fields': ['dev_user_id', 'dev_user_name', 'dev_user_describe', 'dev_rom_id', 'dev_time_stamp','dev_machine_location', 'dev_status']}),
                 ('Bus and type parameters',             {'fields': ['dev_type','dev_bus_type','dev_unit', 'dev_gpio_pin','dev_hidden','dev_sensor_type']}),
                 ('Device - value info ',                {'fields': ['dev_value','dev_adjust','dev_value_old','dev_last_update','dev_read_error','dev_interval','dev_interval_unit_id']}),
 
@@ -36,9 +36,8 @@ class DevicesAdmin(admin.ModelAdmin):
                   'dev_bus_type',
                   'dev_unit',
                   'dev_location',
-                  'dev_main_group',
-                  'dev_sec_group',
-                  'dev_third_group',
+                  'dev_machine_location',
+                 
                   'dev_value',
                   'dev_interval',
                   'dev_interval_unit_id',
@@ -60,6 +59,16 @@ class DevicesAdmin(admin.ModelAdmin):
         if obj: # editing an existing object
             return self.readonly_fields + ('dev_rom_id',)
         return self.readonly_fields
+
+
+
+@admin.register(MachineLocation)
+class MachineLocationAdmin(admin.ModelAdmin):
+    list_display=['ml_name','ml_description','ml_location','ml_enabled']
+    list_display_links = list_display
+
+
+
 
 
 

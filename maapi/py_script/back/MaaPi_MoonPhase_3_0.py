@@ -2,7 +2,10 @@
 # -*- coding: utf-8 -*-
 
 from datetime import datetime
+from datetime import date
 import sys
+from astral import *
+
 from MaaPi_DB_connection_2 import MaaPiDBConnection
 
 class MaaPiExecMath_Verbose(object):
@@ -16,37 +19,29 @@ class MaaPiExecMath_Verbose(object):
 
 
 class MaaPiMoonPhase_exec(object):
+    def phase(self):
+        a = Astral()
+        location = a['Warsaw']
+        timezone = location.timezone
+        moon = location.moon_phase(date=datetime.now())
+        """
 
-    def moon_phase(self,month, day, year):
-        ages = [18, 0, 11, 22, 3, 14, 25, 6, 17, 28, 9, 20, 1, 12, 23, 4, 15, 26, 7]
-        offsets = [-1, 1, 0, 1, 2, 3, 4, 5, 7, 7, 9, 9]
-        if day == 31:
-            day = 1
+        0 = New moon
+        7 = First quarter
+        14 = Full moon
+        21 = Last quarter
 
-        days_into_phase = ((ages[(year + 1) % 19] +
-                            ((day + offsets[month-1]) % 30) +
-                            (year < 1900)) % 30)
-        light = int(2 * days_into_phase * 100/29)
+        """
+        d = round(float(moon) / 14 * 100,0)+(moon/100)+0.001
+        if d > 100:
+            moon_phase = (200 - d)
+            print "moon_phase={0}".format(moon_phase)
+        else: moon_phase = d
 
-        if light > 100:
-            light = light - 200;
-
-        return light
-
-    def phase(self,year=None, month=None, day=None):
-        d=datetime.now()
-        hour_v = d.hour
-        hour=0.04166666 * hour_v
-        month = d.month
-        day = d.day + hour
-        year = d.year
-        light = self.moon_phase(month, day, year)
-        return light
+        return moon_phase
 
     def __init__(self):
         db_con = MaaPiDBConnection()
-        
-
         sensor_type="MoonPhse"
         maapi_device_list = db_con.select_table("maapi_device_list",None,None,None,None)
         for i in maapi_device_list:

@@ -1,9 +1,8 @@
 
-import bmp085 as BMP085
+from lib.lib_maapi_check import Check
 
-sensor = BMP085.BMP085(mode=BMP085.BMP085_HIGHRES)
+condition, condition_min_max, force  = Check().condition(135)
 
-print float(sensor.read_raw_pressure())
-print float(sensor.read_pressure())/100
-print float(sensor.read_raw_temp())
-print float(sensor.read_temperature())
+print ("condition \t\t= {0}".format(condition))
+print ("condition_min_max \t= {0}".format(condition_min_max))
+print ("force \t\t\t= {0}".format(force))

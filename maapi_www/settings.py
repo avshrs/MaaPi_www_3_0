@@ -145,6 +145,7 @@ ADMIN_REORDER = (
                     'maapi.Groups',
                     'maapi.Units',
                     'maapi.Locations',
+                    'maapi.MachineLocation',
                     'maapi.BusTypes',
                     'maapi.MailingList',
                     'maapi.BackgroudListModel',

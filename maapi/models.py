@@ -159,6 +159,20 @@ class BusTypes(models.Model):
         db_table = 'maapi_bustypes'
         verbose_name_plural = "Settings - List - Bus Types"
 
+class MachineLocation(models.Model):
+    id                              = models.AutoField        (primary_key=True)
+    ml_name                         = models.CharField        (unique=True, max_length=100,null=False,blank=False, verbose_name="Name")
+    ml_description                  = models.CharField        (unique=True, max_length=255,null=False,blank=False, verbose_name="Description")
+    ml_location                     = models.CharField        (unique=True, max_length=100,null=False,blank=False, verbose_name="Board location")
+    ml_enabled                      = models.NullBooleanField (blank=False, null=False, default=False, verbose_name="Enabled")
+
+    def __unicode__(self):
+        return u'%s' % self.ml_location
+    class Meta:
+        managed = False
+        db_table = 'maapi_machine_locations'
+        verbose_name_plural = "Settings - List - Board location"
+
 
 class Devices(models.Model):
     TYPE_CHOISE = [('1',"Real"), ('2', "Virtual")]
@@ -175,7 +189,7 @@ class Devices(models.Model):
     dev_unit                            = models.ForeignKey       (Units, on_delete=models.DO_NOTHING, related_name="dev_unit", verbose_name="Unit")
     dev_gpio_pin                        = models.IntegerField     (blank=False, null=False, default=0, verbose_name="Gpio Pin")
     dev_interval                        = models.IntegerField     (blank=False, null=False, default=1,  verbose_name="Read Interval")
-    dev_interval_unit_id                  = models.IntegerField   (max_length=30,  choices=INTERVAL_UNIT_CHOISE, null=False, blank=False, verbose_name="Unit chose")
+    dev_interval_unit_id                = models.IntegerField   (max_length=30,  choices=INTERVAL_UNIT_CHOISE, null=False, blank=False, verbose_name="Unit chose")
     dev_value                           = models.FloatField       (blank=True, null=True, default=0, verbose_name="Value")
     dev_adjust                          = models.IntegerField     (blank=False, null=False, default=0, verbose_name="Value - Adjust")
     dev_value_old                       = models.FloatField       (blank=True, null=True,verbose_name="Value - Old")
@@ -186,6 +200,7 @@ class Devices(models.Model):
     dev_third_group                     = models.ForeignKey       (Groups, on_delete=models.DO_NOTHING, related_name="dev_third_group", blank=False, null=False, verbose_name="Group Third")
     dev_status                          = models.NullBooleanField (blank=False, null=False ,default=False, verbose_name="Enabled")
     dev_hidden                          = models.NullBooleanField (blank=False, null=False ,default=False , verbose_name="Hide")
+    dev_machine_location                = models.ForeignKey       (MachineLocation, on_delete=models.DO_NOTHING, blank=False, null=False, related_name="Machine_Location", verbose_name="Board Location")
     dev_sensor_type                     = models.CharField        (max_length=30, choices=TYPE_CHOISE, null=False, blank=False, verbose_name="Sensor type")
     dev_collect_values_to_db            = models.NullBooleanField (blank=False, null=False ,default=True, verbose_name="Collect to database")
     dev_collect_values_if_cond_e        = models.NullBooleanField (blank=False, null=False ,default=False, verbose_name="Collect condition")

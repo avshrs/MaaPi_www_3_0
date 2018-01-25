@@ -1,6 +1,7 @@
 #!/usr/bin/python2.7
 # -*- coding: utf-8 -*-
 #PostgreSQL
+
 Maapi_dbname='MaaPi'
 Maapi_user='maapi_db'
 Maapi_host='localhost'

@@ -8,7 +8,7 @@
 ##############################################################
 
 from crontab import CronTab
-from MaaPi_Settings import *
+from conf.MaaPi_Settings import *
 import psycopg2
 import sys
 
