@@ -72,9 +72,17 @@ class class_get_values(object):
 
         def readLight():
         #   data = bus.readList(ONE_TIME_HIGH_RES_MODE_2,3)
-            data = bus.readU16BE(CONTINUOUS_HIGH_RES_MODE_1)
-            print (data)
+            readU16BE = bus.readU16BE(CONTINUOUS_HIGH_RES_MODE_1)
+            print ("readU16BE: {0}".format(readU16BE))
 
+            readU16LE = bus.readU16LE(CONTINUOUS_HIGH_RES_MODE_1)
+            print ("readU16LE: {0}".format(readU16LE))
+
+            readS16BE = bus.readS16BE(CONTINUOUS_HIGH_RES_MODE_1)
+            print ("readS16BE: {0}".format(readS16BE))
+
+            readS16LE = bus.readS16LE(CONTINUOUS_HIGH_RES_MODE_1)
+            print ("readS16LE: {0}".format(readS16LE))
         readLight()
         """    for arg in args:
             try:
