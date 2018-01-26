@@ -21,15 +21,12 @@
 from __future__ import division
 import logging
 import time
-import ft232h as FT232H
+import lib.ft232h as FT232H
 
 
 FT232H.use_FT232H()
 # Find the first FT232H device.
 ft232h = FT232H.FT232H()
-
-
-
 
 
 class class_get_values(object):
@@ -73,12 +70,11 @@ class class_get_values(object):
             # into a decimal number
             return ((data[1] + (256 * data[0])) / 1.2)
 
-        def readLight(addr=DEVICE):
+        def readLight():
+        #   data = bus.readList(ONE_TIME_HIGH_RES_MODE_2,3)
+            data = bus.readU16BE(CONTINUOUS_HIGH_RES_MODE_1)
+            print (data)
 
-        #    data = bus.readList(ONE_TIME_HIGH_RES_MODE_2,3)
-            data = bus.readU16BE(ONE_TIME_HIGH_RES_MODE_2)
-            print data
-            
         readLight()
         """    for arg in args:
             try:
