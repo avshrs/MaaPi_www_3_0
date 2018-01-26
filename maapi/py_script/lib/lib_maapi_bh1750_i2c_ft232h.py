@@ -76,9 +76,9 @@ class class_get_values(object):
         def readLight(addr=DEVICE):
 
         #    data = bus.readList(ONE_TIME_HIGH_RES_MODE_2,3)
-            data = bus.readList(ONE_TIME_HIGH_RES_MODE_2,8)
+            data = bus.readU16BE(ONE_TIME_HIGH_RES_MODE_2)
             print data
-            #return convertToNumber(data)
+            
         readLight()
         """    for arg in args:
             try:
