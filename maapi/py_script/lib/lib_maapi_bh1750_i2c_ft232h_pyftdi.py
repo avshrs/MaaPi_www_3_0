@@ -21,13 +21,7 @@
 from __future__ import division
 import logging
 import time
-from pyftdi import i2c
-
-
-
-
-
-
+import pyftdi.i2c as i2c
 
 
 class class_get_values(object):
@@ -48,13 +42,13 @@ class class_get_values(object):
         RESET = 0x07  # Reset data register value
         # Instanciate an I2C controller
 
-        i2c = I2cController()
+        i2c_ = i2c.I2cController()
 
         # Configure the first interface (IF/1) of the FTDI device as an I2C master
-        i2c.configure('ftdi://ftdi:2232h/1')
+        i2c_.configure('ftdi://ftdi:2232h/1')
 
         # Get a port to an I2C slave device
-        slave = i2c.get_port(0x21)
+        slave = i2c_.get_port(0x21)
 
         # Send one byte, then receive one byte
         slave.exchange([0x04], 1)
