@@ -57,17 +57,20 @@ class class_get_values(object):
     def __convert(self, data, offset):
         val = self.twos_complement(data[offset] << 8 | data[offset+1], 16)
         if val == -4096: return None
+        print  round(val * self.__scale, 4)
         return round(val * self.__scale, 4)
 
     def axes(self):
-        data = self.bus.readU16BE( 0x00)
-        #print ("{0:b}".format(data))
-        d = [int(x) for x in bin(data)[2:]]
-        print map(hex, d)
-        x = self.__convert(d, 3)
-        y = self.__convert(d, 7)
-        z = self.__convert(d, 5)
-
+        data = bin(self.bus.readU16BE( 0x00))[2:]
+        d = [int(x) for x in data]
+        print d
+        #print map(hex, data)
+        x = d[3:]
+        print x
+        y = d[7:]
+        print y
+        z = int(d[5:])
+        print z
         return (x,y,z)
 
     def heading(self):
@@ -92,13 +95,13 @@ class class_get_values(object):
         minutes = round((headingDeg - degrees) * 60)
         return (degrees, minutes)
 
-
-    (x, y, z) = axes()
-    print ("Axis X: " + str(x) + "\n" )
-    print "Axis Y: " + str(y) + "\n"
-    print "Axis Z: " + str(z) + "\n"
-    print "Declination: " + self.degrees(self.declination()) + "\n"
-    print "Heading: " + self.degrees(self.heading()) + "\n"
+    def __str__(self):
+        (x, y, z) = self.axes()
+        return "Axis X: " + str(x) + "\n" \
+               "Axis Y: " + str(y) + "\n" \
+               "Axis Z: " + str(z) + "\n" \
+               "Declination: " + self.degrees(self.declination()) + "\n" \
+               "Heading: " + self.degrees(self.heading()) + "\n"
 
 
 compass = class_get_values(gauss = 4.7, declination = (-2,5))
