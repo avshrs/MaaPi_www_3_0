@@ -1,0 +1,108 @@
+#!/usr/bin/env python
+# vim: set fileencoding=UTF-8 :
+
+# HMC5888L Magnetometer (Digital Compass) wrapper class
+# Based on https://bitbucket.org/thinkbowl/i2clibraries/src/14683feb0f96,
+# but uses smbus rather than quick2wire and sets some different init
+# params.
+
+
+import math
+import time
+import sys
+import ft232h as FT232H
+
+
+FT232H.use_FT232H()
+# Find the first FT232H device.
+ft232h = FT232H.FT232H()
+
+class class_get_values(object):
+    debug = 0
+
+    __scales = {
+        0.88: [0, 0.73],
+        1.30: [1, 0.92],
+        1.90: [2, 1.22],
+        2.50: [3, 1.52],
+        4.00: [4, 2.27],
+        4.70: [5, 2.56],
+        5.60: [6, 3.03],
+        8.10: [7, 4.35],
+    }
+
+    def __init__(self, port=1, address=0x1E, gauss=1.3, declination=(0,0)):
+        #self.bus = smbus.SMBus(port)
+        self.address = address
+        self.bus = FT232H.I2CDevice(ft232h, address)
+        (degrees, minutes) = declination
+        self.__declDegrees = degrees
+        self.__declMinutes = minutes
+        self.__declination = (degrees + minutes / 60) * math.pi / 180
+
+        (reg, self.__scale) = self.__scales[gauss]
+        self.bus.write16( 0x00, 0x70) # 8 Average, 15 Hz, normal measurement
+        self.bus.write16( 0x01, reg << 5) # Scale
+        self.bus.write16( 0x02, 0x00) # Continuous measurement
+
+    def declination(self):
+        return (self.__declDegrees, self.__declMinutes)
+
+    def twos_complement(self, val, len):
+        # Convert twos compliment to integer
+        if (val & (1 << len - 1)):
+            val = val - (1<<len)
+        return val
+
+    def __convert(self, data, offset):
+        val = self.twos_complement(data[offset] << 8 | data[offset+1], 16)
+        if val == -4096: return None
+        return round(val * self.__scale, 4)
+
+    def axes(self):
+        data = self.bus.readU16BE( 0x00)
+        #print ("{0:b}".format(data))
+        d = [int(x) for x in bin(data)[2:]]
+        print map(hex, d)
+        x = self.__convert(d, 3)
+        y = self.__convert(d, 7)
+        z = self.__convert(d, 5)
+
+        return (x,y,z)
+
+    def heading(self):
+        (x, y, z) = self.axes()
+        headingRad = math.atan2(y, x)
+        headingRad += self.__declination
+
+        # Correct for reversed heading
+        if headingRad < 0:
+            headingRad += 2 * math.pi
+
+        # Check for wrap and compensate
+        elif headingRad > 2 * math.pi:
+            headingRad -= 2 * math.pi
+
+        # Convert to degrees from radians
+        headingDeg = headingRad * 180 / math.pi
+        return headingDeg
+
+    def degrees(self, headingDeg):
+        degrees = math.floor(headingDeg)
+        minutes = round((headingDeg - degrees) * 60)
+        return (degrees, minutes)
+
+
+    (x, y, z) = axes()
+    print ("Axis X: " + str(x) + "\n" )
+    print "Axis Y: " + str(y) + "\n"
+    print "Axis Z: " + str(z) + "\n"
+    print "Declination: " + self.degrees(self.declination()) + "\n"
+    print "Heading: " + self.degrees(self.heading()) + "\n"
+
+
+compass = class_get_values(gauss = 4.7, declination = (-2,5))
+while True:
+    sys.stdout.write("\rHeading: " + str(compass.degrees(compass.heading())) + "     ")
+    sys.stdout.flush()
+    time.sleep(0.5)

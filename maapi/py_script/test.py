@@ -1,5 +1,5 @@
 
-from lib.lib_maapi_bh1750_i2c_ft232h  import class_get_values as bh
+from lib.lib_maapi_gy_273_i2c_ft232  import class_get_values as bh
 
 
 bh()
