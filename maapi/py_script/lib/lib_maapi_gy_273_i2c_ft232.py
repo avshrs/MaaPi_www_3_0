@@ -69,7 +69,7 @@ class class_get_values(object):
         print x
         y = d[7:]
         print y
-        z = int(d[5:])
+        z = d[5:]
         print z
         return (x,y,z)
 
