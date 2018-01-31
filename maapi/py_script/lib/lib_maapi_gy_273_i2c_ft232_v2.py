@@ -1,5 +1,5 @@
 import math
-import ft232h as FT232H
+import lib.ft232h as FT232H
 from time import *
 
 FT232H.use_FT232H()
@@ -30,7 +30,7 @@ class class_get_values(object):
         self.bus = FT232H.I2CDevice(ft232h, addr)
         self.setScale(gauss)
 
-    def __str__(self):
+    #def __str__(self):
         ret_str = ""
         (x, y, z) = self.getAxes()
         ret_str += "Axis X: "+str(x)+"\n"
@@ -41,7 +41,7 @@ class class_get_values(object):
 
         ret_str += "Heading: "+self.getHeadingString()+"\n"
 
-        return ret_str
+        print ret_str
 
 
 
@@ -121,6 +121,9 @@ class class_get_values(object):
 
     def getAxes(self):
         (magno_x, magno_z, magno_y) = self.bus.readS16(self.AxisXDataRegisterMSB)
+        print (magno_x)
+        print (magno_z)
+        print (magno_y)
 
         if (magno_x == -4096):
             magno_x = None
