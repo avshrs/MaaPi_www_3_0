@@ -119,8 +119,48 @@ class class_get_values(object):
         (degrees, minutes) = self.getHeading()
         return str(degrees)+"\u00b0 "+str(minutes)+"'"
 
+
+
+    def read_3s16int(self, register, flip = False):
+        #	data = self.i2c_device.transaction(,)[0]
+        self.bus.writeRaw8(register)
+        data2 = self.bus.readS16LE(register)
+        print data2
+        data = []
+
+        for i in bin(data2)[2:]:
+            data.append(int(i))
+
+        print data
+
+
+        if flip:
+            s_int1 = (data[1] << 8) | data[0]
+        else:
+            s_int1 = (data[0] << 8) | data[1]
+
+
+        if flip:
+            s_int2 = (data[3] << 8) | data[2]
+        else:
+            s_int2 = (data[2] << 8) | data[3]
+
+        if flip:
+            s_int3 = (data[5] << 8) | data[4]
+        else:
+            s_int3 = (data[4] << 8) | data[5]
+
+        print s_int1
+        print s_int2
+        print s_int3
+        return (s_int1, s_int2, s_int3)
+
+
+
+
+
     def getAxes(self):
-        (magno_x, magno_z, magno_y) = self.bus.readS16(self.AxisXDataRegisterMSB)
+        (magno_x, magno_z, magno_y) = self.read_3s16int(self.AxisXDataRegisterMSB)
         print (magno_x)
         print (magno_z)
         print (magno_y)
