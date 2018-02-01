@@ -6,14 +6,6 @@ import threading
 import sched
 import time
 import sys
-"""
-add max count of sensor sended to lib 10 / becouse one wire on read time is ~750ms prer dev.
-"""
-"""
-Class selector - check sensor which is reading is older then NOW() - interval
-get class name from devices conf. and get/put data from/to sensor/gpio
-"""
-
 
 class Selector(object):
     debug = 0
