@@ -222,7 +222,7 @@ class Devices(models.Model):
 
     def delete(self, *args, **kwargs):
         cursor = connection.cursor()
-        sql = "DROP TABLE maapi_dev_rom_{0}_values".format(self.dev_rom_id)
+        sql = "DROP TABLE maapi_dev_rom_{0}_values".format(self.dev_rom_id.replace("-", "_"))
         cursor.execute(sql)
         cursor.close()
         super(Devices, self).delete(*args, **kwargs)
