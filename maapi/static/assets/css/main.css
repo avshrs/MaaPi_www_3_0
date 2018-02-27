@@ -67,7 +67,7 @@ dispaly:block;
 
 	width:300px;
 	float:left;
- 	padding-right:20px;
+ 	padding-right:15px;
 /*padding-left:70px;*/
 }
 
@@ -106,7 +106,7 @@ font-size: 18px;
 
 #main_temp p .main_temp{
 	line-height:1.2;
-	font-size: 110px;
+	font-size: 100px;
 }
 
   table td .d-value {
