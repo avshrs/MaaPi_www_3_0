@@ -143,6 +143,7 @@ ADMIN_REORDER = (
          'models': ('maapi.ScanedOneWireListModel',
 
                     'maapi.Groups',
+                    'maapi.Tags',
                     'maapi.Units',
                     'maapi.Locations',
                     'maapi.MachineLocation',

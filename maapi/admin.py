@@ -1,6 +1,6 @@
 # coding: utf-8
 from django.contrib import admin
-from .models import MaapiFuturesModel,CronModel, BackgroudListModel,PortListenerModel,MachineLocation, ScanedOneWireListModel,  Devices, Groups, Units, Locations, Logs, SensorsList, CommandLine, SqlQuery, MathModel, MainScreen, SwitchModel ,BusTypes, MailWachDog, MailingList
+from .models import MaapiFuturesModel,CronModel, BackgroudListModel,PortListenerModel,MachineLocation, ScanedOneWireListModel, Tags, Devices, Groups, Units, Locations, Logs, SensorsList, CommandLine, SqlQuery, MathModel, MainScreen, SwitchModel ,BusTypes, MailWachDog, MailingList
 
 
 @admin.register(Devices)
@@ -8,7 +8,7 @@ class DevicesAdmin(admin.ModelAdmin):
     ordering=['dev_user_id']
 
     fieldsets = [
-                ('Main device parameters',              {'fields': ['dev_user_id', 'dev_user_name', 'dev_user_describe', 'dev_rom_id', 'dev_time_stamp','dev_machine_location', 'dev_status']}),
+                ('Main device parameters',              {'fields': ['dev_user_id', 'dev_tag_name','dev_user_name', 'dev_user_describe', 'dev_rom_id', 'dev_time_stamp','dev_machine_location', 'dev_status']}),
                 ('Bus and type parameters',             {'fields': ['dev_type','dev_bus_type','dev_unit', 'dev_gpio_pin','dev_hidden','dev_sensor_type']}),
                 ('Device - value info ',                {'fields': ['dev_value','dev_adjust','dev_value_old','dev_last_update','dev_read_error','dev_interval','dev_interval_unit_id']}),
 
@@ -30,6 +30,7 @@ class DevicesAdmin(admin.ModelAdmin):
     list_display=[
                   'dev_id',
                   'dev_user_id',
+                  'dev_tag_name',
                   'dev_user_name',
                   'dev_rom_id',
                   'dev_type',
@@ -37,7 +38,7 @@ class DevicesAdmin(admin.ModelAdmin):
                   'dev_unit',
                   'dev_location',
                   'dev_machine_location',
-                 
+
                   'dev_value',
                   'dev_interval',
                   'dev_interval_unit_id',
@@ -67,6 +68,11 @@ class MachineLocationAdmin(admin.ModelAdmin):
     list_display=['ml_name','ml_description','ml_location','ml_enabled']
     list_display_links = list_display
 
+
+@admin.register(Tags)
+class TagsAdmin(admin.ModelAdmin):
+    list_display=['id','tag_short','tag_long','tag_description']
+    list_display_links = list_display
 
 
 

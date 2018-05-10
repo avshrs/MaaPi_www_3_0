@@ -172,6 +172,17 @@ class BusTypes(models.Model):
         db_table = 'maapi_bustypes'
         verbose_name_plural = "Settings - List - Bus Types"
 
+class Tags(models.Model):
+    id                      = models.AutoField        (primary_key=True)
+    tag_short               = models.CharField        ( max_length=5,null=False,blank=False, verbose_name="Tag 5 leters")
+    tag_long                = models.CharField        ( max_length=30,null=False,blank=False, verbose_name="tag long")
+    tag_description          = models.CharField        ( max_length=60, verbose_name="Description")
+    def __unicode__(self):
+        return u'%s' % self.tag_short
+    class Meta:
+        managed = False
+        db_table = 'maapi_tags'
+        verbose_name_plural = "Settings - List - Tags Names"
 
 
 class Devices(models.Model):
@@ -181,6 +192,7 @@ class Devices(models.Model):
     dev_rom_id                          = models.CharField        (unique=True, max_length=30,null=False ,blank=False , verbose_name="ROM id")
     dev_time_stamp                      = models.DateTimeField    (null=False, blank=False , verbose_name="Create date")
     dev_user_id                         = models.IntegerField     (default=9999, name="dev_user_id",null=False,blank=False , verbose_name="Id")
+    dev_tag_name                        = models.ForeignKey       (Tags, max_length=30, verbose_name="User TAG")
     dev_user_name                       = models.CharField        (max_length=30, default="Name",null=False,blank=False, verbose_name="User Name")
     dev_user_describe                   = models.CharField        (blank=False, null=False,max_length=60 ,verbose_name="Description")
     dev_location                        = models.ForeignKey       (Locations, on_delete=models.DO_NOTHING, related_name="dev_location", blank=False, null=False, verbose_name="Location")

@@ -39,6 +39,11 @@ table th {
 
 
 }
+td .d-value {
+
+
+
+}
 .box2 {
 float: left;
 margin:10px 10px auto auto;
@@ -109,9 +114,10 @@ font-size: 18px;
 	font-size: 100px;
 }
 
-  table td .d-value {
+td .d-value {
     font-size:12px;
     padding-left:10px;
+    text-align: right;
   }
 
    td .d-unit {
@@ -349,9 +355,9 @@ font-size: 18px;
 		font-size: 80px;
 	}
 
-	  table td .d-value {
+	 td .d-value {
 	    font-size:16px;
-
+      text-align: right;
 	    padding-left:10px;
 	  }
 

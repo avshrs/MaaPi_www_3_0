@@ -29,15 +29,13 @@ cursor: pointer;
                       <th class="d-dev_group"> Main Group</th>
                       <th class="d-dev_type"> Dev Type</th>
                       <th class="d-dev_type"> Dev Bus</th>
-
-                    </tr>
+                   </tr>
                   {% for names in devices %}
                     <tr id="{{names.dev_main_group}}">
-
-                      <td class="d-id" id="{{ names.dev_id}}">  <a href="{% url 'devCharts'  pk=names.dev_id acc='1' date_from='-day' date_to='now'%}">{{ names.dev_user_id }}</a></td>
-                      <td class="d-dev" id="{{ names.dev_id}}"> <a href="{% url 'devCharts'  pk=names.dev_id acc='1' date_from='-day' date_to='now'%}">{{ names.dev_user_name }}</a></td>
-                      <td class="d-value"id="{{ names.dev_id}}"> <a href="{% url 'devCharts'  pk=names.dev_id acc='1' date_from='-day' date_to='now'%}">{{names.dev_id|trend}}</a></td>
-                      <td class="d-value" id="{{ names.dev_id}}"> <a href="{% url 'devCharts'  pk=names.dev_id acc='1' date_from='-day' date_to='now'%}">{{names.dev_id|adjust|floatformat:"-2"}}</a></td>
+                      <td class="d-id" id="{{ names.dev_id}}">  <a href="{% url 'devCharts'  pk=names.dev_id acc='1' date_from='-day' date_to='now'%}"> {{ names.dev_user_id }}</a></td>
+                      <td class="d-dev" id="{{ names.dev_id}}"> <a href="{% url 'devCharts'  pk=names.dev_id acc='1' date_from='-day' date_to='now'%}" >{{ names.dev_user_name }}</a></td>
+                      <td class="d-value" style="text-align: center;" id="{{ names.dev_id}}"> <a href="{% url 'devCharts'  pk=names.dev_id acc='1' date_from='-day' date_to='now'%}">{{names.dev_id|trend}}</a></td>
+                      <td class="d-value" style="text-align: right;"id="{{ names.dev_id}}"> <a href="{% url 'devCharts'  pk=names.dev_id acc='1' date_from='-day' date_to='now'%}">{%if names.dev_id|adjust|floatformat:"-1"|length > 4 %}  {{names.dev_id|adjust|floatformat:"-0"}} {%else%} {{names.dev_id|adjust|floatformat:"-1"}} {%endif%}</a></td>
                       <td class="d-unit" id="{{ names.dev_id}}"> <a href="{% url 'devCharts'  pk=names.dev_id acc='1' date_from='-day' date_to='now'%}">{{ names.dev_unit_id|units}}</a></td>
                       <td class="d-dev_location" id="{{ names.dev_id}}"> <a href="{% url 'devCharts'  pk=names.dev_id acc='1' date_from='-day' date_to='now'%}">{{names.dev_location}}</a></td>
                       <td class="d-dev_group" id="{{ names.dev_id}}"> <a href="{% url 'devCharts'  pk=names.dev_id acc='1' date_from='-day' date_to='now'%}">{{names.dev_main_group}}</a></td>
