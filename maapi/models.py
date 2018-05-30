@@ -93,7 +93,7 @@ class MachineLocation(models.Model):
 
 class SensorsList(models.Model):
 
-    device_name                 = models.CharField          (unique=True, max_length=60)
+    device_name                 = models.CharField          ( max_length=60)
     device_desctiption          = models.CharField          (max_length=255)
     device_lib_name             = models.CharField          (max_length=255)
     device_location             = models.ForeignKey         (MachineLocation, on_delete=models.DO_NOTHING, blank=False, null=False, related_name="Machine_Location", verbose_name="Board Location")
