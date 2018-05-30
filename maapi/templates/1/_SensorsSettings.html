@@ -19,9 +19,12 @@
               <th class="device">Unit</th>
               <th id="dev-location-th"> Location</th>
               <th class="status">Stat</th>
-              <th id="temp-ms-th">Temp MS</th>
-              <th id="list-ms-th">List MS</th>
-              <th id="graph-ms-th">Graph MS</th>
+              <th class="status">GPIO</th>
+
+              <th class="status">SensType</th>
+              <th class="status">BusType</th>
+              <th class="status">GPIO</th>
+
               <th id="main-group-th">Main Group</th>
               <th id="main-group-th">Sec Group</th>
               <th id="main-group-th">Third Group</th>
@@ -37,9 +40,13 @@
               <td class="user_id">{{ device.dev_unit_id|units}}</td>
               <td class="dev-location-td"> {{device.dev_location}} </td>
               <td class="status">{{device.dev_status|isTrue}} </td>
-              <td class="temp-ms-td"> {{device.dev_on_main_screen_main|isTrue}} </td>
-              <td  class="list-ms-td"> {{device.dev_on_main_screen|isTrue}} </td>
-              <td class="graph-ms-td"> {{device.dev_on_main_screen_graph|isTrue}} </td>
+              <td class="status">{{device.dev_gpio_pin}} </td>
+
+              <td class="status">{{device.dev_type}} </td>
+              <td class="status">{{device.dev_bus_type}} </td>
+              <td class="status">{{device.dev_gpio_pin}} </td>
+
+
               <td class="main-group-td">   {{device.dev_main_group}} </td>
               <td class="main-group-td">  {{device.dev_sec_group}} </td>
               <td class="main-group-td">  {{device.dev_third_group}} </td>

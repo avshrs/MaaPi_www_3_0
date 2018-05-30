@@ -45,7 +45,7 @@ class SensorListView(ListView):
    	context['date_time'] = datetime.now()
 	context['devices'] = Devices.objects.order_by('dev_user_id').filter(dev_status = True).filter(dev_hidden = False)
         return context
-        
+
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated():
             pass
@@ -60,7 +60,7 @@ class SensorsDetailListView(ListView):
         # Call the base implementation first to get a context
         context = super(SensorsDetailListView, self).get_context_data(**kwargs)
         context['date_time'] = datetime.now()
-        context['devices'] = Devices.objects.order_by('dev_user_id').all()
+        context['devices'] = Devices.objects.order_by('dev_user_id').filter(dev_hidden = False)
         return context
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated():
