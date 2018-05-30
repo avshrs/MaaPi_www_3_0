@@ -135,7 +135,7 @@ def data_chart(dictionary,key):
             if f_max <= value: f_max = value
             if f_min >= value: f_min = value
             f_avg += value
-            combined.append([date, value])
+            combined.append([date, round(value,1)])
         stop_graph = datetime.now()
         start_stop = ((stop_graph - start_graph).microseconds)/1000
         return json.dumps(combined), start_stop, f_min, f_max, round(f_avg/len(list(ff)),2)
