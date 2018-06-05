@@ -63,7 +63,10 @@ document.getElementById("main_temp").style.paddingBottom="calc(("+inner2+"px - 1
 				<table>
 					{%for sensor_in_main_screen in dev_on_main_screen%}
 					<tr style="background-color: none;">
-					<td ><strong style="align: right;"> <a  class=".button" style="color:white" href="{% url 'devCharts'  pk=sensor_in_main_screen acc='1' date_from='-day' date_to='now'%}"> {{ sensor_in_main_screen|value_by_id|floatformat:"-1" }}</a> </strong></td>
+					<td style="color:white; text-align: right;"><strong > <a  class=".button" style="color:white; text-align: right;" href="{% url 'devCharts'  pk=sensor_in_main_screen acc='1' date_from='-day' date_to='now'%}">
+
+						{%if sensor_in_main_screen|value_by_id|floatformat:"-1"|length > 4 %}  	{{ sensor_in_main_screen|value_by_id|floatformat:"-0" }} {%else%}	{{ sensor_in_main_screen|value_by_id|floatformat:"-1" }}{%endif%}
+					</a> </strong></td>
 					<td >{{ sensor_in_main_screen|unit_by_id }} </td>
 					<td class="unit">{{ sensor_in_main_screen|trend }}</td>
 					<td ><a style="color:white"href="{% url 'devCharts'  pk=sensor_in_main_screen acc='1' date_from='-day' date_to='now'%}"> {{ sensor_in_main_screen|name_by_id}} </a></td>
