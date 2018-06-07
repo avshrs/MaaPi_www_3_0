@@ -131,7 +131,7 @@ def data_chart(dictionary,key):
     else:
         for f in ff:
             date = int(calendar.timegm(f[2].timetuple()))*1000
-            value = round(f[1],2)
+            value = round(f[1],3)
             if f_max <= value: f_max = value
             if f_min >= value: f_min = value
             f_avg += value
