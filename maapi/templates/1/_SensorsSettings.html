@@ -16,14 +16,13 @@
               <th class="id">User Id</th>
               <th id="romid-th">Rom id</th>
               <th class="user-id">Name</th>
-              <th class="device">Unit</th>
+              <th class="device ">Unit</th>
               <th id="dev-location-th"> Location</th>
               <th class="status">Stat</th>
               <th class="status">GPIO</th>
 
-              <th class="status">SensType</th>
-              <th class="status">BusType</th>
-              <th class="status">GPIO</th>
+              <th class="status hide-min">SensType</th>
+              <th class="status hide-min">BusType</th>
 
               <th id="main-group-th">Main Group</th>
               <th id="main-group-th">Sec Group</th>
@@ -39,12 +38,12 @@
               <td class="device">{{ device.dev_user_name }}   </td>
               <td class="user_id">{{ device.dev_unit_id|units}}</td>
               <td class="dev-location-td"> {{device.dev_location}} </td>
-              <td class="status">{{device.dev_status|isTrue}} </td>
+              <td class="status ">{{device.dev_status|isTrue}} </td>
               <td class="status">{{device.dev_gpio_pin}} </td>
 
-              <td class="status">{{device.dev_type}} </td>
-              <td class="status">{{device.dev_bus_type}} </td>
-              <td class="status">{{device.dev_gpio_pin}} </td>
+              <td class="status hide-min">{{device.dev_type}} </td>
+              <td class="status hide-min">{{device.dev_bus_type}} </td>
+
 
 
               <td class="main-group-td">   {{device.dev_main_group}} </td>

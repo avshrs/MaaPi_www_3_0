@@ -426,7 +426,7 @@ td .d-value {
 				display: none;
 }
 
-#main-group-th, .main-group-td,.dev-location-td,#dev-location-th,#romid-th, .romid-td{
+#main-group-th, .main-group-td,.dev-location-td,#dev-location-th,#romid-th,.hide-min, .romid-td{
 		display: none;
 
 			}
