@@ -149,7 +149,7 @@ table th span {  color: #222; }
 
             <select  value="715" id="select_name" multiple="multiple" name="somename0" class="testselect2" style="background-color: rgba(255,255,255,0);height:20px; width:200px;">
               {% for device in list_of_devices %}
-              <option  {%for gr in grouplist%}  {%if gr == device.pk|stringformat:"i"%} selected {%endif%}  {%endfor%} value="{{device.pk}}">  {{ device.dev_user_name}}   </option>
+              <option  {%for gr in grouplist%}  {%if gr == device.dev_id|stringformat:"i"%} selected {%endif%}  {%endfor%} value="{{device.dev_id}}">  {{ device.dev_user_name}}   </option>
               {% endfor %}
 
                </select>
