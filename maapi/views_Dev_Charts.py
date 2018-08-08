@@ -2,9 +2,9 @@ from .models import Devices, Groups, DevValues
 from django.shortcuts import render
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
-import calendar
-import json
-from itertools import chain
+#import calendar
+#import json
+#from itertools import chain
 from django.db import connection
 import time
 
@@ -71,10 +71,11 @@ def devCharts(request, pk, acc, date_from, date_to):
     }
 
     if is_number(pk) == True:
-        dataName = Devices.objects.filter(dev_id=pk)
+        dataName = Devices.objects.values('dev_id', 'dev_user_name',
+                                          'dev_value',
+                                          'dev_unit_id').filter(dev_id=pk)
         groupname = 'null'
-        dev_rom_id = Devices.objects.filter(dev_id=pk).values_list(
-            'dev_rom_id', flat=True)[0]
+        #dev_rom_id = Devices.objects.filter(dev_id=pk).values_list(            'dev_rom_id', flat=True)[0]
         grouplist = [pk]
     else:
         ff = []
