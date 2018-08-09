@@ -17,11 +17,11 @@
               <th id="romid-th">Rom id</th>
               <th class="user-id">Name</th>
               <th class="device ">Unit</th>
-              <th id="dev-location-th"> Location</th>
+              <th id="dev-location-th"> Loc.</th>
               <th class="status">Stat</th>
               <th class="status">GPIO</th>
 
-              <th class="status hide-min">SensType</th>
+              <th class="status hide-min">S_Type</th>
               <th class="status hide-min">BusType</th>
 
               <th id="main-group-th">Main Group</th>
@@ -32,7 +32,7 @@
             </tr>
             {% for device in devices %}
             <tr>
-              <td class="id">{{ device.pk }}</td>
+              <td class="id">{{device.dev_id }}</td>
               <td class="user-id">{{device.dev_user_id}}</td>
               <td class="romid-td">{{device.dev_rom_id}} </td>
               <td class="device">{{ device.dev_user_name }}   </td>
