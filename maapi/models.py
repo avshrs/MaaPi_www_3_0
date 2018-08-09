@@ -201,7 +201,7 @@ class Devices(models.Model):
     dev_unit                            = models.ForeignKey       (Units, on_delete=models.DO_NOTHING, related_name="dev_unit", verbose_name="Unit")
     dev_gpio_pin                        = models.IntegerField     (blank=False, null=False, default=0, verbose_name="Gpio Pin")
     dev_interval                        = models.IntegerField     (blank=False, null=False, default=1,  verbose_name="Read Interval")
-    dev_interval_unit_id                = models.IntegerField   (max_length=30,  choices=INTERVAL_UNIT_CHOISE, null=False, blank=False, verbose_name="Unit chose")
+    dev_interval_unit_id                = models.IntegerField     (max_length=30,  choices=INTERVAL_UNIT_CHOISE, null=False, blank=False, verbose_name="Unit chose")
     dev_value                           = models.FloatField       (blank=True, null=True, default=0, verbose_name="Value")
     dev_adjust                          = models.IntegerField     (blank=False, null=False, default=0, verbose_name="Value - Adjust")
     dev_value_old                       = models.FloatField       (blank=True, null=True,verbose_name="Value - Old")
