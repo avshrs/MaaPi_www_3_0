@@ -145,6 +145,7 @@ def backgroud_main(dictionary):
 @register.filter(name='data_chart')
 def data_chart(dictionary, key):
     start_graph = datetime.now()
+    
     acc2 = key['acc']
     date_from_space = key['date_from']
     date_to_space = key['date_to']
@@ -162,6 +163,7 @@ def data_chart(dictionary, key):
     f_min = 100000000000000
     f_avg = 0
     stop_graph = datetime.now()
+    start_graph2= datetime.now()
     if len(list(ff)) <= 0:
         return (0, 0)
     else:
@@ -172,9 +174,11 @@ def data_chart(dictionary, key):
             if f_min >= value: f_min = value
             f_avg += value
             combined.append([date, round(value, 1)])
-        #stop_graph = datetime.now()
+        stop_graph2 = datetime.now()
+        
         start_stop = ((stop_graph - start_graph).microseconds) / 1000
-        return json.dumps(combined), start_stop, f_min, f_max, round(
+        st = ((stop_graph2 - start_graph2).microseconds) /1000
+        return json.dumps(combined), start_stop, st, f_min, f_max, round(
             f_avg / len(list(ff)), 2)
 
 
