@@ -161,6 +161,7 @@ def data_chart(dictionary, key):
     f_max = -1000000000000000
     f_min = 100000000000000
     f_avg = 0
+    stop_graph = datetime.now()
     if len(list(ff)) <= 0:
         return (0, 0)
     else:
@@ -171,7 +172,7 @@ def data_chart(dictionary, key):
             if f_min >= value: f_min = value
             f_avg += value
             combined.append([date, round(value, 1)])
-        stop_graph = datetime.now()
+        #stop_graph = datetime.now()
         start_stop = ((stop_graph - start_graph).microseconds) / 1000
         return json.dumps(combined), start_stop, f_min, f_max, round(
             f_avg / len(list(ff)), 2)
