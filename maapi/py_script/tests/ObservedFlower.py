@@ -1,7 +1,6 @@
 # Observer/ObservedFlower.py
 # Demonstration of "observer" pattern.
 import sys
-sys.path += ['../util']
 from Observer import Observer, Observable
 
 class Flower:
@@ -57,15 +56,15 @@ class Bee:
         def __init__(self, outer):
             self.outer = outer
         def update(self, observable, arg):
-            print("Bee " + self.outer.name + \)
-              "'s breakfast time!"
+            print("Bee " + self.outer.name + \
+              "'s breakfast time!")
     # Another inner class for closings:
     class CloseObserver(Observer):
         def __init__(self, outer):
             self.outer = outer
         def update(self, observable, arg):
-            print("Bee " + self.outer.name + \)
-              "'s bed time!"
+            print("Bee " + self.outer.name + \
+              "'s bed time!")
 
 class Hummingbird:
     def __init__(self, name):
