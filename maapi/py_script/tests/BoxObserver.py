@@ -4,22 +4,22 @@
 
 # You must inherit a type of Observable:
 class BoxObservable(Observable):
-    def notifyObservers(self, Object b):
+    def notifyObservers(self, b):
         # Otherwise it won't propagate changes:
         setChanged()
         super.notifyObservers(b)
 
 class BoxObserver(JFrame):
-    Observable notifier = BoxObservable()
+    notifier = BoxObservable()
     def __init__(self, grid):
         setTitle("Demonstrates Observer pattern")
-        Container cp = getContentPane()
+        cp = getContentPane()
         cp.setLayout(GridLayout(grid, grid))
-        for(int x = 0 x < grid x++)
-            for(int y = 0 y < grid y++)
+        for x in grid:
+            for y in grid:
                 cp.add(OCBox(x, y, notifier))
 
-    def main(self, String[] args):
+    def main(self, args):
         grid = 8
             if(args.length > 0)
                 grid = Integer.parseInt(args[0])
@@ -31,7 +31,7 @@ class BoxObserver(JFrame):
             # Add a WindowAdapter if you have JDK 1.2
 
 class OCBox(JPanel) implements Observer:
-    Color cColor = newColor()
+    cColor = newColor()
     colors = [
       Color.black, Color.blue, Color.cyan,
       Color.darkGray, Color.gray, Color.green,
