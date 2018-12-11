@@ -126,7 +126,7 @@ table th span {  color: #222; }
                                       series : [
                                                 {%ifequal groupname 'null'%}
                                                 {
-                                                  name : '{{dataName.0.dev_user_name}},  {% with dataName.0.dev_id|data_chart:graph_param as data%} (min: {{data.2}}, max: {{data.3}}, avg: {{data.4}}) - t: {{data.1}}ms,',data :{{data.0}}{% endwith %},
+                                                  name : '{{dataName.0.dev_user_name}},  {% with dataName.0.dev_id|data_chart:graph_param as data%} (min: {{data.3}}, max: {{data.4}}, avg: {{data.5}}) - t: {{data.1}}ms,',data :{{data.0}}{% endwith %},
                                                 }
                                                 {%else%}
                                                 {%for list in grouplist%}
