@@ -25,18 +25,40 @@ def devCharts(request, pk, acc, date_from, date_to):
     dataName = []
     acc2 = 1
     datetime_format = "%Y-%m-%d %H:%M:%S"
+
+
     if date_from == '-day':
+        date_from_space = datetime.now().replace(microsecond=0) - timedelta(
+            days=1)
+    if date_from == '-6hours':
         date_from_space = datetime.now().replace(microsecond=0) - timedelta(
             days=1)
     elif date_from == '-hour':
         date_from_space = datetime.now().replace(microsecond=0) - timedelta(
             hours=1)
+    if date_from == '-12hours':
+        date_from_space = datetime.now().replace(microsecond=0) - timedelta(
+            days=1)
+
+
+
+
+
     elif date_from == '-month':
         date_from_space = datetime.now().replace(microsecond=0) - timedelta(
             days=30)
+    if date_from == '-6month':
+        date_from_space = datetime.now().replace(microsecond=0) - timedelta(
+            days=180)
     elif date_from == '-week':
         date_from_space = datetime.now().replace(microsecond=0) - timedelta(
             days=7)
+
+    if date_from == '-2weeks':
+        date_from_space = datetime.now().replace(microsecond=0) - timedelta(
+            days=14)
+
+
     elif date_from == '-year':
         date_from_space = datetime.now().replace(microsecond=0) - timedelta(
             days=365)

@@ -143,7 +143,12 @@ table th span {  color: #222; }
 
     <div id="selectM" >
 
-      <div class="box2">
+
+                                                                                                                                                                 
+<div class="box2">
+
+
+
         <p style="text-align:center;">Sensor</p>
           <div style="clear: left;">
 
@@ -245,6 +250,24 @@ $( function() {
       <div class="box2">
         <button style="font-size:12px;padding:0 ; margin-top:23px;  width:150px;" id="button">Load Chart</button>
       </div>
+
+<div id="selectM" >
+			<div class="box2" style="width: 50px;"> <a href="{% url 'devCharts' pk='715' acc='1' date_from='-day' date_to='now' %}" style="cursor: pointer; width: 40px">12m</a></div>
+      			<div class="box2" style="width: 50px;"><a href="{% url 'devCharts' pk='715' acc='1' date_from='-day' date_to='now' %}" style="cursor: pointer;">6m</a> </div>
+                        <div class="box2" style="width: 50px;"><a href="{% url 'devCharts' pk='715' acc='1' date_from='-day' date_to='now' %}" style="cursor: pointer;">1m</a> </div>
+                        <div class="box2" style="width: 50px;"><a href="{% url 'devCharts' pk='715' acc='1' date_from='-day' date_to='now' %}" style="cursor: pointer;">2w</a></div>
+			<div class="box2" style="width: 50px;"> <a href="{% url 'devCharts' pk='715' acc='1' date_from='-day' date_to='now' %}" style="cursor: pointer;">1w</a></div>
+			<div class="box2" style="width: 50px;"> <a href="{% url 'devCharts' pk='715' acc='1' date_from='-day' date_to='now' %}" style="cursor: pointer;">1d</a></div>
+			<div class="box2" style="width: 50px;"> <a href="{% url 'devCharts' pk='715' acc='1' date_from='-day' date_to='now' %}" style="cursor: pointer;">12h</a></div>
+			<div class="box2" style="width: 50px;"> <a href="{% url 'devCharts' pk='715' acc='1' date_from='-day' date_to='now' %}" style="cursor: pointer;">6h</a></div>
+			<div class="box2" style="width: 50px;"> <a href="{% url 'devCharts' pk='715' acc='1' date_from='-day' date_to='now' %}" style="cursor: pointer;">1h</a></div>
+
+
+
+
+</div>
+
+
     </div>
 </div>
 {% endblock %}
