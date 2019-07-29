@@ -7,6 +7,32 @@ import os
 from django.db import connection, transaction
 
 
+class MaapiPrefixs(models.Model):
+    id                              = models.AutoField        (primary_key=True)
+    prefix_name                     = models.CharField        (max_length=60, null=False,blank=False, verbose_name="Name")
+    prefix_short                    = models.CharField        (max_length=5, null=False,blank=False, verbose_name="Short name")
+    prefix_value                    = models.FloatField       (blank=False, null=False, verbose_name="Power")
+    def __unicode__(self):
+        return u'%s' % self.prefix_name
+    class Meta:
+        managed = False
+        db_table = 'maapi_prefixs'
+        verbose_name_plural = "Settings - List - Prefix List"
+
+class MachineLocation(models.Model):
+    id                              = models.AutoField        (primary_key=True)
+    ml_name                         = models.CharField        (unique=True, max_length=100,null=False,blank=False, verbose_name="Name")
+    ml_description                  = models.CharField        (unique=True, max_length=255,null=False,blank=False, verbose_name="Description")
+    ml_location                     = models.CharField        (unique=True, max_length=100,null=False,blank=False, verbose_name="Board location")
+    ml_enabled                      = models.NullBooleanField (blank=False, null=False, default=False, verbose_name="Enabled")
+
+    def __unicode__(self):
+        return u'%s' % self.ml_location
+    class Meta:
+        managed = False
+        db_table = 'maapi_machine_locations'
+        verbose_name_plural = "Settings - List - Board location"
+
 class ScanedOneWireListModel(models.Model):
     device_id                   = models.CharField          (blank=False, null=False,max_length=255, verbose_name="Device Id")
     device_name                 = models.CharField          (blank=False, null=False,max_length=255, verbose_name="Devicename")
@@ -17,6 +43,23 @@ class ScanedOneWireListModel(models.Model):
         managed = True
         db_table = 'maapi_scaned_one_wire_list'
         verbose_name_plural = "Settings - List - Scaned OneWire bus sensors"
+
+
+class MaapiRunningPyModel(models.Model):
+    id                         = models.AutoField        (primary_key=True)
+    py_name                    = models.CharField        (blank=False, null=False, verbose_name="Name")
+    py_file_name               = models.CharField        (blank=False, null=False, verbose_name="File Name")
+    py_start_date              = models.DateTimeField    (blank=True,  null=True,  verbose_name="Start Date")
+    py_board                   = models.ForeignKey       (MachineLocation, on_delete=models.DO_NOTHING, blank=False, null=False, related_name="Machine_Location", verbose_name="Board Location")
+    py_pid                      = models.IntegerField    (blank=False, null=False, verbose_name="PID")
+    py_cpu_usage               = models.FloatField(blank=True, null=True,  verbose_name="Cpu Usage %")
+    py_mem_usage               = models.FloatField(blank=True, null=True,  verbose_name="Mem Usage MB")
+    def __unicode__(self):
+        return u'%s' % self.py_name
+    class Meta:
+        managed = True
+        db_table = 'maapi_running_py_scripts'
+        verbose_name_plural = "Settings - Running Python Scripts"
 
 
 class MaapiFuturesModel(models.Model):
@@ -31,6 +74,39 @@ class MaapiFuturesModel(models.Model):
         managed = True
         db_table = 'maapi_futures'
         verbose_name_plural = "MaaPi projects futures proposal list"
+
+class MaapiLogsModel(models.Model):
+    id                         = models.AutoField       (primary_key=True)
+    log_level                  = models.CharField          (blank=False, null=False, verbose_name="Log level")
+    log_owner                  = models.CharField          (blank=False, null=False, verbose_name="Log owner")
+    log_timestamp              = models.DateTimeField      (blank=True, null=True, verbose_name="Timestamp")
+    log_message                = models.CharField          (blank=False, null=False, verbose_name="Log message")
+    log_platform               = models.CharField          (blank=False, null=False, verbose_name="board")
+    def __unicode__(self):
+        return u'%s' % self.log_owner 
+    class Meta:
+        managed = True
+        db_table = 'maapi_logs'
+        verbose_name_plural ="Logger - all logs table"
+
+
+class MaapiPFC8591Options(models.Model):
+    id                              = models.AutoField       (primary_key=True)
+    pfc_address                     = models.IntegerField    (blank=False, null=False,  verbose_name="address")
+    pfc_id                          = models.IntegerField    (blank=False, null=False,  verbose_name="id on sensor")
+    pfc_middle_point                = models.FloatField      (blank=False, null=False, default = 0, verbose_name="relative point")
+    pfc_ref_voltage                 = models.FloatField      (blank=False, null=False, default = 0, verbose_name="reference voltage")
+    pfc_to_amper                    = models.FloatField      (blank=False, null=False, default = 0, verbose_name="to amper")
+    pfc_to_wats                     = models.FloatField      (blank=False, null=False, default = 0, verbose_name="to wats")
+    pfc_to_volts                    = models.FloatField      (blank=False, null=False, default = 0, verbose_name="to volts")
+    pfc_read_accuracy               = models.IntegerField    (blank=False, null=False, default=1, verbose_name="accuracy")
+
+    def __unicode__(self):
+        return u'%s' % self.pfc_address
+    class Meta:
+        managed = True
+        db_table = 'maapi_pfc8591'
+        verbose_name_plural = "Settings - list - PFC8591 Options"
 
 
 class CronModel(models.Model):
@@ -77,25 +153,15 @@ class PortListenerModel(models.Model):
         db_table = 'maapi_port_listener'
         verbose_name_plural = "Exec - Rest listener"
 
-class MachineLocation(models.Model):
-    id                              = models.AutoField        (primary_key=True)
-    ml_name                         = models.CharField        (unique=True, max_length=100,null=False,blank=False, verbose_name="Name")
-    ml_description                  = models.CharField        (unique=True, max_length=255,null=False,blank=False, verbose_name="Description")
-    ml_location                     = models.CharField        (unique=True, max_length=100,null=False,blank=False, verbose_name="Board location")
-    ml_enabled                      = models.NullBooleanField (blank=False, null=False, default=False, verbose_name="Enabled")
 
-    def __unicode__(self):
-        return u'%s' % self.ml_location
-    class Meta:
-        managed = False
-        db_table = 'maapi_machine_locations'
-        verbose_name_plural = "Settings - List - Board location"
 
 class SensorsList(models.Model):
 
     device_name                 = models.CharField          ( max_length=60)
     device_desctiption          = models.CharField          (max_length=255)
-    device_lib_name             = models.CharField          (max_length=255)
+    device_lib_name             = models.CharField          (max_length=255, verbose_name="Library name")
+    device_protocol             = models.CharField          (blank=False, null=False, max_length=255, verbose_name="TCP or UDP")
+    device_port                 = models.IntegerField       (blank=False, null=False, verbose_name="Port nr.")
     device_location             = models.ForeignKey         (MachineLocation, on_delete=models.DO_NOTHING, blank=False, null=False, related_name="Machine_Location", verbose_name="Board Location")
     device_enabled              = models.NullBooleanField   (blank=False, null=False, default=False)
 
@@ -156,6 +222,36 @@ class Locations(models.Model):
         db_table = 'maapi_locations'
         verbose_name_plural = "Settings - List - Sensors Locations"
 
+class BusOptions(models.Model):
+    id                      = models.AutoField          (primary_key=True)
+    bus_id                  = models.IntegerField       (verbose_name="id_user")
+    bus_name                = models.CharField          (max_length=30, verbose_name="Name")
+    bus_options             = models.CharField          (max_length=30, verbose_name="options")
+    bus_enabled             = models.NullBooleanField   (blank=False, null=False, default=False, verbose_name="Enabled")
+    def __unicode__(self):
+        return u'%s' % self.bus_name
+    class Meta:
+        managed = False
+        db_table = 'maaapi_bus_options'
+        verbose_name_plural = "Settings - List - Bus Options"
+
+class MaapiSocketServersModel(models.Model):
+    id                  = models.AutoField          (primary_key=True)
+    ss_name             = models.CharField          (max_length=30, verbose_name="Socket Name")
+    ss_host             = models.CharField          (max_length=30, verbose_name="Socket ip")
+    ss_port             = models.IntegerField       (verbose_name="Socket port")
+    ss_start_date       = models.DateTimeField     (blank=True, null=True,verbose_name="Start Date")
+    ss_board            = models.ForeignKey       (MachineLocation, on_delete=models.DO_NOTHING, blank=False, null=False, related_name="Machine_Location", verbose_name="Board Location")
+    ss_type             = models.CharField          (max_length=30, verbose_name="Socket Type")
+    ss_pid            = models.IntegerField       (verbose_name="Thread PID")
+    ss_last_responce  = models.DateTimeField     (blank=True, null=True,verbose_name="Last Responce")
+    def __unicode__(self):
+        return u'%s' % self.ss_name
+    class Meta:
+        managed = False
+        db_table = 'maapi_running_socket_servers'
+        verbose_name_plural = "Settings - Running SocketServers"
+
 
 class BusTypes(models.Model):
     id                      = models.AutoField        (primary_key=True)
@@ -197,12 +293,14 @@ class Devices(models.Model):
     dev_user_describe                   = models.CharField        (blank=False, null=False,max_length=60 ,verbose_name="Description")
     dev_location                        = models.ForeignKey       (Locations, on_delete=models.DO_NOTHING, related_name="dev_location", blank=False, null=False, verbose_name="Location")
     dev_bus_type                        = models.ForeignKey       (BusTypes, on_delete=models.DO_NOTHING,  blank=False, null=False, verbose_name="Bus Type")
+    dev_bus_options                     = models.ForeignKey       (BusOptions, on_delete=models.DO_NOTHING,  blank=True, null=True, verbose_name="Bus Options")
     dev_type                            = models.ForeignKey       (SensorsList, on_delete=models.DO_NOTHING, blank=False, null=False, verbose_name="Sensor Type")
     dev_unit                            = models.ForeignKey       (Units, on_delete=models.DO_NOTHING, related_name="dev_unit", verbose_name="Unit")
     dev_gpio_pin                        = models.IntegerField     (blank=False, null=False, default=0, verbose_name="Gpio Pin")
     dev_interval                        = models.IntegerField     (blank=False, null=False, default=1,  verbose_name="Read Interval")
     dev_interval_unit_id                = models.IntegerField     (max_length=30,  choices=INTERVAL_UNIT_CHOISE, null=False, blank=False, verbose_name="Unit chose")
     dev_value                           = models.FloatField       (blank=True, null=True, default=0, verbose_name="Value")
+    dev_prefix                          = models.ForeignKey       (MaapiPrefixs, on_delete=models.DO_NOTHING, blank=True, null=True, verbose_name="Prefix")
     dev_adjust                          = models.IntegerField     (blank=False, null=False, default=0, verbose_name="Value - Adjust")
     dev_value_old                       = models.FloatField       (blank=True, null=True,verbose_name="Value - Old")
     dev_last_update                     = models.DateTimeField    (blank=True, null=True,verbose_name="Last Update")
@@ -338,13 +436,22 @@ class MathModel(models.Model):
     math_user_id                = models.IntegerField       (blank=False, null=False, default=0, verbose_name="User Id")
     math_name                   = models.CharField          (blank=False, null=False,max_length=60, verbose_name="Name")
     math_data_from_1            = models.ForeignKey         (Devices, on_delete=models.DO_NOTHING, related_name="dev_1",blank=True, null=True, verbose_name="v1 - Value From Sensor")
+    math_data_from_1_count      = models.IntegerField       (null=True, blank=True , verbose_name="v1 sample counter")
+    math_data_from_1_date       = models.IntegerField       (blank=True, null=True,verbose_name="v1 seconds to now")
     math_data_from_2            = models.ForeignKey         (Devices, on_delete=models.DO_NOTHING, related_name="dev_2",blank=True, null=True, verbose_name="v2 - Value From Sensor")
+    math_data_from_2_count      = models.IntegerField       (null=True, blank=True ,  verbose_name="v2 sample counter")
+    math_data_from_2_date       = models.IntegerField       (blank=True, null=True,verbose_name="v2 seconds to now")
     math_data_from_3            = models.ForeignKey         (Devices, on_delete=models.DO_NOTHING, related_name="dev_3",blank=True, null=True, verbose_name="v3 - Value From Sensor")
+    math_data_from_3_count      = models.IntegerField       (null=True, blank=True ,  verbose_name="v3 sample counter")
+    math_data_from_3_date       = models.IntegerField       (blank=True, null=True,verbose_name="v3 seconds to now")
     math_data_from_4            = models.ForeignKey         (Devices, on_delete=models.DO_NOTHING, related_name="dev_4",blank=True, null=True, verbose_name="v4 - Value From Sensor")
-    math_math                   = models.CharField          (blank=False, null=False,max_length=255, verbose_name="Math Expression", help_text="E.g. v1 * (v2 + v3) / v4 + 100")
+    math_data_from_4_count      = models.IntegerField       (null=True, blank=True , verbose_name="v4 sample counter")
+    math_data_from_4_date       = models.IntegerField       (blank=True, null=True,verbose_name="v4 seconds to now")
+    math_math                   = models.TextField          (blank=False, null=False,  verbose_name="Math Expression", help_text="E.g. v1 * (v2 + v3) / v4 + 100")
     math_descript               = models.CharField          (blank=False, null=False,max_length=255, verbose_name="Description")
     math_update_rom             = models.ForeignKey         (Devices, on_delete=models.DO_NOTHING, related_name="dev_5", verbose_name="Output Sensor")
     math_enabled                = models.NullBooleanField   (blank=False, null=False, default=False , verbose_name="Enabled")
+
     #math_exec_if_cond_e         = models.NullBooleanField   (blank=False, null=False, default=False , verbose_name="Enabled")
     #math_exec_cond              = models.ForeignKey         (Devices, on_delete=models.DO_NOTHING,related_name="dev_10010",blank=True, null=True, verbose_name="Reference Sensor")
     #math_exec_cond_value_min    = models.FloatField         (blank=False, null=False , default=0, verbose_name="Referens < X" )

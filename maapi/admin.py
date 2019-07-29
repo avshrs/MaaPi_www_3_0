@@ -1,16 +1,15 @@
 # coding: utf-8
 from django.contrib import admin
-from .models import MaapiFuturesModel,CronModel, BackgroudListModel,PortListenerModel,MachineLocation, ScanedOneWireListModel, Tags, Devices, Groups, Units, Locations, Logs, SensorsList, CommandLine, SqlQuery, MathModel, MainScreen, SwitchModel ,BusTypes, MailWachDog, MailingList
+from .models import MaapiFuturesModel,CronModel, MaapiLogsModel,MaapiRunningPyModel, MaapiSocketServersModel, BackgroudListModel,MaapiPFC8591Options, PortListenerModel,MachineLocation, ScanedOneWireListModel, Tags, Devices, Groups, Units, Locations, Logs, SensorsList, CommandLine, SqlQuery, MathModel, MainScreen, SwitchModel,BusOptions ,BusTypes, MailWachDog, MailingList, MaapiPrefixs
 
 
 @admin.register(Devices)
 class DevicesAdmin(admin.ModelAdmin):
     ordering=['dev_user_id']
-
     fieldsets = [
                 ('Main device parameters',              {'fields': ['dev_user_id', 'dev_tag_name','dev_user_name', 'dev_user_describe', 'dev_rom_id', 'dev_time_stamp','dev_machine_location', 'dev_status']}),
-                ('Bus and type parameters',             {'fields': ['dev_type','dev_bus_type','dev_unit', 'dev_gpio_pin','dev_hidden','dev_sensor_type']}),
-                ('Device - value info ',                {'fields': ['dev_value','dev_adjust','dev_value_old','dev_last_update','dev_read_error','dev_interval','dev_interval_unit_id']}),
+                ('Bus and type parameters',             {'fields': ['dev_type','dev_bus_type', 'dev_bus_options', 'dev_gpio_pin','dev_hidden','dev_sensor_type']}),
+                ('Device - value info ',                {'fields': ['dev_value', 'dev_unit', 'dev_adjust', 'dev_value_old','dev_last_update','dev_read_error','dev_interval','dev_interval_unit_id']}),
 
                 ('Database',                             {'fields': ['dev_collect_values_to_db',
                                                                      'dev_collect_values_if_cond_e',
@@ -62,6 +61,11 @@ class DevicesAdmin(admin.ModelAdmin):
         return self.readonly_fields
 
 
+@admin.register(MaapiPrefixs)
+class MaapiPrefixsAdmin(admin.ModelAdmin):
+    list_display=['prefix_name','prefix_short','prefix_value']
+    list_display_links = list_display
+
 
 @admin.register(MachineLocation)
 class MachineLocationAdmin(admin.ModelAdmin):
@@ -74,8 +78,29 @@ class TagsAdmin(admin.ModelAdmin):
     list_display=['id','tag_short','tag_long','tag_description']
     list_display_links = list_display
 
+@admin.register(MaapiPFC8591Options)
+class MaapiPFC8591OptionsAdmin(admin.ModelAdmin):
+    list_display=["id", "pfc_address" , "pfc_id" , "pfc_middle_point" , "pfc_ref_voltage" , "pfc_to_amper",  "pfc_to_wats", "pfc_to_volts", "pfc_read_accuracy" ]
+    list_display_links = list_display
+
+@admin.register(MaapiSocketServersModel)
+class MaapiSocketServersAdmin(admin.ModelAdmin):
+    list_display=["id", "ss_name" , "ss_host" , "ss_port" , "ss_start_date", "ss_board","ss_type",  "ss_pid", "ss_last_responce"]
+    list_display_links = list_display
 
 
+@admin.register(MaapiLogsModel)
+class MaapiLogsModelAdmin(admin.ModelAdmin):
+    list_display=["id", "log_level" , "log_owner" , "log_timestamp" , "log_message" , "log_platform"]
+    # list_display_links = list_display
+    list_filter = ("log_level" , "log_owner" , "log_platform")
+
+    
+
+@admin.register(MaapiRunningPyModel)
+class MaapiRunningPyAdmin(admin.ModelAdmin):
+    list_display=["id", "py_name" , "py_file_name" , "py_start_date" , "py_board", "py_pid", "py_cpu_usage", "py_mem_usage" ]
+    list_display_links = list_display
 
 
 @admin.register(MailWachDog)
@@ -109,7 +134,6 @@ class PortListenerModelAdmin(admin.ModelAdmin):
 
 
 
-
 @admin.register(ScanedOneWireListModel)
 class ScanedOneWireListModelAdmin(admin.ModelAdmin):
     list_display=['device_id','device_name','device_description']
@@ -124,7 +148,7 @@ class MaapiFuturesAdmin(admin.ModelAdmin):
 
 
 @admin.register(BackgroudListModel)
-class ScanedOneWireListModelAdmin(admin.ModelAdmin):
+class BackgroudListAdmin(admin.ModelAdmin):
     list_display=['bg_id','bg_name']
     list_display_links = list_display
 
@@ -216,6 +240,10 @@ class BusTypesAdmin(admin.ModelAdmin):
 
                 ]
 
+@admin.register(BusOptions)
+class BusOptionsAdmin(admin.ModelAdmin):
+    list_display=['id','bus_id','bus_name','bus_options','bus_enabled']
+    list_display_links = list_display
 
 @admin.register(SwitchModel)
 class SwitchModelAdmin(admin.ModelAdmin):
@@ -279,7 +307,10 @@ class MathModelAdmin(admin.ModelAdmin):
     list_display_links = list_display
     fieldsets = [
                 ('Exec - Mathematical Expresions - info',   {'fields': ['math_user_id', 'math_name', 'math_descript' ]}),
-                ('Get data from devices',                   {'fields': ['math_data_from_1','math_data_from_2','math_data_from_3','math_data_from_4',]}),
+                ('Get data from devices 1',                   {'fields': ['math_data_from_1','math_data_from_1_count', 'math_data_from_1_date',]}),
+                ('Get data from devices 2',                   {'fields': ['math_data_from_2','math_data_from_2_count', 'math_data_from_2_date',]}),
+                ('Get data from devices 3',                   {'fields': ['math_data_from_3','math_data_from_3_count', 'math_data_from_3_date',]}),
+                ('Get data from devices 4',                   {'fields': ['math_data_from_4','math_data_from_4_count', 'math_data_from_4_date',]}),
                 ('Mathematical Expresion',                  {'fields': ['math_math']}),
 
                 ('Select device to update value',      {'fields': ['math_update_rom']}),
@@ -300,11 +331,11 @@ class LogsAdmin(admin.ModelAdmin):
 @admin.register(SensorsList)
 class SensorsListAdmin(admin.ModelAdmin):
     ordering=['id']
-    list_display=['id','device_name','device_desctiption','device_lib_name','device_location','device_enabled']
+    list_display=['id','device_name','device_desctiption','device_lib_name','device_protocol','device_port','device_location','device_enabled']
     list_display_links = list_display
     fieldsets = [
                 ('Settings - Sensors list  - info',          {'fields': ['device_desctiption',]}),
                 ('Device type - name ',                      {'fields': ['device_name']}),
-                ('Library ',                                 {'fields': ['device_lib_name']}),
+                ('Library ',                                 {'fields': ['device_lib_name','device_protocol','device_port']}),
                 ('Status ',                                  {'fields': ['device_location','device_enabled']}),
                 ]

@@ -22,11 +22,9 @@
               <th class="status">GPIO</th>
 
               <th class="status hide-min">S_Type</th>
-              <th class="status hide-min">BusType</th>
 
               <th id="main-group-th">Main Group</th>
-              <th id="main-group-th">Sec Group</th>
-              <th id="main-group-th">Third Group</th>
+
               <th id="dev-error">error</th>
               <th class="lastUpdate">Last Update</th>
             </tr>
@@ -42,13 +40,12 @@
               <td class="status">{{device.dev_gpio_pin}} </td>
 
               <td class="status hide-min">{{device.dev_type}} </td>
-              <td class="status hide-min">{{device.dev_bus_type}} </td>
+
 
 
 
               <td class="main-group-td">   {{device.dev_main_group}} </td>
-              <td class="main-group-td">  {{device.dev_sec_group}} </td>
-              <td class="main-group-td">  {{device.dev_third_group}} </td>
+
               <td class="dev-error"> {{device.dev_read_error}} </td>
               <td class="lastUpdate"> {{device.dev_last_update|timesince}} </td>
             </tr>
