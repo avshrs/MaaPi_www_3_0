@@ -1,4 +1,4 @@
-{% load staticfiles %}
+{% load static %}
 {% load filters %}
 @import url(font-awesome.min.css);
 

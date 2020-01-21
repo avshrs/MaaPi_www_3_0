@@ -12,10 +12,14 @@ class MaapiPrefixs(models.Model):
     prefix_name                     = models.CharField        (max_length=60, null=False,blank=False, verbose_name="Name")
     prefix_short                    = models.CharField        (max_length=5, null=False,blank=False, verbose_name="Short name")
     prefix_value                    = models.FloatField       (blank=False, null=False, verbose_name="Power")
-    def __unicode__(self):
-        return u'%s' % self.prefix_name
+ #   def __unicode__(self):
+ #       return u'%s' % self.prefix_name
+    
+    def __str__(self):
+        return self.prefix_name
+    
     class Meta:
-        managed = False
+        managed = True
         db_table = 'maapi_prefixs'
         verbose_name_plural = "Settings - List - Prefix List"
 
@@ -26,8 +30,11 @@ class MachineLocation(models.Model):
     ml_location                     = models.CharField        (unique=True, max_length=100,null=False,blank=False, verbose_name="Board location")
     ml_enabled                      = models.NullBooleanField (blank=False, null=False, default=False, verbose_name="Enabled")
 
-    def __unicode__(self):
-        return u'%s' % self.ml_location
+  #  def __unicode__(self):
+  #      return u'%s' % self.ml_location
+    def __str__(self):
+        return self.ml_location
+   
     class Meta:
         managed = False
         db_table = 'maapi_machine_locations'
@@ -37,8 +44,8 @@ class ScanedOneWireListModel(models.Model):
     device_id                   = models.CharField          (blank=False, null=False,max_length=255, verbose_name="Device Id")
     device_name                 = models.CharField          (blank=False, null=False,max_length=255, verbose_name="Devicename")
     device_description          = models.CharField          (blank=False, null=False,max_length=255, verbose_name="Device Description")
-    def __unicode__(self):
-        return u'%s' % self.device_name
+    def __str__(self):
+        return self.device_name
     class Meta:
         managed = True
         db_table = 'maapi_scaned_one_wire_list'
@@ -47,15 +54,15 @@ class ScanedOneWireListModel(models.Model):
 
 class MaapiRunningPyModel(models.Model):
     id                         = models.AutoField        (primary_key=True)
-    py_name                    = models.CharField        (blank=False, null=False, verbose_name="Name")
-    py_file_name               = models.CharField        (blank=False, null=False, verbose_name="File Name")
+    py_name                    = models.CharField        (blank=False, null=False, max_length=255, verbose_name="Name")
+    py_file_name               = models.CharField        (blank=False, null=False,max_length=255,  verbose_name="File Name")
     py_start_date              = models.DateTimeField    (blank=True,  null=True,  verbose_name="Start Date")
-    py_board                   = models.ForeignKey       (MachineLocation, on_delete=models.DO_NOTHING, blank=False, null=False, related_name="Machine_Location", verbose_name="Board Location")
+    py_board                   = models.ForeignKey       (MachineLocation, on_delete=models.DO_NOTHING, blank=False, null=False, related_name="Machine_Location_2", verbose_name="Board Location")
     py_pid                      = models.IntegerField    (blank=False, null=False, verbose_name="PID")
     py_cpu_usage               = models.FloatField(blank=True, null=True,  verbose_name="Cpu Usage %")
     py_mem_usage               = models.FloatField(blank=True, null=True,  verbose_name="Mem Usage MB")
-    def __unicode__(self):
-        return u'%s' % self.py_name
+    def __str__(self):
+        return self.py_name
     class Meta:
         managed = True
         db_table = 'maapi_running_py_scripts'
@@ -68,8 +75,8 @@ class MaapiFuturesModel(models.Model):
     f_done                  = models.NullBooleanField   (blank=False, null=False, default=False, verbose_name="Done")
     f_added                 = models.DateTimeField      (blank=True, null=True, verbose_name="Topic Added")
     f_created               = models.DateTimeField      (blank=True, null=True, verbose_name="Futures done")
-    def __unicode__(self):
-        return u'%s' % self.f_name
+    def __str__(self):
+        return self.f_name
     class Meta:
         managed = True
         db_table = 'maapi_futures'
@@ -77,13 +84,13 @@ class MaapiFuturesModel(models.Model):
 
 class MaapiLogsModel(models.Model):
     id                         = models.AutoField       (primary_key=True)
-    log_level                  = models.CharField          (blank=False, null=False, verbose_name="Log level")
-    log_owner                  = models.CharField          (blank=False, null=False, verbose_name="Log owner")
+    log_level                  = models.CharField          (blank=False, null=False,max_length=255, verbose_name="Log level")
+    log_owner                  = models.CharField          (blank=False, null=False,max_length=255, verbose_name="Log owner")
     log_timestamp              = models.DateTimeField      (blank=True, null=True, verbose_name="Timestamp")
-    log_message                = models.CharField          (blank=False, null=False, verbose_name="Log message")
-    log_platform               = models.CharField          (blank=False, null=False, verbose_name="board")
-    def __unicode__(self):
-        return u'%s' % self.log_owner 
+    log_message                = models.CharField          (blank=False, null=False,max_length=255, verbose_name="Log message")
+    log_platform               = models.CharField          (blank=False, null=False,max_length=255, verbose_name="board")
+    def __str__(self):
+        return self.log_owner 
     class Meta:
         managed = True
         db_table = 'maapi_logs'
@@ -101,8 +108,8 @@ class MaapiPFC8591Options(models.Model):
     pfc_to_volts                    = models.FloatField      (blank=False, null=False, default = 0, verbose_name="to volts")
     pfc_read_accuracy               = models.IntegerField    (blank=False, null=False, default=1, verbose_name="accuracy")
 
-    def __unicode__(self):
-        return u'%s' % self.pfc_address
+    def __str__(self):
+        return self.pfc_address
     class Meta:
         managed = True
         db_table = 'maapi_pfc8591'
@@ -110,9 +117,9 @@ class MaapiPFC8591Options(models.Model):
 
 
 class CronModel(models.Model):
-    CRON_MIN = [ (i, i) for i in xrange(1,60) ]
-    CRON_HOUR = [ (i, i) for i in xrange(1,24) ]
-    CRON_DAYM = [ (i, i) for i in xrange(1,31) ]
+    CRON_MIN = [ (i, i) for i in range(1,60) ]
+    CRON_HOUR = [ (i, i) for i in range(1,24) ]
+    CRON_DAYM = [ (i, i) for i in range(1,31) ]
     CRON_DAYW = [ (1, "Monday"),(2, "Tuesday"),(3, "Wednesday"),(4, "Thursday"),(5, "Friday"),(6, "Saturday"),(7, "Sunday")]
     CRON_CHOISE = [(1,"On"), (2, "Every")]
     cron_minute_id          = models.IntegerField     (blank=False, null=False, choices=CRON_MIN,       default=1,  verbose_name="Minute")
@@ -146,8 +153,8 @@ class PortListenerModel(models.Model):
     pl_enabled              = models.NullBooleanField   (blank=False, null=False, default=False, verbose_name="Enabled")
     pl_location             = models.CharField          (blank=False, null=False, max_length=160)
 #    pl_pid              = models.IntegerField       (blank=False, null=False, verbose_name="running")
-    def __unicode__(self):
-        return u'%s' % self.pl_name
+    def __str__(self):
+        return self.pl_name
     class Meta:
         managed = False
         db_table = 'maapi_port_listener'
@@ -162,11 +169,11 @@ class SensorsList(models.Model):
     device_lib_name             = models.CharField          (max_length=255, verbose_name="Library name")
     device_protocol             = models.CharField          (blank=False, null=False, max_length=255, verbose_name="TCP or UDP")
     device_port                 = models.IntegerField       (blank=False, null=False, verbose_name="Port nr.")
-    device_location             = models.ForeignKey         (MachineLocation, on_delete=models.DO_NOTHING, blank=False, null=False, related_name="Machine_Location", verbose_name="Board Location")
+    device_location             = models.ForeignKey         (MachineLocation, on_delete=models.DO_NOTHING, blank=False, null=False, related_name="Machine_Location_3", verbose_name="Board Location")
     device_enabled              = models.NullBooleanField   (blank=False, null=False, default=False)
 
-    def __unicode__(self):
-        return u'%s' % self.device_name
+    def __str__(self):
+        return self.device_name
     class Meta:
         managed = False
         db_table = 'maapi_device_list'
@@ -188,8 +195,8 @@ class Groups(models.Model):
     group_user_id           = models.IntegerField       (unique=True,blank=False, null=False, verbose_name="id")
     group_name              = models.CharField          (unique=True, max_length=30, verbose_name="Name")
     group_enabled           = models.NullBooleanField   (blank=False, null=False, default=False, verbose_name="Enabled")
-    def __unicode__(self):
-        return u'%s' % self.group_name
+    def __str__(self):
+        return self.group_name
     class Meta:
         managed = False
         db_table = 'maapi_groups'
@@ -202,8 +209,8 @@ class Units(models.Model):
     unit_name               = models.CharField          (unique=True, max_length=30, verbose_name="Full Name")
     unit_sign               = models.CharField          (unique=False, max_length=30, verbose_name="Sign")
     unit_enabled            = models.NullBooleanField   (blank=False, null=False, default=False, verbose_name="Enabled")
-    def __unicode__(self):
-        return u'%s' % self.unit_name
+    def __str__(self):
+        return self.unit_name
     class Meta:
         managed = False
         db_table = 'maapi_units'
@@ -215,8 +222,8 @@ class Locations(models.Model):
     location_user_id        = models.IntegerField       (unique=True, verbose_name="id")
     location_name           = models.CharField          (unique=True, max_length=30, verbose_name="Name")
     location_enabled        = models.NullBooleanField   (blank=False, null=False, default=False, verbose_name="Enabled")
-    def __unicode__(self):
-        return u'%s' % self.location_name
+    def __str__(self):
+        return self.location_name
     class Meta:
         managed = False
         db_table = 'maapi_locations'
@@ -228,8 +235,8 @@ class BusOptions(models.Model):
     bus_name                = models.CharField          (max_length=30, verbose_name="Name")
     bus_options             = models.CharField          (max_length=30, verbose_name="options")
     bus_enabled             = models.NullBooleanField   (blank=False, null=False, default=False, verbose_name="Enabled")
-    def __unicode__(self):
-        return u'%s' % self.bus_name
+    def __str__(self):
+        return self.bus_name
     class Meta:
         managed = False
         db_table = 'maaapi_bus_options'
@@ -241,12 +248,12 @@ class MaapiSocketServersModel(models.Model):
     ss_host             = models.CharField          (max_length=30, verbose_name="Socket ip")
     ss_port             = models.IntegerField       (verbose_name="Socket port")
     ss_start_date       = models.DateTimeField     (blank=True, null=True,verbose_name="Start Date")
-    ss_board            = models.ForeignKey       (MachineLocation, on_delete=models.DO_NOTHING, blank=False, null=False, related_name="Machine_Location", verbose_name="Board Location")
+    ss_board            = models.ForeignKey       (MachineLocation, on_delete=models.DO_NOTHING, blank=False, null=False, related_name="Machine_Location_4", verbose_name="Board Location")
     ss_type             = models.CharField          (max_length=30, verbose_name="Socket Type")
     ss_pid            = models.IntegerField       (verbose_name="Thread PID")
     ss_last_responce  = models.DateTimeField     (blank=True, null=True,verbose_name="Last Responce")
-    def __unicode__(self):
-        return u'%s' % self.ss_name
+    def __str__(self):
+        return self.ss_name
     class Meta:
         managed = False
         db_table = 'maapi_running_socket_servers'
@@ -261,8 +268,8 @@ class BusTypes(models.Model):
     bus_lib_name            = models.CharField        (unique=True, max_length=30,null=False,blank=False, verbose_name="Lib file name")
     bus_lib_name_class_name = models.CharField        (unique=True, max_length=30,null=False,blank=False, verbose_name="Class name")
     bus_enabled             = models.NullBooleanField (blank=False, null=False, default=False, verbose_name="Enabled")
-    def __unicode__(self):
-        return u'%s' % self.bus_type
+    def __str__(self):
+        return self.bus_type
     class Meta:
         managed = False
         db_table = 'maapi_bustypes'
@@ -273,8 +280,8 @@ class Tags(models.Model):
     tag_short               = models.CharField        ( max_length=5,null=False,blank=False, verbose_name="Tag 5 leters")
     tag_long                = models.CharField        ( max_length=30,null=False,blank=False, verbose_name="tag long")
     tag_description          = models.CharField        ( max_length=60, verbose_name="Description")
-    def __unicode__(self):
-        return u'%s' % self.tag_short
+    def __str__(self):
+        return self.tag_short
     class Meta:
         managed = False
         db_table = 'maapi_tags'
@@ -288,7 +295,7 @@ class Devices(models.Model):
     dev_rom_id                          = models.CharField        (unique=True, max_length=30,null=False ,blank=False , verbose_name="ROM id")
     dev_time_stamp                      = models.DateTimeField    (null=False, blank=False , verbose_name="Create date")
     dev_user_id                         = models.IntegerField     (default=9999, name="dev_user_id",null=False,blank=False , verbose_name="Id")
-    dev_tag_name                        = models.ForeignKey       (Tags, max_length=30, verbose_name="User TAG")
+    dev_tag_name                        = models.ForeignKey       (Tags, on_delete=models.DO_NOTHING, max_length=30, verbose_name="User TAG")
     dev_user_name                       = models.CharField        (max_length=30, default="Name",null=False,blank=False, verbose_name="User Name")
     dev_user_describe                   = models.CharField        (blank=False, null=False,max_length=60 ,verbose_name="Description")
     dev_location                        = models.ForeignKey       (Locations, on_delete=models.DO_NOTHING, related_name="dev_location", blank=False, null=False, verbose_name="Location")
@@ -298,7 +305,7 @@ class Devices(models.Model):
     dev_unit                            = models.ForeignKey       (Units, on_delete=models.DO_NOTHING, related_name="dev_unit", verbose_name="Unit")
     dev_gpio_pin                        = models.IntegerField     (blank=False, null=False, default=0, verbose_name="Gpio Pin")
     dev_interval                        = models.IntegerField     (blank=False, null=False, default=1,  verbose_name="Read Interval")
-    dev_interval_unit_id                = models.IntegerField     (max_length=30,  choices=INTERVAL_UNIT_CHOISE, null=False, blank=False, verbose_name="Unit chose")
+    dev_interval_unit_id                = models.IntegerField     ( choices=INTERVAL_UNIT_CHOISE, null=False, blank=False, verbose_name="Unit chose")
     dev_value                           = models.FloatField       (blank=True, null=True, default=0, verbose_name="Value")
     dev_prefix                          = models.ForeignKey       (MaapiPrefixs, on_delete=models.DO_NOTHING, blank=True, null=True, verbose_name="Prefix")
     dev_adjust                          = models.IntegerField     (blank=False, null=False, default=0, verbose_name="Value - Adjust")
@@ -337,13 +344,12 @@ class Devices(models.Model):
         cursor.close()
         super(Devices, self).delete(*args, **kwargs)
 
-    def __unicode__(self):
-        return u'%s' % self.dev_user_name
+    def __str__(self):
+        return self.dev_user_name
     class Meta:
         managed = True
         db_table = 'devices'
         verbose_name_plural = "Settings - All Sensors "
-
 
 class MailingList(models.Model):
     ml_user_id              = models.IntegerField     (default=9999, null=False,blank=False , verbose_name="id")
@@ -352,8 +358,10 @@ class MailingList(models.Model):
     ml_password             = models.CharField        (max_length=255, null=False, verbose_name="Password")
     ml_smtp                 = models.CharField        (max_length=255, null=False, default='smtp.gmail.com', verbose_name="Smtp")
     ml_port                 = models.IntegerField     (default=587, null=False, blank=False , verbose_name="smtp port")
-    def __unicode__(self):
-        return u'%s' % self.ml_name
+    
+    def __str__(self):
+        return self.ml_name
+
     class Meta:
         managed = True
         db_table = 'maapi_mailing_list'
@@ -386,8 +394,8 @@ class MailWachDog(models.Model):
 class BackgroudListModel(models.Model):
     bg_id               = models.IntegerField       (blank=False, null=False, default=0, verbose_name="id")
     bg_name             = models.CharField          (max_length=30, null=False, verbose_name="Backgroud file name")
-    def __unicode__(self):
-        return u'%s' % self.bg_name
+    def __str__(self):
+        return self.bg_name
     class Meta:
         managed = False
         db_table = 'maapi_backgroud_list'

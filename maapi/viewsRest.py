@@ -8,7 +8,7 @@
 ##############################################################
 
 from maapi.models import Devices, DevValues
-from django.shortcuts import render_to_response, render
+from django.shortcuts import  render
 from time import mktime
 import calendar
 from itertools import chain
@@ -18,7 +18,7 @@ from django.db import connection
 
 def getFromEsp(request,postsysname,postid,postvalue,postidx):
     if request.method == "POST":
-           print "whatever ..."
+        pass
     if request.method == "GET" :
            #get old value
            old=Devices.objects.filter(dev_id = int(postid)).values_list('dev_value', flat=True)[0]

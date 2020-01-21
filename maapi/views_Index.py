@@ -14,7 +14,7 @@ class MainIndexView(ListView):
         # Call the base implementation first to get a context
         context = super(MainIndexView, self).get_context_data(**kwargs)
         dev_on_main_screen = []
-        for i in xrange(1, 13):
+        for i in range(1, 13):
             if MainScreen.objects.values_list(
                     'dev_on_main_screen_{0}'.format(i),
                     flat=True)[0] is not None:
@@ -38,7 +38,7 @@ class MainIndexView(ListView):
         return context
 
     def dispatch(self, request, *args, **kwargs):
-        if request.user.is_authenticated():
+        if request.user.is_authenticated:
             pass
         else:
             return HttpResponseRedirect('/login')
@@ -63,7 +63,7 @@ class SensorListView(ListView):
         return context
 
     def dispatch(self, request, *args, **kwargs):
-        if request.user.is_authenticated():
+        if request.user.is_authenticated:
             pass
         else:
             return HttpResponseRedirect('/login')
@@ -82,7 +82,7 @@ class SensorsDetailListView(ListView):
         return context
 
     def dispatch(self, request, *args, **kwargs):
-        if request.user.is_authenticated():
+        if request.user.is_authenticated:
             pass
         else:
             return HttpResponseRedirect('/login')
@@ -94,7 +94,7 @@ class twenty(TemplateView):
     template_name = 'twenty/index.html'
 
     def dispatch(self, request, *args, **kwargs):
-        if request.user.is_authenticated():
+        if request.user.is_authenticated:
             pass
         else:
             return HttpResponseRedirect('/login')

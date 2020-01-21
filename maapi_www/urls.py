@@ -21,12 +21,18 @@ from maapi.viewsRest import getFromEsp
 from django.http import HttpResponse
 from django.contrib.auth import views as auth_views
 
+
+from django.contrib.auth import views as auth_views
+
+urlpatterns = [
+   url( r'^login/$',auth_views.LoginView.as_view(template_name="useraccounts/login.html"), name="login"),
+]
+
 urlpatterns = [
     url(r'^crazyadmin2/', include('admin_honeypot.urls',namespace='admin_honeypot')),
     url(r'^Settings/', admin.site.urls),
-    url(r'^login/$', auth_views.login, {'template_name': 'login.html'}, name='login'),
-    url(r'^logout/$', auth_views.logout, {'template_name': 'logout.html'}, name='logout'),
-
+    url(r'^login/$',auth_views.LoginView.as_view(template_name="login.html"), name="login"),
+    url(r'^logout/$', auth_views.LoginView.as_view(template_name="logout.html"), name="logout"),
     url(r'^$', MainIndexView.as_view(), name="index"),
     url(r'^Devices_info/$', SensorListView.as_view(), name="sensor_list_detail"),
     url(r'^twenty2/$', twenty.as_view(), name="twenty"),

@@ -18,6 +18,7 @@ def is_number(s):
 
 
 def devCharts(request, pk, acc, date_from, date_to):
+    pk22 = pk
     groupname = []
     grouplist = []
     list_of_devices = Devices.objects.values('dev_id', 'dev_user_name').filter(
@@ -26,43 +27,54 @@ def devCharts(request, pk, acc, date_from, date_to):
     acc2 = 1
     datetime_format = "%Y-%m-%d %H:%M:%S"
 
-
+    rangee="date"
     if date_from == '-day':
         date_from_space = datetime.now().replace(microsecond=0) - timedelta(
             days=1)
+        rangee=date_from
     elif date_from == '-6hours':
         date_from_space = datetime.now().replace(microsecond=0) - timedelta(
             hours=6)
+        rangee=date_from
     elif date_from == '-hour':
         date_from_space = datetime.now().replace(microsecond=0) - timedelta(
             hours=1)
+        rangee=date_from
     elif date_from == '-12hours':
         date_from_space = datetime.now().replace(microsecond=0) - timedelta(
             hours=12)
+        rangee=date_from
     elif date_from == '-month':
         date_from_space = datetime.now().replace(microsecond=0) - timedelta(
             days=30)
+        rangee=date_from
     elif date_from == '-6month':
         date_from_space = datetime.now().replace(microsecond=0) - timedelta(
             days=180)
+        rangee=date_from
     elif date_from == '-week':
         date_from_space = datetime.now().replace(microsecond=0) - timedelta(
             days=7)
+        rangee=date_from
     elif date_from == '-2weeks':
         date_from_space = datetime.now().replace(microsecond=0) - timedelta(
             days=14)
+        rangee=date_from
     elif date_from == '-year':
         date_from_space = datetime.now().replace(microsecond=0) - timedelta(
             days=365)
+        rangee=date_from
     else:
-        date_from_space = date_from.encode('ascii')
+        date_from_space = date_from
 
     if date_to == 'now':
         date_to_space = datetime.now().replace(microsecond=0)
         hour_to_html = "now"
+        range_to = "now"
+
     else:
-        date_to_space = date_to.encode('ascii')
-        hour_to_html = datetime.strptime(str(date_to_space),
+        date_to_space = date_to
+        hour_to_html = datetime.strptime(date_to_space,
                                          datetime_format).hour
 
     a = datetime.strptime(str(date_from_space), datetime_format)
@@ -76,7 +88,6 @@ def devCharts(request, pk, acc, date_from, date_to):
     if int(acc) == 1:
         if delta_date != 0:
             acc2 = 2 * delta_date
-    print acc2
     graph_param = {
         'pk': pk,
         'acc': acc2,
@@ -111,4 +122,6 @@ def devCharts(request, pk, acc, date_from, date_to):
             'grouplist': grouplist,
             'groupname': groupname,
             'graph_param': graph_param,
+            'rangee': rangee,
+            'range_to':range_to,
         })

@@ -26,7 +26,7 @@ SECRET_KEY = '62m+8*(=q=3sf#i+yyf9=*2(c9i)ck6-00!3zonqdnm_2)=zuk'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['maapi.pl','192.168.1.110']
+ALLOWED_HOSTS = ['maapi.pl','192.168.1.109','192.168.1.100']
 
 
 # Application definition
@@ -44,7 +44,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 )
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = (
     'admin_reorder.middleware.ModelAdminReorder',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -63,7 +63,7 @@ TEMPLATES = [
 
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
 #        'DIRS': ['/var/www/html/maapi_www/maapi/templates'],
-        'DIRS': [  '/home/apache/maapi_www/maapi/templates'
+        'DIRS': [  '/home/apache/MaaPi_www_3_0/maapi/templates'
 
                 ],
         'OPTIONS': {
@@ -85,14 +85,15 @@ DATABASES = {
         'NAME': 'MaaPi',
         'USER': 'maapi_db',
         'PASSWORD': '889192',
-        'HOST': 'localhost',
+        'HOST': '192.168.1.107',
         'PORT': '5432',
     }
 
 
 }
 
-LANGUAGE_CODE = 'Pl-pl'
+LANGUAGE_CODE = 'pl'
+
 
 TIME_ZONE = 'Europe/Warsaw'
 
@@ -119,7 +120,8 @@ ADMIN_REORDER = (
     {'app': 'maapi', 'label': 'Settings',
          'models': ('maapi.Devices',
                     'maapi.SensorsList',
-                    'maapi.DList',
+                    'maapi.MaapiSocketServersModel',
+                    'maapi.MaapiRunningPyModel',
                     'maapi.MainScreen',
                     'maapi.MaapiFuturesModel'
                     )
@@ -142,11 +144,15 @@ ADMIN_REORDER = (
     {'app': 'maapi', 'label': 'Settings - Lists',
          'models': ('maapi.ScanedOneWireListModel',
 
+                    'maapi.MaapiPFC8591Options',
                     'maapi.Groups',
                     'maapi.Tags',
                     'maapi.Units',
+                    'maapi.UnitPrefixs',
                     'maapi.Locations',
                     'maapi.MachineLocation',
+                    'maapi.BusTypes',
+                    'maapi.BusOptions',
                     'maapi.BusTypes',
                     'maapi.MailingList',
                     'maapi.BackgroudListModel',
@@ -156,6 +162,7 @@ ADMIN_REORDER = (
              'models': (
                         'maapi.CronModel',
                         'maapi.PortListenerModel',
+                        'maapi.MaapiLogsModel',
                         )
             },
     {'app': 'auth', 'label': 'Authorisation'},

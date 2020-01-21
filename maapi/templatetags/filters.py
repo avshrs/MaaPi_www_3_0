@@ -145,7 +145,7 @@ def backgroud_main(dictionary):
 @register.filter(name='data_chart')
 def data_chart(dictionary, key):
     start_graph = datetime.now()
-    
+
     acc2 = key['acc']
     date_from_space = key['date_from']
     date_to_space = key['date_to']
@@ -154,10 +154,31 @@ def data_chart(dictionary, key):
         'dev_rom_id', flat=True)[0]
     combined = []
     cursor = connection.cursor()
-    cursor.execute(
-        """SELECT  ((seqnum - 1) /{0}) AS id, avg(dev_value) as dev_value, MAX("dev_timestamp") as dev_timestamp FROM ( SELECT  row_number() over (ORDER BY dev_timestamp) AS seqnum, maapi_dev_rom_{1}_values.dev_timestamp, maapi_dev_rom_{1}_values.dev_value FROM maapi_dev_rom_{1}_values  WHERE dev_id={2}  AND dev_timestamp >= '{3}' AND dev_timestamp <= '{4}'  ) maapi_devices_values GROUP BY id ORDER BY id """.
-        format(acc2, dev_rom_id.replace("-", "_"), pk_d, date_from_space,
-               date_to_space))
+
+    query = ("SELECT "
+            "((seqnum - 1) /{acc2}) AS id, "
+            "avg(dev_value) as dev_value, "
+            "MAX(dev_timestamp) as dev_timestamp "
+            "FROM "
+            "( SELECT  row_number() over (ORDER BY dev_timestamp) AS seqnum, "
+            "maapi_dev_rom_{rom_id}_values.dev_timestamp, "
+            "maapi_dev_rom_{rom_id}_values.dev_value "
+            "FROM maapi_dev_rom_{rom_id}_values  "
+            "WHERE "
+            "dev_id={id} "
+            "AND dev_timestamp >= '{date_from_space}' "
+            "AND dev_timestamp <= '{date_to_space}' ) "
+            "maapi_devices_values "
+            "GROUP BY id ORDER BY id ".format(
+                acc2 = acc2,
+                rom_id = dev_rom_id.replace("-", "_"),
+                id = pk_d,
+                date_from_space = date_from_space,
+                date_to_space = date_to_space
+                )
+            )
+    cursor.execute(query)
+
     ff = cursor.fetchall()
     f_max = -1000000000000000
     f_min = 100000000000000
@@ -168,14 +189,14 @@ def data_chart(dictionary, key):
         return (0, 0)
     else:
         for f in ff:
-            date = int(calendar.timegm(f[2].timetuple())) * 1000
+            date = int(calendar.timegm((f[2]).timetuple())) * 1000
             value = round(f[1], 2)
             if f_max <= value: f_max = value
             if f_min >= value: f_min = value
             f_avg += value
             combined.append([date, round(value, 1)])
         stop_graph2 = datetime.now()
-        
+
         start_stop = ((stop_graph - start_graph).microseconds) / 1000
         st = ((stop_graph2 - start_graph2).microseconds) /1000
         return json.dumps(combined), start_stop, st, f_min, f_max, round(

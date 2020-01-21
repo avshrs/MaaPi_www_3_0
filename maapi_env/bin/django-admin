@@ -1,4 +1,4 @@
-#!/home/www-data/maapi_www/maapi_env/bin/python2
+#!/home/apache/MaaPi_www/maapi_env/bin/python3
 
 # -*- coding: utf-8 -*-
 import re

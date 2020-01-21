@@ -1,4 +1,4 @@
-#!/home/www-data/maapi_www/maapi_env/bin/python2
+#!/home/apache/MaaPi_www/maapi_env/bin/python3
 from django.core import management
 
 if __name__ == "__main__":
