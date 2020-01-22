@@ -59,6 +59,7 @@ function date_hide_to(){
 
     function do_something() {
     range = $("#select_range").val();	    
+    range_to = $("#select_range_to").val();
     date_from = $("#datepickerfrom").val();
     hour_from = $("#hour_from").val();
     date_to = $("#datepickerto").val();
@@ -69,19 +70,19 @@ function date_hide_to(){
     num = $("#select_name2").val();
     if(name=="null"){alert("Select Senosr")}
     else{
-      if (hour_to === "now" && range === "date")
+      if      (range === "date" && range_to != "date")
 	    {
-  	    dd ="/Charts/Draw="+name+"/Acc="+acc+"/From="+date_from+" "+hour_from+":00:00"+"/To=now";
+  	    dd ="/Charts/Draw="+name+"/Acc="+acc+"/From="+date_from+" "+hour_from+":00:00"+"/To="+range_to;
 	    }
-      else if (range != "date" && hour_to === "now" )
+      else if (range != "date" && range_to != "date" )
 	    {
-	    dd ="/Charts/Draw="+name+"/Acc="+acc+"/From="+range+"/To=now";
+	    dd ="/Charts/Draw="+name+"/Acc="+acc+"/From="+range+"/To="+range_to;
 	    }
-      else if (range === "date" && hour_to != "now" )
+      else if (range === "date" && range_to === "date" )
 	    {
 	    dd ="/Charts/Draw="+name+"/Acc="+acc+"/From="+date_from+" "+hour_from+":00:00"+"/To="+date_to+" "+hour_to+":00:00";
 	    }
-      else if (range != "date" && hour_to != "now" )
+      else if (range != "date" && range_to === "date" )
 	    {
 	    dd ="/Charts/Draw="+name+"/Acc="+acc+"/From="+range+"/To="+date_to+" "+hour_to+":00:00";
 	    }
@@ -256,7 +257,7 @@ $( function() {
 
    <div class="box2">
       <div class="box3" style="float: left; margin-left:5px;">
-        <p style="text-align:center;">range</p>
+        <p style="text-align:center;">From</p>
         <select style="height:20px; width:70px; padding-right: 5px;padding-left: 10px;" id="select_range" name="select">
           <option  value="date" {%if rangee == "date"  %}selected="selected"{%endif%} > date</option>
           <option  value="-hour" {%if rangee == "-hour"  %}selected="selected"{%endif%} >- 1 hour</option>
@@ -291,7 +292,24 @@ $( function() {
 
 
     <div class="box2">
-	    <div class="box3" style="float: left;" id="date_to_box">
+
+	<div class="box3" style="float: left; margin-left:5px;">
+        <p style="text-align:center;">To</p>
+        <select style="height:20px; width:70px; padding-right: 5px;padding-left: 10px;" id="select_range_to" name="select">
+          <option  value="date" {%if range_to == "date"  %}selected="selected"{%endif%} > date</option>
+          <option  value="now" {%if range_to == "now"  %}selected="selected"{%endif%} > now</option>
+          <option  value="-hour" {%if range_to == "-hour"  %}selected="selected"{%endif%} >- 1 hour</option>
+          <option  value="-6hours" {%if range_to == "-6hours"  %}selected="selected"{%endif%} > -6 hour</option>
+          <option  value="-12hours" {%if range_to == "-12hours"  %}selected="selected"{%endif%} >-12 hour</option>
+          <option  value="-day" {%if range_to == "-day"  %}selected="selected"{%endif%} >-1 day</option>
+          <option  value="-week" {%if range_to == "-week"  %}selected="selected"{%endif%} >-1 week</option>
+          <option  value="-2weeks" {%if range_to == "-2weeks"  %}selected="selected"{%endif%} >-2 weeks</option>
+          <option  value="-month" {%if range_to == "-month"  %}selected="selected"{%endif%} >- 1 month</option>
+          <option  value="-6month" {%if range_to == "-6month"  %}selected="selected"{%endif%} >-6 months</option>
+          <option  value="-year" {%if range_to == "-year"  %}selected="selected"{%endif%} >-1 year</option>
+        </select>
+	</div>
+	    <div class="box3" style="float: left; margin-left:5px;" id="date_to_box">
         <p style="text-align:center;">To</p>
         <input type="text"  style="padding-right: 5px;padding-left: 10px;height:20px; width:90px;" id="datepickerto">
       </div>
@@ -299,8 +317,6 @@ $( function() {
       <div class="box3" style="float: left; margin-left:5px;" id="date_to_box2">
         <p style="text-align:center;">Hour</p>
           <select style="padding-right: 5px;padding-left: 5px;height:20px; width:40px;" id="hour_to" name="select">
-          <option  value="now" {%if hour_to_html == "now"  %}selected="selected"{%endif%}>now</option>
-
           {%for i in loop_hour%}
           <option  value="{{ forloop.counter }}" {%if hour_to_html == forloop.counter %}selected="selected"{%endif%}>{{forloop.counter}}</option>
           {%endfor%}
@@ -308,23 +324,6 @@ $( function() {
 
       </div>
 
-   <div class="box2">
-      <div class="box3" style="float: left; margin-left:5px;">
-        <p style="text-align:center;">Range to</p>
-        <select style="height:20px; width:70px; padding-right: 5px;padding-left: 10px;" id="select_range_to" name="select">
-          <option  value="date" {%if rangee_to == "date"  %}selected="selected"{%endif%} > date</option>
-	  <option  value="now" {%if rangee_to == "now"  %}selected="selected"{%endif%} > now</option>
-          <option  value="-hour" {%if rangee_to == "-hour"  %}selected="selected"{%endif%} >- 1 hour</option>
-          <option  value="-6hours" {%if rangee_to == "-6hours"  %}selected="selected"{%endif%} > -6 hour</option>
-          <option  value="-12hours" {%if rangee_to == "-12hours"  %}selected="selected"{%endif%} >-12 hour</option>
-          <option  value="-day" {%if rangee_to == "-day"  %}selected="selected"{%endif%} >-1 day</option>
-          <option  value="-week" {%if rangee_to == "-week"  %}selected="selected"{%endif%} >-1 week</option>
-          <option  value="-2weeks" {%if rangee_to == "-2weeks"  %}selected="selected"{%endif%} >-2 weeks</option>
-          <option  value="-month" {%if rangee_to == "-month"  %}selected="selected"{%endif%} >- 1 month</option>
-          <option  value="-6month" {%if rangee_to == "-6month"  %}selected="selected"{%endif%} >-6 months</option>
-          <option  value="-year" {%if rangee_to == "-year"  %}selected="selected"{%endif%} >-1 year</option>
-        </select>
-    </div>
 
 
 
@@ -350,6 +349,10 @@ $( function() {
           <option  value="256"{%if chartACC == "256"  %}selected="selected"{%endif%}>256</option>
           <option  value="512"{%if chartACC == "512"  %}selected="selected"{%endif%}>512</option>
           <option  value="1024"{%if chartACC == "1024"  %}selected="selected"{%endif%}>1024</option>
+          <option  value="2048"{%if chartACC == "2048"  %}selected="selected"{%endif%}>2048</option>
+	  <option  value="4096"{%if chartACC == "4096"  %}selected="selected"{%endif%}>4096</option>
+	  <option  value="8192"{%if chartACC == "8192"  %}selected="selected"{%endif%}>8192</option>
+          <option  value="16384"{%if chartACC == "16384"  %}selected="selected"{%endif%}>16384</option>
         </select>
     </div>
 

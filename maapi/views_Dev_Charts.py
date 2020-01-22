@@ -28,6 +28,7 @@ def devCharts(request, pk, acc, date_from, date_to):
     datetime_format = "%Y-%m-%d %H:%M:%S"
 
     rangee="date"
+    range_to="now"
     if date_from == '-day':
         date_from_space = datetime.now().replace(microsecond=0) - timedelta(
             days=1)
@@ -71,11 +72,46 @@ def devCharts(request, pk, acc, date_from, date_to):
         date_to_space = datetime.now().replace(microsecond=0)
         hour_to_html = "now"
         range_to = "now"
-
+    elif date_to == '-day':
+        date_to_space = datetime.now().replace(microsecond=0) - timedelta(
+            days=1)
+        range_to=date_to
+    elif date_to == '-6hours':
+        date_to_space = datetime.now().replace(microsecond=0) - timedelta(
+            hours=6)
+        range_to=date_to
+    elif date_to == '-hour':
+        date_to_space = datetime.now().replace(microsecond=0) - timedelta(
+            hours=1)
+        range_to=date_to
+    elif date_to == '-12hours':
+        date_to_space = datetime.now().replace(microsecond=0) - timedelta(
+            hours=12)
+        range_to=date_to
+    elif date_to == '-month':
+        date_to_space = datetime.now().replace(microsecond=0) - timedelta(
+            days=30)
+        range_to=date_to
+    elif date_to == '-6month':
+        date_to_space = datetime.now().replace(microsecond=0) - timedelta(
+            days=180)
+        range_to=date_to
+    elif date_to == '-week':
+        date_to_space = datetime.now().replace(microsecond=0) - timedelta(
+            days=7)
+        range_to=date_to
+    elif date_to == '-2weeks':
+        date_to_space = datetime.now().replace(microsecond=0) - timedelta(
+            days=14)
+        range_to=date_to
+    elif date_to == '-year':
+        date_to_space = datetime.now().replace(microsecond=0) - timedelta(
+            days=365)
+        range_to=date_to
     else:
         date_to_space = date_to
-        hour_to_html = datetime.strptime(date_to_space,
-                                         datetime_format).hour
+        #hour_to_html = datetime.strptime(date_to_space,
+        #                                 datetime_format).hour
 
     a = datetime.strptime(str(date_from_space), datetime_format)
     b = datetime.strptime(str(date_to_space), datetime_format)
@@ -84,15 +120,33 @@ def devCharts(request, pk, acc, date_from, date_to):
     date_to_html = datetime.strptime(str(date_to_space), datetime_format)
     date_from_html = datetime.strptime(str(date_from_space), datetime_format)
     hour_from_html = a.hour
+    hour_to_html = b.hour
+
+
+
+    inter = Devices.objects.values('dev_id', 'dev_interval',
+                                          'dev_interval_unit_id')
+    inter_unit = {3: 3600,
+                  2: 60,
+                  1: 1,
+            }
+
+    for i in inter:
+        if int(i['dev_id']) == int(pk):
+            dev_inter_sec = float(float(i['dev_interval'])*inter_unit[float(i['dev_interval_unit_id'])])
+            #print(dev_inter_sec)
 
     if int(acc) == 1:
-        if delta_date != 0:
-            acc2 = 2 * delta_date
+        if int(delta_date) != 0:
+            acc2 =  int(int(delta_date) * (60 / (dev_inter_sec * dev_inter_sec)) * dev_inter_sec)
+            print("accuracy",acc2)   
+    
     graph_param = {
         'pk': pk,
         'acc': acc2,
         'date_from': date_from_space,
-        'date_to': date_to_space
+        'date_to': date_to_space,
+        'days_delta':delta_date
     }
 
     if is_number(pk) == True:
