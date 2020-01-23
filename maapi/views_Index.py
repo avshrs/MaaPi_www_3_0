@@ -27,8 +27,6 @@ class MainIndexView(ListView):
                                               'dev_on_main_screen_10',
                                               'dev_on_main_screen_11',
                                               'dev_on_main_screen_12',
-                                              'dev_on_main',
-                                              'dev_on_main_name',
                                               'dev_on_main_enabled',
                                               'dev_on_main_screen_main',
                                               'main_backgroud'
