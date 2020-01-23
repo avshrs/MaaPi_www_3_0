@@ -56,7 +56,8 @@ class MainIndexView(ListView):
         dev_main = []
         for dev in devices:
             print(dev['dev_id'])
-            if dev['dev_id'] == main_list['dev_on_main_screen_main']:
+            print(main_list['dev_on_main_screen_main'])
+            if int(dev['dev_id']) == int(main_list['dev_on_main_screen_main']):
                 print("indev", dev)
                 dev_main.append(dev)
                 print(dev_main)
