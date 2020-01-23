@@ -32,6 +32,8 @@ class MainIndexView(ListView):
                                               'main_backgroud',
                                               )
         print(main_list)
+        print(main_list['dev_on_main_screen_main'])
+        
         devices = Devices.objects.values('dev_id',
                                          'dev_user_name',
                                          'dev_value',
