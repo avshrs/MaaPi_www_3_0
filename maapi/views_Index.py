@@ -14,9 +14,9 @@ class MainIndexView(ListView):
         # Call the base implementation first to get a context
         context = super(MainIndexView, self).get_context_data(**kwargs)
         main_dev = []
-        main_list = MainScreen.objects.values_list('*', flat=True)
-        print(main_list)
-        print(main_list['dev_on_main_screen_main'])
+        main_list = MainScreen.objects.all()
+        print(main_list.dev_on_main_screen_main)
+        # print(main_list['dev_on_main_screen_main'])
         devices = Devices.objects.values('dev_id',
                                          'dev_user_name',
                                          'dev_value',
