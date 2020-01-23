@@ -14,7 +14,26 @@ class MainIndexView(ListView):
         # Call the base implementation first to get a context
         context = super(MainIndexView, self).get_context_data(**kwargs)
         main_dev = []
-        main_list = MainScreen.objects.all()
+        main_list = MainScreen.objects.values('dev_on_main_screen_1',
+                                              'dev_on_main_screen_2',
+                                              'dev_on_main_screen_2',
+                                              'dev_on_main_screen_3',
+                                              'dev_on_main_screen_4',
+                                              'dev_on_main_screen_5',
+                                              'dev_on_main_screen_6',
+                                              'dev_on_main_screen_7',
+                                              'dev_on_main_screen_8',
+                                              'dev_on_main_screen_9',
+                                              'dev_on_main_screen_10',
+                                              'dev_on_main_screen_11',
+                                              'dev_on_main_screen_12',
+                                              'dev_on_main_screen_13',
+                                              'dev_on_main',
+                                              'dev_on_main_name',
+                                              'dev_on_main_enabled',
+                                              'dev_on_main_screen_main',
+                                              'main_backgroud'
+                                              )
         print(main_list.MainScreen)
 
         devices = Devices.objects.values('dev_id',
