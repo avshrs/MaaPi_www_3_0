@@ -51,7 +51,7 @@ class MainIndexView(ListView):
                     main_dev.append(main_list[f'dev_on_main_screen_{i}'])
             except Exception:
                 pass
-        context['temp'] = devices['dev_id'=main_list['dev_on_main_screen_main']]
+        context['temp'] = devices[main_list['dev_on_main_screen_main']]
         context['dev_on_main_screen'] = main_dev
         context['date_time'] = datetime.now()
         context['data'] = devices
