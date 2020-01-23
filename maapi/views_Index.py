@@ -13,28 +13,31 @@ class MainIndexView(ListView):
 
         # Call the base implementation first to get a context
         context = super(MainIndexView, self).get_context_data(**kwargs)
-        dev_on_main_screen = []
+        main_dev = []
+        main_list = MainScreen.objects.get()
+        devices = Devices.objects.values('dev_id',
+                                         'dev_user_name',
+                                         'dev_value',
+                                         'dev_unit',
+                                         'dev_adjust',
+                                         'dev_unit_id',
+                                         'dev_location'
+                                         ).filter(
+                                             dev_status=True
+                                             ).filter(
+                                                 dev_hidden=False
+                                                 ).order_by('dev_user_id')
+
         for i in range(1, 13):
-            if MainScreen.objects.values_list(
-                    'dev_on_main_screen_{0}'.format(i),
-                    flat=True)[0] is not None:
-                dev_on_main_screen.append(
-                    MainScreen.objects.values_list(
-                        'dev_on_main_screen_{0}'.format(i), flat=True)[0])
-        context['temp'] = Devices.objects.values(
-            'dev_id', 'dev_user_name', 'dev_value',
-            'dev_unit').filter(dev_hidden=False).filter(
-                dev_id=(MainScreen.objects.values_list(
-                    'dev_on_main_screen_main', flat=True)[0]))
-        #context['devices'] = Devices.objects.order_by('dev_user_id').filter(dev_hidden = False)
-        context['dev_on_main_screen'] = dev_on_main_screen
+            try:
+                if main_list[f'dev_on_main_screen_{i}'] is not None:
+                    main_dev.append(main_list[f'dev_on_main_screen_{i}'])
+            except Exception:
+                pass
+        context['temp'] = devices[main_list['dev_on_main_screen_main']]
+        context['dev_on_main_screen'] = main_dev
         context['date_time'] = datetime.now()
-        date_from = datetime.now().replace(microsecond=0) - timedelta(hours=1)
-        #context['data2'] = {'pk': 1,'acc': 24,'date_from': date_from,'date_to': 'now'        }
-        context['data'] = Devices.objects.values(
-            'dev_id', 'dev_user_name', 'dev_value', 'dev_unit', 'dev_adjust',
-            'dev_unit_id', 'dev_location').filter(dev_status=True).filter(
-                dev_hidden=False).order_by('dev_user_id')
+        context['data'] = devices
         return context
 
     def dispatch(self, request, *args, **kwargs):
