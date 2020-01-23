@@ -30,7 +30,7 @@ class MainIndexView(ListView):
                                               'dev_on_main_enabled',
                                               'dev_on_main_screen_main',
                                               'main_backgroud',
-                                              )
+                                              )[0]
         print(main_list)
         print(main_list['dev_on_main_screen_main'])
         
