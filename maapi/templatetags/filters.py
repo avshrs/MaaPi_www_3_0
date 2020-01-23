@@ -147,65 +147,56 @@ def backgroud_main(dictionary):
 @register.filter(name='data_chart')
 def data_chart(dictionary, key):
     start_graph = datetime.now()
-
     acc2 = key['acc']
     date_from_space = key['date_from']
     date_to_space = key['date_to']
-    days_delta = key['days_delta']
     pk_d = dictionary
     dev_rom_id = Devices.objects.filter(dev_id=pk_d).values_list(
         'dev_rom_id', flat=True)[0]
     combined = []
     cursor = connection.cursor()
-
-
-    
     query = ("SELECT "
-            "((seqnum - 1) /{acc2}) AS id, "
-            "avg(dev_value) as dev_value, "
-            "MAX(dev_timestamp) as dev_timestamp "
-            "FROM "
-            "( SELECT  row_number() over (ORDER BY dev_timestamp) AS seqnum, "
-            "maapi_dev_rom_{rom_id}_values.dev_timestamp, "
-            "maapi_dev_rom_{rom_id}_values.dev_value "
-            "FROM maapi_dev_rom_{rom_id}_values  "
-            "WHERE "
-            "dev_id={id} "
-            "AND dev_timestamp >= '{date_from_space}' "
-            "AND dev_timestamp <= '{date_to_space}' ) "
-            "maapi_devices_values "
-            "GROUP BY id ORDER BY id ".format(
-                acc2 = acc2,
-                rom_id = dev_rom_id.replace("-", "_"),
-                id = pk_d,
-                date_from_space = date_from_space,
-                date_to_space = date_to_space
+             "((seqnum - 1) /{acc2}) AS id, "
+             "avg(dev_value) as dev_value, "
+             "MAX(dev_timestamp) as dev_timestamp "
+             "FROM "
+             "( SELECT  row_number() over (ORDER BY dev_timestamp) AS seqnum, "
+             "maapi_dev_rom_{rom_id}_values.dev_timestamp, "
+             "maapi_dev_rom_{rom_id}_values.dev_value "
+             "FROM maapi_dev_rom_{rom_id}_values  "
+             "WHERE "
+             "dev_id={id} "
+             "AND dev_timestamp >= '{date_from_space}' "
+             "AND dev_timestamp <= '{date_to_space}' ) "
+             "maapi_devices_values "
+             "GROUP BY id ORDER BY id ".format(
+                acc2=acc2,
+                rom_id=dev_rom_id.replace("-", "_"),
+                id=pk_d,
+                date_from_space=date_from_space,
+                date_to_space=date_to_space
                 )
-            )
+             )
     cursor.execute(query)
-
     ff = cursor.fetchall()
-    f_max = -1000000000000000
-    f_min = 100000000000000
-    f_avg = 0
-    stop_graph = datetime.now()
-    start_graph2= datetime.now()
+    t_value = []
+
     if len(list(ff)) <= 0:
         return (0, 0)
     else:
         for f in ff:
             date = int(calendar.timegm((f[2]).timetuple())) * 1000
             value = round(f[1], 2)
-            if f_max <= value: f_max = value
-            if f_min >= value: f_min = value
-            f_avg += value
+            t_value.append(value)
             combined.append([date, value])
-        stop_graph2 = datetime.now()
-
+        f_max = max(t_value)
+        f_min = min(t_value)
+        f_avg = sum(t_value) / len(t_value)
+        stop_graph = datetime.now()
         start_stop = ((stop_graph - start_graph).microseconds) / 1000
-        st = ((stop_graph2 - start_graph2).microseconds) /1000
-        return json.dumps(combined), start_stop, st, f_min, f_max, round(
-            f_avg / len(list(ff)), 2)
+        st = start_stop
+        return json.dumps(combined), start_stop, st, f_min, f_max, round(f_avg, 2)
+
 
 @register.filter(name='data_chart2')
 def data_chart2(dictionary, key):
