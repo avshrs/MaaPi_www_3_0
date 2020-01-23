@@ -57,6 +57,7 @@ class MainIndexView(ListView):
         for dev in devices:
             if dev['dev_id'] == main_list['dev_on_main_screen_main']:
                 dev_main.append(dev)
+                print(dev_main)
         context['temp'] = dev_main
         context['dev_on_main_screen'] = main_dev
         context['date_time'] = datetime.now()
