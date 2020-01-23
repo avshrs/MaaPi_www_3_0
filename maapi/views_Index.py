@@ -51,6 +51,7 @@ class MainIndexView(ListView):
             try:
                 if main_list[f'dev_on_main_screen_{i}'] is not None:
                     main_dev.append(main_list[f'dev_on_main_screen_{i}'])
+                    print(main_list[f'dev_on_main_screen_{i}'])
             except Exception:
                 pass
         dev_main = []
