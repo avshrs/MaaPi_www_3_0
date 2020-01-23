@@ -10,8 +10,6 @@ class MainIndexView(ListView):
     template_name = '1/_Main.html'
 
     def get_context_data(self, **kwargs):
-
-        # Call the base implementation first to get a context
         context = super(MainIndexView, self).get_context_data(**kwargs)
         main_dev = []
         main_list = MainScreen.objects.values('dev_on_main_screen_1',
@@ -31,9 +29,6 @@ class MainIndexView(ListView):
                                               'dev_on_main_screen_main',
                                               'main_backgroud',
                                               )[0]
-        print(main_list)
-        print(main_list['dev_on_main_screen_main'])
-        
         devices = Devices.objects.values('dev_id',
                                          'dev_user_name',
                                          'dev_value',
@@ -46,7 +41,6 @@ class MainIndexView(ListView):
                                              ).filter(
                                                  dev_hidden=False
                                                  ).order_by('dev_user_id')
-        print(devices)
         for i in range(1, 13):
             try:
                 if main_list[f'dev_on_main_screen_{i}'] is not None:
@@ -55,12 +49,9 @@ class MainIndexView(ListView):
                 pass
         dev_main = []
         for dev in devices:
-            print(dev['dev_id'])
-            print(main_list['dev_on_main_screen_main'])
+
             if int(dev['dev_id']) == int(main_list['dev_on_main_screen_main']):
-                print("indev", dev)
                 dev_main.append(dev)
-                print(dev_main)
         context['temp'] = dev_main
         context['dev_on_main_screen'] = main_dev
         context['date_time'] = datetime.now()
@@ -84,8 +75,6 @@ class SensorListView(ListView):
     template_name = '1/_SensorListDetail.html'
 
     def get_context_data(self, **kwargs):
-        # Call the base implementation first to get a context
-
         context = super(SensorListView, self).get_context_data(**kwargs)
         context['date_time'] = datetime.now()
         context['devices'] = Devices.objects.order_by('dev_user_id').filter(
@@ -105,7 +94,6 @@ class SensorsDetailListView(ListView):
     template_name = '1/_SensorsSettings.html'
 
     def get_context_data(self, **kwargs):
-        # Call the base implementation first to get a context
         context = super(SensorsDetailListView, self).get_context_data(**kwargs)
         context['date_time'] = datetime.now()
         context['devices'] = Devices.objects.order_by('dev_user_id').filter(dev_hidden=False)
