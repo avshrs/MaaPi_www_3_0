@@ -132,9 +132,12 @@ def devCharts(request, pk, acc, date_from, date_to):
             }
 
     for i in inter:
-        if int(i['dev_id']) == int(pk):
+        if is_number(pk):
+            if int(i['dev_id']) == int(pk):
+                dev_inter_sec = float(float(i['dev_interval'])*inter_unit[float(i['dev_interval_unit_id'])])
+
+        elif int(i['dev_id']) == int(pk[0]):
             dev_inter_sec = float(float(i['dev_interval'])*inter_unit[float(i['dev_interval_unit_id'])])
-            #print(dev_inter_sec)
 
     if int(acc) == 1:
         if int(delta_date) != 0:
