@@ -51,12 +51,13 @@ class MainIndexView(ListView):
             try:
                 if main_list[f'dev_on_main_screen_{i}'] is not None:
                     main_dev.append(main_list[f'dev_on_main_screen_{i}'])
-                    print(main_list[f'dev_on_main_screen_{i}'])
             except Exception:
                 pass
         dev_main = []
         for dev in devices:
+            print(dev)
             if dev['dev_id'] == main_list['dev_on_main_screen_main']:
+                print("indev", dev)
                 dev_main.append(dev)
                 print(dev_main)
         context['temp'] = dev_main
