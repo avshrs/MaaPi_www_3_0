@@ -55,7 +55,7 @@ def devCharts(request, pk, acc, date_from, date_to):
     range_to = "now"
 
     date_from_space, range_from = range_date(date_from)
-    date_to_space, range_to = range_date(date_from)
+    date_to_space, range_to = range_date(date_to)
 
     a = datetime.strptime(str(date_from_space), datetime_format)
     b = datetime.strptime(str(date_to_space), datetime_format)
