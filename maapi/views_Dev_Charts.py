@@ -18,7 +18,8 @@ def is_number(s):
 
 
 def devCharts(request, pk, acc, date_from, date_to):
-    range_name_days = {'-day': 1,
+    range_name_days = {'now': 0,
+                       '-day': 1,
                        '-week': 7,
                        '-2weeks': 14,
                        '-month': 30,
@@ -39,30 +40,30 @@ def devCharts(request, pk, acc, date_from, date_to):
     dataName = []
     acc2 = 1
     datetime_format = "%Y-%m-%d %H:%M:%S"
-    rangee = "date"
+    range_from = "date"
     range_to = "now"
 
     if date_from in range_name_days:
         date_from_space = datetime.now().replace(microsecond=0) - timedelta(
             days=range_name_days[date_from])
-        rangee = date_from
+        range_from = date_from
 
     elif date_from in range_name_hours:
         date_from_space = datetime.now().replace(microsecond=0) - timedelta(
             hours=range_name_hours[date_from])
-        rangee = date_from
+        range_from = date_from
     else:
         date_from_space = date_from
 
     if date_to in range_name_days:
         date_from_space = datetime.now().replace(microsecond=0) - timedelta(
             days=range_name_days[date_to])
-        rangee = date_to
+        range_from = date_to
 
     elif date_to in range_name_hours:
         date_from_space = datetime.now().replace(microsecond=0) - timedelta(
             hours=range_name_hours[date_to])
-        rangee = date_to
+        range_from = date_to
     else:
         date_to_space = date_to
 
@@ -130,6 +131,6 @@ def devCharts(request, pk, acc, date_from, date_to):
             'grouplist': grouplist,
             'groupname': groupname,
             'graph_param': graph_param,
-            'rangee': rangee,
+            'range_from': range_from,
             'range_to': range_to,
         })
