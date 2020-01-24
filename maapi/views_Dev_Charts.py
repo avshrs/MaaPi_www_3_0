@@ -39,7 +39,7 @@ def range_date(range_tf):
         return datetime.now().replace(microsecond=0) - timedelta(
             hours=range_name_hours[range_tf]), range_tf
     else:
-        return range_tf, "date"
+        return range_tf, ""
 
 
 def devCharts(request, pk, acc, date_from, date_to):
