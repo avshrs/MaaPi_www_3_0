@@ -72,9 +72,9 @@ def devCharts(request, pk, acc, date_from, date_to):
     delta_date = (b - a).days
 
     date_to_html = datetime.strptime(str(date_to_space), datetime_format)
+    hour_to_html = b.hour
     date_from_html = datetime.strptime(str(date_from_space), datetime_format)
     hour_from_html = a.hour
-    hour_to_html = b.hour
 
     inter = Devices.objects.values('dev_id',
                                    'dev_interval',
