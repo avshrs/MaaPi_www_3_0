@@ -22,7 +22,7 @@ table th span {  color: #222; }
 	date_hide();
 	    date_hide_to();
 	    $('#button').click('change', do_something);
-       	   $('#select_range').click('change', date_hide);
+       	   $('#select_range_from').click('change', date_hide);
 	   $('#select_range_to').click('change', date_hide_to); 
 	    $('.testselect2').SumoSelect({selectAll:false, search: true, searchText:'Search here.',  captionFormat: '{0} Selected',});
 
@@ -31,7 +31,7 @@ table th span {  color: #222; }
 
 
 function date_hide(){
-      if ( $("#select_range").val()==="date"){
+      if ( $("#select_range_from").val()==="date"){
                     $("#date_from_box").show();
                     $("#date_from_box2").show();
                 }
@@ -258,17 +258,17 @@ $( function() {
    <div class="box2">
       <div class="box3" style="float: left; margin-left:5px;">
         <p style="text-align:center;">From</p>
-        <select style="height:20px; width:70px; padding-right: 5px;padding-left: 10px;" id="select_range" name="select">
-          <option  value="date" {%if rangee == "date"  %}selected="selected"{%endif%} > date</option>
-          <option  value="-hour" {%if rangee == "-hour"  %}selected="selected"{%endif%} >- 1 hour</option>
-          <option  value="-6hours" {%if rangee == "-6hours"  %}selected="selected"{%endif%} > -6 hour</option>
-          <option  value="-12hours" {%if rangee == "-12hours"  %}selected="selected"{%endif%} >-12 hour</option>
-          <option  value="-day" {%if rangee == "-day"  %}selected="selected"{%endif%} >-1 day</option>
-          <option  value="-week" {%if rangee == "-week"  %}selected="selected"{%endif%} >-1 week</option>
-          <option  value="-2weeks" {%if rangee == "-2weeks"  %}selected="selected"{%endif%} >-2 weeks</option>
-          <option  value="-month" {%if rangee == "-month"  %}selected="selected"{%endif%} >- 1 month</option>
-          <option  value="-6month" {%if rangee == "-6month"  %}selected="selected"{%endif%} >-6 months</option>
-          <option  value="-year" {%if rangee == "-year"  %}selected="selected"{%endif%} >-1 year</option>
+        <select style="height:20px; width:70px; padding-right: 5px;padding-left: 10px;" id="select_range_from" name="select">
+          <option  value="date" {%if range_from == "date"  %}selected="selected"{%endif%} > date</option>
+          <option  value="-hour" {%if range_from == "-hour"  %}selected="selected"{%endif%} >- 1 hour</option>
+          <option  value="-6hours" {%if range_from == "-6hours"  %}selected="selected"{%endif%} > -6 hour</option>
+          <option  value="-12hours" {%if range_from == "-12hours"  %}selected="selected"{%endif%} >-12 hour</option>
+          <option  value="-day" {%if range_from == "-day"  %}selected="selected"{%endif%} >-1 day</option>
+          <option  value="-week" {%if range_from == "-week"  %}selected="selected"{%endif%} >-1 week</option>
+          <option  value="-2weeks" {%if range_from == "-2weeks"  %}selected="selected"{%endif%} >-2 weeks</option>
+          <option  value="-month" {%if range_from == "-month"  %}selected="selected"{%endif%} >- 1 month</option>
+          <option  value="-6month" {%if range_from == "-6month"  %}selected="selected"{%endif%} >-6 months</option>
+          <option  value="-year" {%if range_from == "-year"  %}selected="selected"{%endif%} >-1 year</option>
         </select>
     </div>
  
