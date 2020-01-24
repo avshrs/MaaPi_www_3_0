@@ -1,8 +1,8 @@
-from maapi.models import Groups, Devices, MainScreen
-from datetime import datetime, date, timedelta
+from maapi.models import Devices, MainScreen
+from datetime import datetime
 from django.views.generic import ListView
 from django.http import HttpResponseRedirect
-from django.views.generic import TemplateView
+# from django.views.generic import TemplateView
 
 
 class MainIndexView(ListView):
@@ -94,10 +94,11 @@ class SensorsDetailListView(ListView):
     template_name = '1/_SensorsSettings.html'
 
     def get_context_data(self, **kwargs):
-        context = super(SensorsDetailListView, self).get_context_data(**kwargs)
-        context['date_time'] = datetime.now()
-        context['devices'] = Devices.objects.order_by('dev_user_id').filter(dev_hidden=False)
-        return context
+        ctx = super(SensorsDetailListView, self).get_context_data(**kwargs)
+        ctx['date_time'] = datetime.now()
+        ctx['devices'] = Devices.objects.order_by(
+            'dev_user_id').filter(dev_hidden=False)
+        return ctx
 
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
@@ -106,14 +107,3 @@ class SensorsDetailListView(ListView):
             return HttpResponseRedirect('/login')
         return super(SensorsDetailListView, self).dispatch(
             request, *args, **kwargs)
-
-
-class twenty(TemplateView):
-    template_name = 'twenty/index.html'
-
-    def dispatch(self, request, *args, **kwargs):
-        if request.user.is_authenticated:
-            pass
-        else:
-            return HttpResponseRedirect('/login')
-        return super(twenty, self).dispatch(request, *args, **kwargs)
