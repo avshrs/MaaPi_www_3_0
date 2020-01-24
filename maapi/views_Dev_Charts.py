@@ -56,14 +56,14 @@ def devCharts(request, pk, acc, date_from, date_to):
         date_from_space = date_from
 
     if date_to in range_name_days:
-        date_from_space = datetime.now().replace(microsecond=0) - timedelta(
+        date_to_space = datetime.now().replace(microsecond=0) - timedelta(
             days=range_name_days[date_to])
-        range_from = date_to
+        range_to = date_to
 
     elif date_to in range_name_hours:
-        date_from_space = datetime.now().replace(microsecond=0) - timedelta(
+        date_to_space = datetime.now().replace(microsecond=0) - timedelta(
             hours=range_name_hours[date_to])
-        range_from = date_to
+        range_to = date_to
     else:
         date_to_space = date_to
 
