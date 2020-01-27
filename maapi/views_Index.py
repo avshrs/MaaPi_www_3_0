@@ -75,28 +75,11 @@ class SensorListView(ListView):
     template_name = '1/_SensorListDetail.html'
 
     def get_context_data(self, **kwargs):
-        devices = Devices.objects.values(
-            'dev_id',
-            'dev_user_name',
-            'dev_value',
-            'dev_main_group',
-            'dev_unit',
-            'dev_adjust',
-            'dev_unit_id',
-            'dev_type',
-            'dev_unit_id',
-            'dev_location',
-            'dev_bus_type'
-            ).filter(
-                dev_status=True
-                ).filter(
-                    dev_hidden=False
-                    ).order_by('dev_user_id')
         context = super(SensorListView, self).get_context_data(**kwargs)
         context['date_time'] = datetime.now()
-        context['devices'] = devices
-        # context['devices'] = Devices.objects.order_by('dev_user_id').filter(
-        #     dev_status=True).filter(dev_hidden=False)
+
+        context['devices'] = Devices.objects.order_by('dev_user_id').filter(
+            dev_status=True).filter(dev_hidden=False)
         return context
 
     def dispatch(self, request, *args, **kwargs):
