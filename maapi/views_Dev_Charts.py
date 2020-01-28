@@ -90,7 +90,7 @@ def devCharts(request, pk, acc, date_from, date_to):
 
     graph_param = {
         'pk': pk,
-        'acc': acc2/2,
+        'acc': acc2*2,
         'date_from': date_from_space,
         'date_to': date_to_space,
         'days_delta': delta_date
