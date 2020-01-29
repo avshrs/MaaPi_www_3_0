@@ -20,7 +20,7 @@ from maapi.views_Dev_Charts import devCharts
 from maapi.viewsRest import getFromEsp
 from django.http import HttpResponse
 from django.contrib.auth import views as auth_views
-
+from django.urls import path
 
 from django.contrib.auth import views as auth_views
 
@@ -29,6 +29,7 @@ urlpatterns = [
 ]
 
 urlpatterns = [
+    
     url(r'^Settings/', admin.site.urls),
     url(r'^login/$',auth_views.LoginView.as_view(template_name="login.html"), name="login"),
     url(r'^logout/$', auth_views.LoginView.as_view(template_name="logout.html"), name="logout"),
