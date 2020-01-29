@@ -90,6 +90,25 @@ class SensorListView(ListView):
         return super(SensorListView, self).dispatch(request, *args, **kwargs)
 
 
+class Pyex(ListView):
+    model = Devices
+
+    def get_context_data(self, **kwargs):
+        context = super(Pyex, self).get_context_data(**kwargs)
+        context['date_time'] = datetime.now()
+
+        context['devices'] = Devices.objects.order_by('dev_user_id').filter(
+            dev_status=True).filter(dev_hidden=False)
+        return context
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            pass
+        else:
+            return HttpResponseRedirect('/login')
+        return super(Pyex, self).dispatch(request, *args, **kwargs)
+
+
 class SensorsDetailListView(ListView):
     model = Devices
     template_name = '1/_SensorsSettings.html'

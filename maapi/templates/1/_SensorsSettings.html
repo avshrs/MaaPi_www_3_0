@@ -4,55 +4,43 @@
 {% load filters %}
 {% load humanize %}
 
-
-          <header id="header">
-
-              <div class="content">
-                <div class="inner" style="max-height: 100%;">
-
+<header id="header">
+    <div class="content">
+        <div class="inner" style="max-height: 100%;">
             <table >
-            <tr>
-              <th class="id">Id</th>
-              <th class="id">User Id</th>
-              <th id="romid-th">Rom id</th>
-              <th class="user-id">Name</th>
-              <th class="device ">Unit</th>
-              <th id="dev-location-th"> Loc.</th>
-              <th class="status">Stat</th>
-              <th class="status">GPIO</th>
-
-              <th class="status hide-min">S_Type</th>
-
-              <th id="main-group-th">Main Group</th>
-
-              <th id="dev-error">error</th>
-              <th class="lastUpdate">Last Update</th>
-            </tr>
-            {% for device in devices %}
-            <tr>
-              <td class="id">{{device.dev_id }}</td>
-              <td class="user-id">{{device.dev_user_id}}</td>
-              <td class="romid-td">{{device.dev_rom_id}} </td>
-              <td class="device">{{ device.dev_user_name }}   </td>
-              <td class="user_id">{{ device.dev_unit_id|units}}</td>
-              <td class="dev-location-td"> {{device.dev_location}} </td>
-              <td class="status ">{{device.dev_status|isTrue}} </td>
-              <td class="status">{{device.dev_gpio_pin}} </td>
-
-              <td class="status hide-min">{{device.dev_type}} </td>
-
-
-
-
-              <td class="main-group-td">   {{device.dev_main_group}} </td>
-
-              <td class="dev-error"> {{device.dev_read_error}} </td>
-              <td class="lastUpdate"> {{device.dev_last_update|timesince}} </td>
-            </tr>
-            {% endfor %}
+                <tr>
+                    <th class="id">Id</th>
+                    <th class="id">User Id</th>
+                    <th id="romid-th">Rom id</th>
+                    <th class="user-id">Name</th>
+                    <th class="device ">Unit</th>
+                    <th id="dev-location-th">Loc.</th>
+                    <th class="status">Stat</th>
+                    <th class="status">GPIO</th>
+                    <th class="status hide-min">S_Type</th>
+                    <th id="main-group-th">Main Group</th>
+                    <th id="dev-error">error</th>
+                    <th class="lastUpdate">Last Update</th>
+                </tr>
+                {% for device in devices %}
+                <tr>
+                    <td class="id">{{device.dev_id }}</td>
+                    <td class="user-id">{{device.dev_user_id}}</td>
+                    <td class="romid-td">{{device.dev_rom_id}} </td>
+                    <td class="device">{{ device.dev_user_name }}   </td>
+                    <td class="user_id">{{ device.dev_unit_id|units}}</td>
+                    <td class="dev-location-td"> {{device.dev_location}} </td>
+                    <td class="status ">{{device.dev_status|isTrue}} </td>
+                    <td class="status">{{device.dev_gpio_pin}} </td>
+                    <td class="status hide-min">{{device.dev_type}} </td>
+                    <td class="main-group-td">   {{device.dev_main_group}} </td>
+                    <td class="dev-error"> {{device.dev_read_error}} </td>
+                    <td class="lastUpdate"> {{device.dev_last_update|timesince}} </td>
+                </tr>
+                {% endfor %}
             </table>
         </div>
-      </div>
-  </header>
+    </div>
+</header>
 
 {% endblock %}
